@@ -10,7 +10,7 @@ namespace WebAppNo1.Controllers
 {
     public class MemberController : ApiController
     {
-        m_user[] members = new m_user[]
+        m_user[] member = new m_user[]
         {
             new m_user {user_id = 1, user_name = "DKhoa", password ="123", email ="DKhoa@123",
                         phone ="0123456789", reg_date = DateTime.Now, is_active = false },
@@ -22,16 +22,16 @@ namespace WebAppNo1.Controllers
 
         public IEnumerable<m_user> GetAllMember()
         {
-            return members;
+            return member;
         }
 
         public IHttpActionResult GetMember(int id)
         {
-            var member = members.FirstOrDefault(p => p.user_id == id);
-            if (member == null)
+            var mem = member.FirstOrDefault(p => p.user_id == id);
+            if (mem == null)
                 return NotFound();
             else
-                return Ok(member);
+                return Ok(mem);
         }
     }
 }
