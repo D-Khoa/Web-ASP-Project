@@ -10,28 +10,42 @@ namespace WebAppNo1.Controllers
 {
     public class MemberController : ApiController
     {
-        m_user[] member = new m_user[]
-        {
-            new m_user {user_id = 1, user_name = "DKhoa", password ="123", email ="DKhoa@123",
-                        phone ="0123456789", reg_date = DateTime.Now, is_active = false },
-            new m_user {user_id = 2, user_name = "TKhoa", password ="456", email ="TKhoa@456",
-                        phone ="0987654321", reg_date = DateTime.Now, is_active = false },
-            new m_user {user_id = 3, user_name = "NKhoa", password ="789", email ="NKhoa@789",
-                        phone ="0999999999", reg_date = DateTime.Now, is_active = false },
-        };
+        //m_user[] members = new m_user[]
+        //{
+        //    new m_user {user_id = 1, user_name = "DKhoa", password ="123", email ="DKhoa@123",
+        //                phone ="0123456789", reg_date = DateTime.Now, is_active = false },
+        //    new m_user {user_id = 2, user_name = "TKhoa", password ="456", email ="TKhoa@456",
+        //                phone ="0987654321", reg_date = DateTime.Now, is_active = false },
+        //    new m_user {user_id = 3, user_name = "NKhoa", password ="789", email ="NKhoa@789",
+        //                phone ="0999999999", reg_date = DateTime.Now, is_active = false },
+        //};
+        m_user userData { get; set; }
 
-        public IEnumerable<m_user> GetAllMember()
+        public MemberController()
         {
-            return member;
+            userData = new m_user();
         }
 
-        public IHttpActionResult GetMember(int id)
+        public IEnumerable<m_user> Get()
         {
-            var mem = member.FirstOrDefault(p => p.user_id == id);
-            if (mem == null)
-                return NotFound();
+            userData.GetAllUser();
+            return userData.listUser;
+        }
+
+        [HttpPost]
+        public IHttpActionResult AddMember(m_user inuser)
+        {
+            var n = userData.AddUser(new m_user
+            {
+                user_name = inuser.user_name,
+                password = inuser.password,
+                email = inuser.email,
+                phone = inuser.phone,
+            });
+            if (n > 0)
+                return Ok();
             else
-                return Ok(mem);
+                return NotFound();
         }
     }
 }
