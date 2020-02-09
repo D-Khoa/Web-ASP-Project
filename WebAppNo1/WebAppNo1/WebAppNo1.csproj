@@ -133,7 +133,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\MySQLDao.cs" />
-    <Compile Include="Models\m_data.cs" />
+    <Compile Include="Models\m_lamp.cs" />
     <Compile Include="Models\m_user.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
