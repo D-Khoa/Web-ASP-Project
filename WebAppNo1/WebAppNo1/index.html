@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
 <head>
-    <title>Web API</title>
     <meta charset="utf-8" />
+    <title>Web API</title>
 </head>
 <body>
     <h1>Member Management</h1>
@@ -28,9 +28,18 @@
         <input id="LogUser" type="text" /><br />
         <h5>Password: </h5>
         <input id="LogPass" type="password" /><br />
-        <input type="button" id="btn_signin" onclick="signin()" value="Sign In" />
+        <input type="button" id="btn_signin" onclick="signin('https://web-api-33bdf.firebaseio.com/m_user.json')" value="Sign In" />
     </div>
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="/__/firebase/7.8.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="/__/firebase/7.8.1/firebase-analytics.js"></script>
+
+    <!-- Initialize Firebase -->
+    <script src="/__/firebase/init.js"></script>
     <script>
         //var uri = 'api/member';
         //$(document).ready(function () {
@@ -59,7 +68,7 @@
                 success: function (data) { console.log(data), alert(data); }
             })
         }
-        function signin() {
+        function signin(newlocation) {
             var user = document.getElementById('LogUser').value;
             var pass = document.getElementById('LogPass').value;
             var loginfo = { user_name: user, password: pass };
@@ -69,9 +78,21 @@
                 data: JSON.stringify(loginfo),
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
-                success: function (data) { console.log(data), alert(data); }
+                success: function (data) {
+                    //console.log(data), alert(data);
+                    if(data)
+                    {
+                        $.ajax({
+                            dataType: "json",
+                            url: newlocation,
+                            data: data,
+                            success: function (data) { alert(data);}
+                        });
+                    }
+                }
             })
         }
     </script>
+
 </body>
-</html>
+<!--</html>-->

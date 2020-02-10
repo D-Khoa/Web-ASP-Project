@@ -55,16 +55,18 @@ namespace WebAppNo1.Controllers
 
         [HttpPost]
         [Route("api/member/SignIn")]
-        public string SignIn(m_user loginUser)
+        public bool SignIn(m_user loginUser)
         {
             try
             {
                 userData = userData.LoginUser(loginUser.user_name, loginUser.password);
-                return "Welcome " + loginUser.user_name;
+                //return "Welcome " + loginUser.user_name;
+                return true;
             }
             catch(Exception ex)
             {
-                return ex.Message;
+                //return ex.Message;
+                return false;
             }
         }
     }
