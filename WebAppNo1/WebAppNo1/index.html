@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<!--<html xmlns="http://www.w3.org/1999/xhtml">-->
+<html>
 <head>
     <meta charset="utf-8" />
     <title>Web API</title>
@@ -9,11 +9,12 @@
     <div>
         <h2>All Members</h2>
         <ul id="members" />
+        <a href="email-password.html" target="logup">Sign Up</a>
     </div>
     <div>
         <h2>Sign Up</h2>
         <h5>Username: </h5>
-        <input id="RegUser" type="text" /><br/>
+        <input id="RegUser" type="text" /><br />
         <h5>Password: </h5>
         <input id="RegPass" type="password" /><br />
         <h5>E-Mail: </h5>
@@ -30,29 +31,9 @@
         <input id="LogPass" type="password" /><br />
         <input type="button" id="btn_signin" onclick="signin('https://web-api-33bdf.firebaseio.com/m_user.json')" value="Sign In" />
     </div>
-    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="/__/firebase/7.8.1/firebase-app.js"></script>
-
-    <!-- TODO: Add SDKs for Firebase products that you want to use
-         https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="/__/firebase/7.8.1/firebase-analytics.js"></script>
-
-    <!-- Initialize Firebase -->
-    <script src="/__/firebase/init.js"></script>
-    <script>
-        //var uri = 'api/member';
-        //$(document).ready(function () {
-        //    $.getJSON(uri)
-        //    .done(function (data) {
-        //        $.each(data, function (key, item) {
-        //            $('<li>', { text: formatItem(item) }).appendTo($('#members'));
-        //        });
-        //    });
-        //});
-        //function formatItem(item) {
-        //    return 'ID: ' + item.user_id + '- Name: ' + item.user_name + '- IsOnline: ' + item.is_active;
-        //}
+    <div>
+        <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-2.0.3.min.js"></script>
+        <script>
         function signup() {
             var user = document.getElementById('RegUser').value;
             var pass = document.getElementById('RegPass').value;
@@ -80,19 +61,50 @@
                 dataType: 'json',
                 success: function (data) {
                     //console.log(data), alert(data);
-                    if(data)
-                    {
+                    if (data) {
                         $.ajax({
                             dataType: "json",
                             url: newlocation,
                             data: data,
-                            success: function (data) { alert(data);}
+                            success: function (data) { alert(data); }
                         });
                     }
                 }
             })
         }
-    </script>
+        </script>
+    </div>
+    <div>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
 
+        <!-- TODO: Add SDKs for Firebase products that you want to use
+             https://firebase.google.com/docs/web/setup#available-libraries -->
+        <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-analytics.js"></script>
+
+        <script>
+            // Your web app's Firebase configuration
+            var firebaseConfig = {
+                apiKey: "AIzaSyAdjr0vxcb9ceC6FuvtgPSstlZDI6qkeAI",
+                authDomain: "web-api-33bdf.firebaseapp.com",
+                databaseURL: "https://web-api-33bdf.firebaseio.com",
+                projectId: "web-api-33bdf",
+                storageBucket: "web-api-33bdf.appspot.com",
+                messagingSenderId: "28477694938",
+                appId: "1:28477694938:web:964040f7057c3e123f56e3",
+                measurementId: "G-HD3SFE36CH"
+            };
+            // Initialize Firebase
+            firebase.initializeApp(firebaseConfig);
+            firebase.analytics();
+
+            firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // ...
+            }); email - password.html
+        </script>
+    </div>
 </body>
-<!--</html>-->
+</html>
