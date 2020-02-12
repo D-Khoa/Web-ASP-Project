@@ -1,18 +1,19 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <title>Login Firebase</title>
+    <title>Log In Firebase</title>
 	<meta charset="utf-8" />
     <link rel="stylesheet" href="CSS/Style.css" />
 </head>
 <body>
-    <div id="login_div" class="main-div">
+    <div id="main_log_div" class="main-div">
         <h3>Firebase Web Login</h3>
         <input type="email" placeholder="Email..." id="login_email" />
         <input type="password" placeholder="Password..." id="login_pass" />
-        <button onclick="Login()">Log In Firebase</button>
+        <button onclick="Login()">Log In</button>
+        <button onclick="Register()">Register</button>
     </div>
-    <div id="user_div" class="login-div">
+    <div id="user_info_div" class="welcome-div">
     	<h3>Wellcome User</h3>
     	<p id="user_para">You're current login.</p>
     	<button onclick="Logout()">Log Out</button>
@@ -25,7 +26,6 @@
 	<!-- TODO: Add SDKs for Firebase products that you want to use
 	     https://firebase.google.com/docs/web/setup#available-libraries -->
 	<script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-analytics.js"></script>
-
 	<script>
 	  // Your web app's Firebase configuration
 	  var firebaseConfig = {
