@@ -1,0 +1,43 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>My Firebase System</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="CSS/Style.css" />
+</head>
+<body>
+    <div class="top-bar">
+        <h2>My Firebase System</h2>
+        <button id="top_login_button">Register/Log In</button>
+    </div>
+    <div id="main_log_div" class="main-div">
+        <h3>Firebase Web Login</h3>
+        <input type="email" placeholder="Email..." id="login_email" />
+        <input type="password" placeholder="Password..." id="login_pass" />
+        <button onclick="Login()">Log In</button>
+        <button onclick="Register()">Register</button>
+    </div>
+    <div id="user_info_div" class="welcome-div">
+        <h3>Wellcome User</h3>
+        <p id="user_para">You're current login.</p>
+        <button onclick="Logout()">Log Out</button>
+    </div>
+    <div id="write_data" class="writedata-div">
+        <input type="text" placeholder="Name..." id="write_name" />
+        <input type="email" placeholder="Email..." id="write_email" />
+        <input type="password" placeholder="Password..." id="write_pass" />
+        <button onclick="writeUserData()">Write data</button>
+        <button onclick="readUserData()">Read data</button>
+    </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
+    <!-- Add Firebase products that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-auth.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+     <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-analytics.js"></script>
+     <script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-database.js"></script>
+     <script type="text/javascript" src="scripts/index.js"></script>
+ </body>
+ </html>

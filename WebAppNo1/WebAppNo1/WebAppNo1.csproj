@@ -122,13 +122,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CSS\Style.css" />
-    <Content Include="email-password.html" />
+    <Content Include="CSS\styles.css" />
     <Content Include="Global.asax" />
+    <Content Include="index2.html" />
     <Content Include="index.html" />
     <Content Include="LoginFirebase.html" />
-    <Content Include="LoginPage.html" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="scripts\firebase-config.js" />
+    <Content Include="scripts\log-in.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
