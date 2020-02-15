@@ -17,6 +17,7 @@
 	<!-- end: CSS -->
 </head>
 <body>
+	<!--TOP BAR ELEMENTS-->
 	<div class="top-bar" id="top_bar">
 		<div class="left"><h2>Firebase Dashboard</h2></div>
 		<div class="right">
@@ -24,14 +25,80 @@
 			<button class="btn right" onclick="Logout()">Log Out</button>
 		</div>
 		<div class="clearfix"></div>
-	</div>
+	</div><!--END: TOP-BAR-->
 
-	<div class="container">
-		<div class="sidebar">Sidebar</div>
-		<div class="mainside">Main Side</div>
-		<div class="clearfix"></div>		
-	</div>
+	<!--DASHBOARD LAYOUT-->
+	<div class="container" id="container_bar">
+		<!--MENU DASHBOARD-->
+		<div class="sidebar">
+			<ul class="main-menu">
+				<li><a id="dashboard" href="#add_device"><span>Dashboard</span></a></li>
+				<li><a href="#get_device"><span>Devices</span></a></li>
+				<li><a href="#"><span>Statistical</span></a></li>
+				<li><a href="#"><span>Setting</span></a></li>
+			</ul>
+		</div>
+		<div class="mainside">
+			<div><h2>Add new device</h2>
+				<form class="form-horizontal" id="add_device">
+					<fieldset>
+						<div class="input-prepend" title="Device Code">
+							Device Code<input class="input-large" id="deviceCD" type="text" name="device_code" placeholder="Device Code...">
+						</div>
+						<div class="clearfix"></div>
 
+						<div class="input-prepend" title="Device State">
+							Device State<input class="input-large" id="deviceState" type="text" name="device_state" placeholder="Device State...">
+						</div>
+						<div class="clearfix"></div>
+
+						<div class="input-prepend" title="Device Value">
+							Device Value<input class="input-large" id="deviceValue" type="text" name="device_value" placeholder="Device Value...">
+						</div>
+						<div class="clearfix"></div>
+
+						<div class="input-prepend" title="Device Location">
+							Device Location<input class="input-large" id="deviceLocation" type="text" name="device_location" placeholder="Device Location...">
+						</div>
+						<div class="clearfix"></div>
+
+						<button class="btn right" onclick="writeDeviceData()">Add Device</button>
+					</fieldset>
+				</form>
+			</div>
+
+			<div><h2>Get device data</h2>
+				<form class="form-horizontal" id="get_device">
+					<fieldset class="get-device-info">
+						<div class="input-prepend" title="Device Code">
+							Device Code<input class="input-large" id="findeviceCD" type="text" name="device_code" placeholder="Device Code...">
+						</div>
+						<div class="clearfix"></div>
+
+						<div class="input-prepend" title="Device State">
+							Device State<p class="get-device right" id="get_device_state"></p>
+						</div>
+						<div class="clearfix"></div>
+
+						<div class="input-prepend" title="Device Value">
+							Device Value<p class="get-device right" id="get_device_value"></p>
+						</div>
+						<div class="clearfix"></div>
+
+						<div class="input-prepend" title="Device Location">
+							Device Location<p class="get-device right" id="get_device_location"></p>
+						</div>
+						<div class="clearfix"></div>			
+
+						<button class="btn right" onclick="readUserData()">Get Device</button>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+		<div class="clearfix"></div>
+	</div><!--END: DASHBOARD LAYOUT-->
+
+	<!--LOGIN BOX FORM-->
 	<div class="login-box" id="login_box">
 		<h2>Login Your Account</h2>
 		<form class="form-horizontal" action="#" id="login_form">
@@ -59,7 +126,7 @@
 		<hr>
 		<h3>Forgot Password?</h3>
 		<p>No problem, <a href="#">Click here</a> to get a new password.</p>
-	</div><!--/login-box-->
+	</div><!--END: LOGIN BOX FORM-->
 
 	<!-- start: JavaScript -->
 	<!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -69,6 +136,7 @@
 	<!-- TODO: Add SDKs for Firebase products that you want to use
 		https://firebase.google.com/docs/web/setup#available-libraries -->
 		<script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-analytics.js"></script>
+		<script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-database.js"></script>
 		<script type="text/javascript" src="scripts/firebase-config.js"></script>
 		<script type="text/javascript" src="scripts/log-in.js"></script>
 		<!-- end: JavaScript -->

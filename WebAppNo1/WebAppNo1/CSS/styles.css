@@ -1,3 +1,15 @@
+/*BOX SIZE INCLUDE BORDER AND PADDING*/
+*{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+/*FULL HEIGHT*/
+html, body{
+	height: 100%;
+	margin: 0px;
+}
+/*--START: CLEAR FIX--*/
 .clearfix{
 	*zoom:1;
 }
@@ -12,19 +24,8 @@
 .clearfix:after {
 	clear: both;
 }
-
-.remember{
-	padding: 10px;
-}
-
-.btn{
-	background-color: #000;
-	border: 1px solid #fff;
-	height: 30px;
-	width: 100px;
-	color: #fff;
-}
-
+/*--END: CLEAR FIX--*/
+/*--START: DIV FLOAT LEFT-RIGHT*/
 .right{
 	display: inline-block;
 	float: right;
@@ -34,32 +35,38 @@
 	display: inline-block;
 	float: left;
 }
-
+/*--END:DIV FLOAT LEFT RIGHT--*/
+/*--START: TOP-BAR CONFIG--*/
 .top-bar{
-	background-color: #000;
+	background-color: #080808;
 	color: #fff;
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid rgb(56,56,61);
 	padding: 15px;
 	display: none;
 }
-
+/*--END: TOP-BAR CONFIG*/
+/*--START: FORM CONFIG*/
+.form-horizontal{
+	width: 50%;
+	display: inline-block;
+}
+/*LOGIN BOX FORM CONFIG*/
 .login-box{
 	text-align: center;
 	display: none;
 	padding: 10px auto;
 }
-
-.button-login{
-
+/*--END: FORM CONFIG*/
+/*--START: INPUT CONFIG*/
+.input-prepend{
+	text-align: right;
 }
 
-.form-horizontal{
-	width: 50%;
-	display: inline-block;
-}
-
-.input-prepend, .button-login{
+.login-box .input-prepend{
 	text-align: center;
+}
+.get-device-info .input-prepend{
+	text-align: left;
 }
 
 .input-large{
@@ -67,24 +74,72 @@
 	display: inline-block;
 	width: 50%;
 }
-
-.container{
-	border: 1px solid #000;
-	width: 100%;
+/*REMEMBER CHECKBOX*/
+.remember{
 	padding: 10px;
-	display: block;
 }
 
+.get-device{
+	text-align: right;
+	display: inline-block;
+}
+/*--END: INPUT CONFIG*/
+/*--START: BUTTON CONFIG*/
+.btn{
+	background-color: #000;
+	border: 1px solid #fff;
+	height: 30px;
+	width: 100px;
+	color: #fff;
+}
+/*LOGIN BUTTON CONFIG*/
+.button-login{
+	text-align: center;
+}
+/*--END: BUTTON CONFIG*/
+/*--START: LAYOUT*/
+.container{
+	width: 100%;
+	height: 100%;
+	display: none;
+	overflow: auto;
+	border: 1px solid #000;
+}
+/*SIDEBAR CONFIG*/
 .sidebar{
-	width: 30%;
-	background: #777;
+	width: 20%;
+	height: 100%;
 	float: left;
-	height: 300px;
+	background: #1C2B36;
+}
+.main-menu{
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	text-align: left;
+	list-style-type: none;
 }
 
-.mainside{
-	width: 70%;
-	background: #fff;
-	float: right;
-	height: 300px;
+.main-menu li>a{
+	color: #fff;
+	height: auto;
+	display: block;
+	padding: 10px 10px;
+	font-weight: bold;
+	text-decoration: none;
 }
+
+.main-menu li>a:hover,
+.main-menu li>a:focus,
+.main-menu li>a:visited{
+	background-color: #000;
+}
+/*MAIN CONTENT CONFIG*/
+.mainside{
+	width: 80%;
+	height: 100%;
+	background: #999;
+	float: right;
+	padding: 10px;
+}
+/*--END: LAYOUT*/
