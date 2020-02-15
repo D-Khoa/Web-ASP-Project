@@ -78,3 +78,34 @@ input:focus{
 	display: none;
 	text-align: center;
 }
+
+.user-bar{
+	background-color: #777;
+	width: 100%
+	margin: 0px auto;
+	padding: 0px;
+	display: none;
+}
+
+.user-bar #user_para{
+	display: inline-block;
+	float: right;
+	margin-right: 20px;
+}
+
+.user-bar #left{
+	display: inline-block;
+	float: left;
+}
+
+.user-bar .btn{
+	width: 20%;
+	float: right;
+}
+
+.login-box{
+	background-color: #000;
+	width: 100%;
+	margin: 10px auto;
+	display: none;
+}

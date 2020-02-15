@@ -1,0 +1,90 @@
+.clearfix{
+	*zoom:1;
+}
+
+.clearfix:before,
+.clearfix:after {
+	display: table;
+	line-height: 0;
+	content: "";
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+.remember{
+	padding: 10px;
+}
+
+.btn{
+	background-color: #000;
+	border: 1px solid #fff;
+	height: 30px;
+	width: 100px;
+	color: #fff;
+}
+
+.right{
+	display: inline-block;
+	float: right;
+}
+
+.left{
+	display: inline-block;
+	float: left;
+}
+
+.top-bar{
+	background-color: #000;
+	color: #fff;
+	border-bottom: 1px solid #000;
+	padding: 15px;
+	display: none;
+}
+
+.login-box{
+	text-align: center;
+	display: none;
+	padding: 10px auto;
+}
+
+.button-login{
+
+}
+
+.form-horizontal{
+	width: 50%;
+	display: inline-block;
+}
+
+.input-prepend, .button-login{
+	text-align: center;
+}
+
+.input-large{
+	margin: 10px;
+	display: inline-block;
+	width: 50%;
+}
+
+.container{
+	border: 1px solid #000;
+	width: 100%;
+	padding: 10px;
+	display: block;
+}
+
+.sidebar{
+	width: 30%;
+	background: #777;
+	float: left;
+	height: 300px;
+}
+
+.mainside{
+	width: 70%;
+	background: #fff;
+	float: right;
+	height: 300px;
+}

@@ -31,7 +31,7 @@ function Register(){
 	  var errorCode = error.code;
 	  var errorMessage = error.message;
 	  // ...
-	  	window.alert("Error: " + errorMessage);
+	  window.alert("Error: " + errorMessage);
 	});
 }
 
@@ -43,7 +43,7 @@ function Login() {
 	  var errorCode = error.code;
 	  var errorMessage = error.message;
 	  // ...
-	  	window.alert("Error: " + errorMessage);
+	  window.alert("Error: " + errorMessage);
 	});
 }
 
@@ -55,32 +55,46 @@ function Logout(){
 	});
 }
 
-function writeUserData() {
-	var name = document.getElementById("write_name").value;
-	var email = document.getElementById("write_email").value;
-	var pass = document.getElementById("write_pass").value;
+// Your web app's Firebase configuration
+var firebaseConfig = {
+	apiKey: "AIzaSyAdjr0vxcb9ceC6FuvtgPSstlZDI6qkeAI",
+	authDomain: "web-api-33bdf.firebaseapp.com",
+	databaseURL: "https://web-api-33bdf.firebaseio.com",
+	projectId: "web-api-33bdf",
+	storageBucket: "web-api-33bdf.appspot.com",
+	messagingSenderId: "28477694938",
+	appId: "1:28477694938:web:964040f7057c3e123f56e3",
+	measurementId: "G-HD3SFE36CH"
+};
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+      function writeUserData() {
+      	var name = document.getElementById("write_name").value;
+      	var email = document.getElementById("write_email").value;
+      	var pass = document.getElementById("write_pass").value;
 
-	firebase.database().ref('users/' + name).set({
-	    email: email,
-	    password : pass
-	}).catch(function(error){
-		var errorMessage = error.message;
-	  	window.alert("Error: " + errorMessage);
-	});
-	window.alert("successful: " + name);
-}
+      	firebase.database().ref('users/' + name).set({
+      		email: email,
+      		password : pass
+      	}).catch(function(error){
+      		var errorMessage = error.message;
+      		window.alert("Error: " + errorMessage);
+      	});
+      	window.alert("successful: " + name);
+      }
 
-function readUserData(){
-	var userId = firebase.auth().currentUser.uid;
-	var name = document.getElementById("write_name").value;
-	var email = document.getElementById("write_email").value;
-	var pass = document.getElementById("write_pass").value;
+      function readUserData(){
+      	var userId = firebase.auth().currentUser.uid;
+      	var name = document.getElementById("write_name").value;
+      	var email = document.getElementById("write_email").value;
+      	var pass = document.getElementById("write_pass").value;
 
-	return firebase.database().ref('/users/' + name).once('value').then(function(snapshot) {
-	  email = (snapshot.val() && snapshot.val().email) || 'Empty';
-	  pass = (snapshot.val() && snapshot.val().password) || 'Empty';
+      	return firebase.database().ref('/users/' + name).once('value').then(function(snapshot) {
+      		email = (snapshot.val() && snapshot.val().email) || 'Empty';
+      		pass = (snapshot.val() && snapshot.val().password) || 'Empty';
 	  // ...
 	  document.getElementById("write_email").value = email;
 	  document.getElementById("write_pass").value = pass;
 	});
-}
+      }

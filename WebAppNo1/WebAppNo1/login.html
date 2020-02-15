@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- start: Meta -->
+	<meta charset="utf-8">
+	<title>Login Firebase Web App</title>
+	<meta name="description" content="Bootstrap Metro Dashboard">
+	<meta name="author" content="Dennis Ji">
+	<meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive">
+	<!-- end: Meta -->
+
+	<!-- start: Mobile Specific -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- end: Mobile Specific -->	
+	<!-- start: CSS -->
+	<link href="css/styles.css" rel="stylesheet">
+	<!-- end: CSS -->
+</head>
+<body>
+	<div class="top-bar" id="top_bar">
+		<div class="left"><h2>Firebase Dashboard</h2></div>
+		<div class="right">
+			<p id="user_para"></p>
+			<button class="btn right" onclick="Logout()">Log Out</button>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+
+	<div class="container">
+		<div class="sidebar">Sidebar</div>
+		<div class="mainside">Main Side</div>
+		<div class="clearfix"></div>		
+	</div>
+
+	<div class="login-box" id="login_box">
+		<h2>Login Your Account</h2>
+		<form class="form-horizontal" action="#" id="login_form">
+			<fieldset>
+				<div class="input-prepend" title="Email">
+					<input class="input-large" id="user_email" type="text" name="email" placeholder="Email...">
+				</div>
+				<div class="clearfix"></div>
+
+				<div class="input-prepend" title="Password">
+					<input class="input-large" id="user_password" type="password" name="password" placeholder="Password...">
+				</div>
+				<div class="clearfix"></div>
+
+				<div class="button-login">
+					<label class="remember" for="remember">
+						<input type="checkbox" id="remember"/>Remember me
+					</label>
+					<button class="btn" onclick="Register()">Register</button>
+					<button class="btn" onclick="Login()">Login</button>
+				</div>
+				<div class="clearfix"></div>
+			</fieldset>
+		</form>
+		<hr>
+		<h3>Forgot Password?</h3>
+		<p>No problem, <a href="#">Click here</a> to get a new password.</p>
+	</div><!--/login-box-->
+
+	<!-- start: JavaScript -->
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-app.js"></script>
+	<!-- Add Firebase products that you want to use -->
+	<script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-auth.js"></script>
+	<!-- TODO: Add SDKs for Firebase products that you want to use
+		https://firebase.google.com/docs/web/setup#available-libraries -->
+		<script src="https://www.gstatic.com/firebasejs/7.8.1/firebase-analytics.js"></script>
+		<script type="text/javascript" src="scripts/firebase-config.js"></script>
+		<script type="text/javascript" src="scripts/log-in.js"></script>
+		<!-- end: JavaScript -->
+	</body>
+	</html>
