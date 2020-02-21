@@ -1,0 +1,145 @@
+/*BOX SIZE INCLUDE BORDER AND PADDING*/
+*{
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+/*FULL HEIGHT*/
+html, body{
+	height: 100%;
+	margin: 0px;
+}
+/*--START: CLEAR FIX--*/
+.clearfix{
+	*zoom:1;
+}
+
+.clearfix:before,
+.clearfix:after {
+	display: table;
+	line-height: 0;
+	content: "";
+}
+
+.clearfix:after {
+	clear: both;
+}
+/*--END: CLEAR FIX--*/
+/*--START: DIV FLOAT LEFT-RIGHT*/
+.right{
+	display: inline-block;
+	float: right;
+}
+
+.left{
+	display: inline-block;
+	float: left;
+}
+/*--END:DIV FLOAT LEFT RIGHT--*/
+/*--START: TOP-BAR CONFIG--*/
+.top-bar{
+	background-color: #080808;
+	color: #fff;
+	border-bottom: 1px solid rgb(56,56,61);
+	padding: 15px;
+	display: none;
+}
+/*--END: TOP-BAR CONFIG*/
+/*--START: FORM CONFIG*/
+.form-horizontal{
+	width: 50%;
+	display: inline-block;
+}
+/*LOGIN BOX FORM CONFIG*/
+.login-box{
+	text-align: center;
+	display: none;
+	padding: 10px auto;
+}
+/*--END: FORM CONFIG*/
+/*--START: INPUT CONFIG*/
+.input-prepend{
+	text-align: right;
+}
+
+.login-box .input-prepend{
+	text-align: center;
+}
+.get-device-info .input-prepend{
+	text-align: left;
+}
+
+.input-large{
+	margin: 10px;
+	display: inline-block;
+	width: 50%;
+}
+/*REMEMBER CHECKBOX*/
+.remember{
+	padding: 10px;
+}
+
+.get-device{
+	text-align: right;
+	display: inline-block;
+}
+/*--END: INPUT CONFIG*/
+/*--START: BUTTON CONFIG*/
+.btn{
+	background-color: #000;
+	border: 1px solid #fff;
+	height: 30px;
+	width: 100px;
+	color: #fff;
+}
+/*LOGIN BUTTON CONFIG*/
+.button-login{
+	text-align: center;
+}
+/*--END: BUTTON CONFIG*/
+/*--START: LAYOUT*/
+.container{
+	width: 100%;
+	height: 100%;
+	display: none;
+	overflow: auto;
+	border: 1px solid #000;
+}
+/*SIDEBAR CONFIG*/
+.sidebar{
+	width: 20%;
+	height: 100%;
+	float: left;
+	background: #1C2B36;
+}
+.main-menu{
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	text-align: left;
+	list-style-type: none;
+}
+
+.main-menu li>a{
+	color: #fff;
+	height: auto;
+	display: block;
+	padding: 10px 10px;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+.main-menu li>a:hover,
+.main-menu li>a:focus,
+.main-menu li>a:visited{
+	background-color: #000;
+}
+/*MAIN CONTENT CONFIG*/
+.mainside{
+	width: 80%;
+	height: 100%;
+	background: #999;
+	float: right;
+	padding: 10px;
+}
+/*--END: LAYOUT*/
