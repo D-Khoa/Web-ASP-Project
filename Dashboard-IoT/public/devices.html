@@ -58,7 +58,7 @@
 		<script src="js/login.js"></script>
 		<script src="js/device.js"></script>		
 	</head>
-	<body onload="GetCurrentUser();AutoAddItems();">
+	<body onload="GetCurrentUser();">
 		<!--start: Header-->
 		<div class="navbar">
 			<div class="navbar-inner">
@@ -118,23 +118,22 @@
 					<div class="box span6">
 						<div class="box-header">
 							<h2>
-							<i class="halflings-icon white list"></i>
-							<span class="break"></span>Actutors
+								<i class="halflings-icon white list"></i>
+								<span class="break"></span>Actutors
 							</h2>
 							<div class="box-icon">
-							<a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
-							<a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>
+								<a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
+								<a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>
 							</div>
-							</div>
-							<div class="box-content">
+						</div>
+						<div class="box-content">
 							<div class="controls">
-							<label class="control-label" for="actutor_id">ID:</label>
-							<input class="input-xlarge focused" id="actutor_id" type="text" placeholder="type actutor id" />
-							<button class="btn btn-large btn-primary" id="btnAddActutor" onclick="AddActutorBtn(document.querySelector('#actutor_id').value)">Add Actutor</button>
+								<label class="control-label" for="actutor_id">ID:</label>
+								<input class="input-xlarge focused" id="actutor_id" type="text" placeholder="type actutor id" />
+								<label class="control-label" for="actutor_name">Name:</label>
+								<input class="input-xlarge focused" id="actutor_name" type="text" placeholder="type actutor name" />
+								<button class="btn btn-large btn-primary" id="btnAddActutor" onclick="AddNewActutor()">Add Actutor</button>
 							</div>													
-							<div id="actutor_bar">
-							<label class="control-label">Actutors:</label>
-							</div>
 							</div>
 							</div>
 							<!-- end: custom actutors -->
@@ -154,11 +153,10 @@
 							<div class="controls">
 							<label class="control-label" for="sensor_id">ID:</label>
 							<input class="input-xlarge focused" id="sensor_id" type="text" placeholder="type sensor id" />
-							<input type="button" class="btn btn-large btn-primary" id="btnAddSensor" value="Add Sensor" onclick="AddSensorLabel(document.querySelector('#sensor_id').value)">
+							<label class="control-label" for="sensor_name">Name:</label>
+							<input class="input-xlarge focused" id="sensor_name" type="text" placeholder="type sensor name" />
+							<input type="button" class="btn btn-large btn-primary" id="btnAddSensor" value="Add Sensor" onclick="AddNewSensor()">
 							</div>													
-							<div id="sensor_bar">
-							<label class="control-label">Sensors:</label>
-							</div>
 							</div>
 							</div>
 							<!-- end: custom sensors -->
@@ -253,4 +251,4 @@
 							<script src="js/custom.js"></script>
 							<!-- end: JavaScript-->
 							</body>
-							</html>							
+							</html>																					
