@@ -3013,3 +3013,16 @@ ul.messagesList li span.date {
 	margin-right: auto;
 	width: 50%;
 }
+.btn-actutor{
+	width: 100px;
+	height: 50px;
+	margin: 10px;
+	padding: 5px;
+}
+.label-sensor{
+	width: 100px;
+	height: 20px;
+	margin: 10px;
+	padding: 5px;
+	text-align: center;
+}
