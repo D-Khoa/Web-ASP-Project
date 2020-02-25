@@ -1,53 +1,91 @@
-function Login() {
-	var userEmail = document.getElementById("username").value;
-	var userPass = document.getElementById("password").value;
-	firebase.auth().signInWithEmailAndPassword(userEmail, userPass).then(function(){
-		currUser = userEmail;
-		window.alert("Welcome " + userEmail);
-		document.getElementById("login_form").submit();
-	}).catch(function(error) {
-	  // Handle Errors here.
-	  var errorCode = error.code;
-	  var errorMessage = error.message;
-	  window.alert(errorMessage);
-	  // ...
+const authRef = firebase.auth();
+const docRef = firebase.firestore();
+
+function Register(){
+	const usermail = document.querySelector("#user_mail").value;
+	const userpass = document.querySelector("#password").value;
+	authRef.createUserWithEmailAndPassword(usermail, userpass).then(function(){
+		var currUser = authRef.currentUser;
+		currUser.sendEmailVerification().then(function() {
+			docRef.doc("mods/"+currUser.uid).set({
+				email: currUser.email,
+				btnactutors:"",
+				btnsensors:"",
+			});
+			// Email sent.
+			window.alert("Please check your mail to verify your account");
+			}).catch(function(error) {
+			// An error happened.
+			var errorCode = error.code;
+			var errorMessage = error.message;
+			// ...
+			window.alert(errorCode +": "+ errorMessage);
+		});
+		}).catch(function(error) {
+		// Handle Errors here.
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		// ...
+		window.alert(errorCode +": "+ errorMessage);
 	});
 }
 
-function Logout(){	firebase.auth().signOut().then(function() {	  	
-	// Sign-out successful.
-	currUser = null;
-	window.location.href = "login.html";
-	window.alert("Sign-out successful!")
-}).catch(function(error) {
-	// An error happened.
-	window.alert(error.message);
-});
+function Login() {
+	const usermail = document.querySelector("#user_mail").value;
+	const userpass = document.querySelector("#password").value;
+	authRef.signInWithEmailAndPassword(usermail, userpass).then(function(){
+		var currUser = authRef.currentUser;
+		if(currUser.emailVerified){
+			window.alert("Welcome " + usermail);
+			document.getElementById("login_form").submit();
+		}
+		else window.alert("Please verify your account before log-in");
+		}).catch(function(error) {
+		// Handle Errors here.
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		window.alert(errorCode +": "+ errorMessage);
+	});
+}
+
+function Logout(){	
+	authRef.signOut().then(function() {	  	
+		// Sign-out successful.
+		window.location.href = "login.html";
+		window.alert("Sign-out successful!")
+		}).catch(function(error) {
+		// An error happened.
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		window.alert(errorCode +": "+ errorMessage);
+	});
 }
 
 function GetCurrentUser(){
-	firebase.auth().onAuthStateChanged(function(user) {
+	authRef.onAuthStateChanged(function(user) {
 		if (user) {
-	    // User is signed in.
-	    document.getElementById("user_name").innerHTML = user.email;
-	} else {
-	    // No user is signed in.
-	    window.location.href = "login.html";
-	}
-});
+			// User is signed in.
+			document.getElementById("user_name").innerHTML = user.email;
+			} else {
+			// No user is signed in.
+			window.location.href = "login.html";
+		}
+	});
 }
 
-function Register(){
-	const iusername = document.querySelector("#username");
-	const iemail = document.querySelector("#email");
-	const ipassword = document.querySelector("#password");
-	const docRef = firebase.firestore().doc("users/" + iusername.value);
-	docRef.set({
-		email : iemail.value,
-		password : ipassword.value,
-	}).then(function(){
-		console.log("Register successful!");
-	}).catch(function(error){
-		console.log("Got an error: ", error);
+function AddNewMember(){
+	const membername = document.querySelector("#member_name").value;
+	const memberpass = document.querySelector("#member_password").value;
+	const currUser = authRef.currentUser;
+	docRef.doc("mods/"+currUser.uid+"/members/"+membername).set({
+		//name: membername,
+		password: memberpass
+		}).then(function(){
+		window.alert("Add member: "+membername+" successful!");
+		}).catch(function(error) {
+		// An error happened.
+		var errorCode = error.code;
+		var errorMessage = error.message;
+		window.alert(errorCode +": "+ errorMessage);
 	});
 }
