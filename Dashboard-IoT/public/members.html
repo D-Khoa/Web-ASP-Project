@@ -3,7 +3,7 @@
 	<head>
 		<!--start: Meta-->
 		<meta charset="utf-8">
-		<title>Firebase Metro Dashboard</title>
+		<title>IFM IoT Web Dashboard</title>
 		<meta name="description" content="Bootstrap Metro Dashboard">
 		<meta name="author" content="Dennis Ji">
 		<meta name="keyword" content="Metro, Metro UI, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
@@ -40,14 +40,14 @@
 		<script>
 			// Your web app's Firebase configuration
 			var firebaseConfig = {
-			apiKey: "AIzaSyAdjr0vxcb9ceC6FuvtgPSstlZDI6qkeAI",
-			authDomain: "web-api-33bdf.firebaseapp.com",
-			databaseURL: "https://web-api-33bdf.firebaseio.com",
-			projectId: "web-api-33bdf",
-			storageBucket: "web-api-33bdf.appspot.com",
-			messagingSenderId: "28477694938",
-			appId: "1:28477694938:web:964040f7057c3e123f56e3",
-			measurementId: "G-HD3SFE36CH"
+				apiKey: "AIzaSyAdjr0vxcb9ceC6FuvtgPSstlZDI6qkeAI",
+				authDomain: "web-api-33bdf.firebaseapp.com",
+				databaseURL: "https://web-api-33bdf.firebaseio.com",
+				projectId: "web-api-33bdf",
+				storageBucket: "web-api-33bdf.appspot.com",
+				messagingSenderId: "28477694938",
+				appId: "1:28477694938:web:964040f7057c3e123f56e3",
+				measurementId: "G-HD3SFE36CH"
 			};
 			// Initialize Firebase
 			firebase.initializeApp(firebaseConfig);
@@ -55,11 +55,13 @@
 		</script>
 		<!-- end: manual firebase -->
 		<!--<script src="js/firebase-config.js"></script>-->
-		<script src="js/global.js"></script>	
-		<script src="js/login.js"></script>
-		<script src="js/device.js"></script>		
 	</head>
-	<body onload="GetCurrentUser();">
+	<body>
+		<script>
+			window.addEventListener("load", function(event) {			
+				CheckLogin();
+			});
+		</script>
 		<!--start: Header-->
 		<div class="navbar">
 			<div class="navbar-inner">
@@ -103,9 +105,9 @@
 				<div id="sidebar-left" class="span2">
 					<div class="nav-collapse sidebar-nav">
 						<ul class="nav nav-tabs nav-stacked main-menu">
-							<li><a href="index.html"><i class="icon-bar-chart"></i><span class="hidden-tablet"> Dashboard</span></a></li>
-							<li><a href="devices.html"><i class="icon-tasks"></i><span class="hidden-tablet"> Devices</span></a></li>
-							<li><a href="members.html"><i class="icon-group"></i><span class="hidden-tablet"> Members</span></a></li>
+							<li><a href="#" onclick="LoginData('index.html')"><i class="icon-bar-chart"></i><span class="hidden-tablet"> Dashboard</span></a></li>
+							<li><a href="#" onclick="LoginData('devices.html')"><i class="icon-tasks"></i><span class="hidden-tablet"> Devices</span></a></li>
+							<li><a href="#" onclick="LoginData('members.html')"><i class="icon-group"></i><span class="hidden-tablet"> Members</span></a></li>
 							<li><a href="#" onclick="Logout()"><i class="icon-lock"></i><span class="hidden-tablet"> Login Page</span></a></li>
 						</ul>
 					</div>
@@ -157,6 +159,8 @@
 			</p>
 		</footer>
 		<!-- start: JavaScript-->
+		<script src="js/global.js"></script>	
+		<script src="js/login.js"></script>
 		<script src="js/jquery-1.9.1.min.js"></script>
 		<script src="js/jquery-migrate-1.0.0.min.js"></script>
 		
@@ -209,8 +213,8 @@
 		<script src="js/counter.js"></script>
 		
 		<script src="js/retina.js"></script>
-		
-		<script src="js/custom.js"></script>
-		<!-- end: JavaScript-->
+	
+	<script src="js/custom.js"></script>
+	<!-- end: JavaScript-->
 	</body>
-</html>																										
+	</html>																																		

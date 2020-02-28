@@ -1,11 +1,11 @@
 /*
-* Author: ThemifyCloud
-* Template: Metro Admin Template - Bootstrap Theme
-* Version: 1.0.0
-* Bootstrap version: 2.3.1
-* Copyright 2013 Bootstrap Metro Dashboard
-* www: http://themifycloud.com
-* mail: support@themifycloud.com
+	* Author: ThemifyCloud
+	* Template: Metro Admin Template - Bootstrap Theme
+	* Version: 1.0.0
+	* Bootstrap version: 2.3.1
+	* Copyright 2013 Bootstrap Metro Dashboard
+	* www: http://themifycloud.com
+	* mail: support@themifycloud.com
 */
 
 /* Import Section
@@ -2977,7 +2977,7 @@ ul.messagesList li span.date {
 		background: url(../img/chat-left@2x.png) no-repeat 0px 0px;
 		background-size: 100%;
 	}
-
+	
 	ul.chat li.right .message .arrow {
 		background: url(../img/chat-right@2x.png) no-repeat 0px 0px;
 		background-size: 100%;
@@ -2987,7 +2987,7 @@ ul.messagesList li span.date {
 		background: url(../img/chat-left-metro@2x.png) no-repeat 0px 0px;
 		background-size: 100%;
 	}
-
+	
 	ul.chat.metro li.right .message .arrow {
 		background: url(../img/chat-right-metro@2x.png) no-repeat 0px 0px;
 		background-size: 100%;
@@ -3025,4 +3025,7 @@ ul.messagesList li span.date {
 	margin: 10px;
 	padding: 5px;
 	text-align: center;
+}
+#mem_login_form{
+	display: none;
 }
