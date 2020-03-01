@@ -1687,13 +1687,8 @@ function charts() {
 	 // we use an inline data source in the example, usually data would
 	// be fetched from a server
 	//Math.random()*10
-	function GetRealTimeData(){
-		firebase.database().ref('sensor/1/').once('value', function(snapshot) {
-			return snapshot.val().humidity;
-		});
-	}
 
-	var data = [], totalPoints = 300;
+	//var data = [], totalPoints = 300;
 	function getRandomData() {
 		if (data.length > 0)
 			data = data.slice(1);
@@ -1701,7 +1696,7 @@ function charts() {
 		// do a random walk
 		while (data.length < totalPoints) {
 			var prev = data.length > 0 ? data[data.length - 1] : 50;
-			var y = prev + GetRealTimeData() - 5;
+			var y = sensordata;
 			if (y < 0)
 				y = 0;
 			if (y > 100)
