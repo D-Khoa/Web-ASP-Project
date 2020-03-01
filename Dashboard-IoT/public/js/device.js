@@ -36,7 +36,7 @@ function AddActutorBtn(actId){
 			UpdateUserActutor(actId);
 			element.innerHTML = doc.data().name + "-" + actId;
 			if(doc.data().state){
-				element.className = "btn btn-large btn-success btn-actutor"
+				element.className = "btn btn-large btn-success btn-actutor";
 			}
 			else{
 				element.className ="btn btn-large btn-inverse btn-actutor";

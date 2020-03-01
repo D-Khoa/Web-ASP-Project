@@ -1,55 +1,51 @@
+//Firebase SDK
 const authRef = firebase.auth();
 const dbRef = firebase.database();
 const docRef = firebase.firestore();
+//Default username
 var display_current_user = "User Name";
-var isLogin = false;
+//User id
+var userID = "";
+
 //Logout mod user
 function Logout() {
-  authRef
-    .signOut()
-    .then(function() {
-      // Sign-out successful.
-      isLogin = false;
-      window.location.href = "login.html";
-      window.alert("Log-out successful!");
-    })
-    .catch(function(error) {
-      // An error happened.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      window.alert(errorCode + ": " + errorMessage);
-    });
+  //Confirm user before log-out
+  if (confirm("Do you want log-out?")) {
+    authRef
+      .signOut()
+      .then(function() {
+        // Sign-out successful.
+        isLogin = false;
+        window.location.href = "login.html";
+        console.log("Log-out successful!");
+      })
+      .catch(function(error) {
+        // An error happened.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorCode + ": " + errorMessage);
+      });
+  }
 }
-/*Get user info
-	function GetCurrentUser()
-	{
-	authRef.onAuthStateChanged(function(user) {
-	if (user) {
-	// User is signed in.
-	//document.getElementById("user_name").innerHTML = user.email;
-	display_current_user = user.email;
-	document.body.style.display = "block";
-	} else {
-	// No user is signed in.
-	document.body.style.display = "none";
-	window.location.href = "login.html";			
-	}
-	});
-}*/
-
+//Check log-in state and user info
 function CheckLogin() {
+  //Decode URI
   var queryString = decodeURIComponent(window.location.search);
+  //If URI not contains user info then return login.html page
   if (queryString == "") window.location.href = "login.html";
+  //Get user info
   queryString = queryString.substring(1);
   var queries = queryString.split("&");
-  isLogin = queries[0].split("=")[1];
-  display_current_user = queries[1].split("=")[1];
-  if (isLogin) {
-    document.getElementById("user_name").innerHTML = display_current_user;
-  } else window.location.href = "login.html";
+  display_current_user = queries[0].split("=")[1];
+  userID = queries[1].split("=")[1];
+  //Change display username
+  document.getElementById("user_name").innerHTML = display_current_user;
 }
-
+//Send user info when change page
 function LoginData(url) {
-  var queryString = "?para1=" + isLogin + "&para2=" + display_current_user;
+  var queryString = "?para1=" + display_current_user + "&para2=" + userID;
   window.location.href = url + queryString;
+}
+function GetData(fromVal) {
+  return fromVal;
 }
