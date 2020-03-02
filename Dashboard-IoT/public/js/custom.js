@@ -1709,12 +1709,10 @@ function charts() {
 			dataRef.once("value").then(function (sensorVal) {
 				if (sensorVal.exists()) {
 					stateRef.onDisconnect().update({
-						state: false,
-						value: 0
+						state: false
 					});
 					sensordata = sensorVal.val();
 				}
-				else sensordata = '0';
 			});
 			
 			var y = sensordata;

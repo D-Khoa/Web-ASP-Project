@@ -45,15 +45,27 @@ function CheckLogin() {
   document.getElementById("user_name").innerHTML = display_current_user;
   //If mod then show device and member
   const allModElement = document.querySelectorAll(".mod-user");
-  if (isMod) {    
+  if (isMod) {
     for (let i = 0; i < allModElement.length; i++) {
       allModElement[i].style.display = "block";
     }
   }
-  else{
+  else {
     for (let i = 0; i < allModElement.length; i++) {
       allModElement[i].style.display = "none";
     }
+  }
+  var pageName = location.pathname.split("/").pop();
+  switch (pageName) {
+    case "index.html":
+      document.querySelector("#index_menu").style.background = "#578EBE";
+      break;
+    case "devices.html":
+      document.querySelector("#device_menu").style.background = "#578EBE";
+      break;
+    case "members.html":
+      document.querySelector("#member_menu").style.background = "#578EBE";
+      break;
   }
 }
 

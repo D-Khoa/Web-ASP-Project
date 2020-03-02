@@ -169,12 +169,6 @@ function AddSensorLabel(sensorID) {
     sensordata = 0;
     //Draw new chart
     charts();
-    //Listen value of sensor
-    /*let listenSensor = dataRef.on("value", function(sensorvalue) {
-        sensordata = sensorvalue.val();
-        document.querySelector("#realtimebox").innerHTML =
-          event.target.id + " - " + element.name;
-    });*/
   });
 }
 
