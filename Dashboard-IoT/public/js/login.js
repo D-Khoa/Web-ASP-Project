@@ -7,19 +7,19 @@ function Register() {
   //Create user with email and password
   authRef
     .createUserWithEmailAndPassword(usermail, userpass)
-    .then(function() {
+    .then(function () {
       //Get user after register
       const currUser = authRef.currentUser;
       //Send a verify mail to email of user
       currUser
         .sendEmailVerification()
-        .then(function() {
-          //Add uid of user into firestore
+        .then(function () {
+          /*Add uid of user into firestore
           docRef.doc("mods/" + currUser.uid).set({
             email: currUser.email,
             btnactutors: "",
             btnsensors: ""
-          });
+          });*/
           //Add uid of user into realtime DB
           dbRef.ref("mods/" + currUser.uid).set({
             email: currUser.email,
@@ -29,7 +29,7 @@ function Register() {
           // Email sent.
           window.alert("Please check your mail to verify your account");
         })
-        .catch(function(error) {
+        .catch(function (error) {
           // An error happened.
           var errorCode = error.code;
           var errorMessage = error.message;
@@ -37,7 +37,7 @@ function Register() {
           window.alert(errorCode + ": " + errorMessage);
         });
     })
-    .catch(function(error) {
+    .catch(function (error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -53,20 +53,20 @@ function Login() {
   //Login with email and password
   authRef
     .signInWithEmailAndPassword(usermail, userpass)
-    .then(function() {
+    .then(function () {
       //Get current user
       const currUser = authRef.currentUser;
       //If user is verified
       if (currUser.emailVerified) {
         window.alert("Welcome " + usermail);
         //Send info of user to index.html page
-        var queryString = "?para1=" + usermail + "&para2=" + currUser.uid;
+        var queryString = "?para1=" + usermail + "&para2=" + currUser.uid + "&para3=" + true;
         window.location.href = "index.html" + queryString;
       }
       //If user isn't verified then alert
       else window.alert("Please verify your account before log-in");
     })
-    .catch(function(error) {
+    .catch(function (error) {
       // Handle Errors here.
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -80,38 +80,31 @@ function AddNewMember() {
   //Get member name and passsword
   const membername = document.querySelector("#member_name").value;
   const memberpass = document.querySelector("#member_password").value;
-  //Check username
-  var isExist = false;
-  docRef
-    .doc("users/" + membername)
-    .get()
-    .then(function(doc) {
+  dbRef
+    .ref("users/" + membername)
+    .once("value")
+    .then(function (snapshot) {
       //If user is exists then alert
-      if (doc.exists) {
+      if (snapshot.exists()) {
         window.alert(
           "Username: " + membername + " is exists! Please choose another name!"
         );
-        isExist = true;
+      }
+      else {
+        //If user isn't exists then create a new
+        dbRef.ref("users/" + membername).set({
+          uid: currUser.uid,
+          password: memberpass
+        }).then(function () {
+          window.alert("Add new member: " + membername + " successful!");
+        }).catch(function (error) {
+          // An error happened.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          console.log(errorCode + ": " + errorMessage);
+        });
       }
     });
-  //If user isn't exists then create a new
-  if (!isExist) {
-    docRef
-      .doc("users/" + membername)
-      .set({
-        uid: currUser.uid,
-        password: memberpass
-      })
-      .then(function() {
-        window.alert("Add member: " + membername + " successful!");
-      })
-      .catch(function(error) {
-        // An error happened.
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        window.alert(errorCode + ": " + errorMessage);
-      });
-  }
 }
 //Member login
 function MemberLogin() {
@@ -121,7 +114,7 @@ function MemberLogin() {
   dbRef
     .ref("users/" + inputname)
     .once("value")
-    .then(function(snapshot) {
+    .then(function (snapshot) {
       //If username is exist
       if (snapshot.exists()) {
         //Check password
@@ -129,12 +122,12 @@ function MemberLogin() {
         if (inputpass == snapshot.val().password) {
           window.alert("Welcome " + inputname);
           //Send user info to index.html page
-          var queryString = "?para1=" + inputname + "&para2=" + snapshot.val().uid;
+          var queryString = "?para1=" + inputname + "&para2=" + snapshot.val().uid + "&para3=" + false;
           window.location.href = "index.html" + queryString;
         } else window.alert("Wrong password!");
       } else window.alert("User is not exists!");
     })
-    .catch(function(error) {
+    .catch(function (error) {
       // An error happened.
       var errorCode = error.code;
       var errorMessage = error.message;

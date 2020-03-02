@@ -11,10 +11,10 @@ function AddNewActutor() {
       name: actname,
       state: false
     })
-    .then(function() {
+    .then(function () {
       window.alert("Add actutor: " + actId + " successful!");
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("Got an error: ", error);
     });
 }
@@ -33,10 +33,10 @@ function AddNewSensor() {
       state: false,
       value: 0
     })
-    .then(function() {
+    .then(function () {
       window.alert("Add sensor: " + senID + " successful!");
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("Got an error: ", error);
     });
 }
@@ -60,11 +60,11 @@ function AddActutorBtn(actId) {
   element.id = actId;
   //Add actutor button into parent
   actField.appendChild(element);
-  //
+  //Update list button actutors
   UpdateUserActutor(actId);
   userRef
     .once("value")
-    .then(function(snapshot) {
+    .then(function (snapshot) {
       if (snapshot.exists()) {
         //Text on actutor button
         element.innerHTML = snapshot.val().name + "-" + actId;
@@ -77,14 +77,14 @@ function AddActutorBtn(actId) {
         element.parentNode.removeChild(element);
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("Got an error: ", error);
     });
   //Click event
-  element.onclick = function() {
+  element.addEventListener("click", function () {
     userRef
       .once("value")
-      .then(function(snapshot) {
+      .then(function (snapshot) {
         if (snapshot.exists()) {
           //Get actutor state
           if (!snapshot.val().state)
@@ -95,18 +95,18 @@ function AddActutorBtn(actId) {
             .update({
               state: !snapshot.val().state
             })
-            .then(function() {
+            .then(function () {
               console.log("Update successful!");
             })
-            .catch(function(error) {
+            .catch(function (error) {
               console.log("Got an error: ", error);
             });
         }
       })
-      .catch(function(error) {
+      .catch(function (error) {
         console.log("Got an error: ", error);
       });
-  };
+  });
 }
 
 //Set sensor data = 0
@@ -114,7 +114,7 @@ var sensordata = 0;
 //Set chart array data = 0
 var data = [],
   totalPoints = 300;
-    var tempID;
+var tempID;
 //Add label sensor with sensor id
 function AddSensorLabel(sensorID) {
   //If sensor id empty then skip
@@ -135,10 +135,10 @@ function AddSensorLabel(sensorID) {
   element.style.cursor = "pointer";
   //Add label sensor into parent
   sensorField.appendChild(element);
-  //
+  //Update list sensor of user
   UpdateUserSensor(sensorID);
   //Get info of sensor
-  userRef.on("value", function(snapshot) {
+  userRef.on("value", function (snapshot) {
     if (snapshot.exists()) {
       element.name = snapshot.val().name;
       element.innerHTML = snapshot.val().name + ": " + snapshot.val().value;
@@ -152,9 +152,9 @@ function AddSensorLabel(sensorID) {
   });
   var btnClick = false;
   //Click event
-  element.addEventListener("click", function() {
+  element.addEventListener("click", function () {
     btnClick = true;
-	if(btnClick) tempID = element.id;
+    if (btnClick) tempID = element.id;
     //Get chartbox and chart from index.html
     const chartbox = document.querySelector("#chartbox");
     var chart = document.querySelector("#realtimechart");
@@ -185,7 +185,7 @@ function UpdateUserActutor(itemID) {
   //Read list actutors of user
   userRef
     .once("value")
-    .then(function(snapshot) {
+    .then(function (snapshot) {
       if (snapshot.exists()) {
         itemArray = snapshot.val().btnactutors;
         //If list actutors isn't contains actutor id then add it
@@ -198,15 +198,15 @@ function UpdateUserActutor(itemID) {
           .update({
             btnactutors: itemArray
           })
-          .then(function() {
+          .then(function () {
             console.log("Update successful!");
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log("Got an error: ", error);
           });
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("Got an error: ", error);
     });
 }
@@ -218,7 +218,7 @@ function UpdateUserSensor(itemID) {
   //Read list sensors of user
   userRef
     .once("value")
-    .then(function(snapshot) {
+    .then(function (snapshot) {
       if (snapshot.exists()) {
         itemArray = snapshot.val().btnsensors;
         //If list sensors isn't contains sensor then add it
@@ -231,15 +231,15 @@ function UpdateUserSensor(itemID) {
           .update({
             btnsensors: itemArray
           })
-          .then(function() {
+          .then(function () {
             console.log("Update successful!");
           })
-          .catch(function(error) {
+          .catch(function (error) {
             console.log("Got an error: ", error);
           });
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("Got an error: ", error);
     });
 }
@@ -250,7 +250,7 @@ function AutoAddItems() {
   dbRef
     .ref("mods/" + userID)
     .once("value")
-    .then(function(snapshot) {
+    .then(function (snapshot) {
       if (snapshot.exists()) {
         arrayActID = snapshot.val().btnactutors.split(",");
         arraySenID = snapshot.val().btnsensors.split(",");
@@ -261,7 +261,7 @@ function AutoAddItems() {
         window.location.href = "login.html";
       }
     })
-    .catch(function(error) {
+    .catch(function (error) {
       console.log("Got an error: ", error);
     });
 }

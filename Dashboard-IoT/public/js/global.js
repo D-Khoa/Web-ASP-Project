@@ -6,6 +6,8 @@ const docRef = firebase.firestore();
 var display_current_user = "User Name";
 //User id
 var userID = "";
+//Mod
+var isMod = false;
 
 //Logout mod user
 function Logout() {
@@ -13,13 +15,12 @@ function Logout() {
   if (confirm("Do you want log-out?")) {
     authRef
       .signOut()
-      .then(function() {
+      .then(function () {
         // Sign-out successful.
-        isLogin = false;
-        window.location.href = "login.html";
         console.log("Log-out successful!");
+        window.location.href = "login.html";
       })
-      .catch(function(error) {
+      .catch(function (error) {
         // An error happened.
         var errorCode = error.code;
         var errorMessage = error.message;
@@ -27,6 +28,7 @@ function Logout() {
       });
   }
 }
+
 //Check log-in state and user info
 function CheckLogin() {
   //Decode URI
@@ -38,14 +40,25 @@ function CheckLogin() {
   var queries = queryString.split("&");
   display_current_user = queries[0].split("=")[1];
   userID = queries[1].split("=")[1];
+  isMod = (queries[2].split("=")[1] == "true");
   //Change display username
   document.getElementById("user_name").innerHTML = display_current_user;
+  //If mod then show device and member
+  const allModElement = document.querySelectorAll(".mod-user");
+  if (isMod) {    
+    for (let i = 0; i < allModElement.length; i++) {
+      allModElement[i].style.display = "block";
+    }
+  }
+  else{
+    for (let i = 0; i < allModElement.length; i++) {
+      allModElement[i].style.display = "none";
+    }
+  }
 }
+
 //Send user info when change page
 function LoginData(url) {
-  var queryString = "?para1=" + display_current_user + "&para2=" + userID;
+  var queryString = "?para1=" + display_current_user + "&para2=" + userID + "&para3=" + isMod;
   window.location.href = url + queryString;
-}
-function GetData(fromVal) {
-  return fromVal;
 }
