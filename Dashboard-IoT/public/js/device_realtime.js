@@ -114,6 +114,7 @@ var sensordata = 0;
 //Set chart array data = 0
 var data = [],
   totalPoints = 300;
+    var tempID;
 //Add label sensor with sensor id
 function AddSensorLabel(sensorID) {
   //If sensor id empty then skip
@@ -151,12 +152,9 @@ function AddSensorLabel(sensorID) {
   });
   var btnClick = false;
   //Click event
-  element.addEventListener("click", function(event) {
+  element.addEventListener("click", function() {
     btnClick = true;
-    //Address of sensor value
-    const dataRef = dbRef.ref(
-      "mods/" + userID + "/sensors/" + event.target.id + "/value"
-    );
+	if(btnClick) tempID = element.id;
     //Get chartbox and chart from index.html
     const chartbox = document.querySelector("#chartbox");
     var chart = document.querySelector("#realtimechart");
@@ -172,14 +170,11 @@ function AddSensorLabel(sensorID) {
     //Draw new chart
     charts();
     //Listen value of sensor
-    let listenSensor = dataRef.on("value", function(sensorvalue) {
-      if (btnClick) {
-        btnClick = false;
+    /*let listenSensor = dataRef.on("value", function(sensorvalue) {
         sensordata = sensorvalue.val();
         document.querySelector("#realtimebox").innerHTML =
           event.target.id + " - " + element.name;
-      }
-    });
+    });*/
   });
 }
 

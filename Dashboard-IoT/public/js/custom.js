@@ -1696,6 +1696,16 @@ function charts() {
 		// do a random walk
 		while (data.length < totalPoints) {
 			var prev = data.length > 0 ? data[data.length - 1] : 50;
+			//Address of sensor value
+    const dataRef = dbRef.ref(
+      "mods/" + userID + "/sensors/" + tempID + "/value"
+    );
+			dataRef.once("value").then(function(sensorVal){
+				if(sensorVal.exists())
+				{
+					sensordata = sensorVal.val();
+				}
+			});
 			var y = sensordata;
 			if (y < 0)
 				y = 0;
