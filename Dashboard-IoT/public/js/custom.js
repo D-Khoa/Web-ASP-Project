@@ -1705,6 +1705,7 @@ function charts() {
 				{
 					sensordata = sensorVal.val();
 				}
+				else sensordata = '0';
 			});
 			var y = sensordata;
 			if (y < 0)
