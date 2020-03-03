@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- start: Meta -->
+    <meta charset="utf-8" />
+    <title>Web Title</title>
+    <meta name="description" content="Web Custom" />
+    <meta name="author" content="Monz" />
+    <meta name="keyword" content="Web" />
+    <style>
+      /*Top-bar option*/
+      .top-bar {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 35px;
+        display: block;
+        position: fixed;
+        z-index: 100000;
+        background-color: #777;
+      }
+      .top-bar ul {
+        margin: 0;
+        padding: 0;
+      }
+      .top-bar ul li {
+        color: blanchedalmond;
+        padding: 0;
+        width: auto;
+        float: left; /*chuyển dọc sang ngang*/
+        line-height: 35px; /*text canh giữa*/
+        margin-right: 10px;
+        list-style: none inside;
+      }
+      .top-bar ul li a {
+        color: blanchedalmond;
+        display: block;
+        padding: 0 10px;
+        font-size: 0.8em;
+        white-space: nowrap; /*cho chữ trong menu không bị xuống dòng*/
+        text-decoration: none; /*định dạng gạch đích chữ*/
+        text-transform: uppercase; /*chuyển sang chữ in hoa*/
+      }
+      .top-bar ul li:hover a {
+        color: chartreuse;
+      }
+      /*Header option*/
+      .web-info-bar {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        padding-top: 35px;
+        line-height: 1em;
+      }
+      .web-info-bar .web-logo {
+        margin-right: 20px;
+        display: flex;
+        box-sizing: inherit;
+        -webkit-box-align: start;
+        align-items: flex-start;
+      }
+      .web-info-bar .web-info {
+        margin: 0;
+        color: #000;
+        font-weight: 400;
+        font-family: "Courier New", Courier, monospace;
+      }
+      .web-info-bar .web-info .web-title a {
+        padding: 0;
+        color: #000;
+        font-size: 1.8em;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      .web-info-bar .web-info .web-logan {
+        padding: 0;
+        font-size: 1em;
+      }
+      /*Introduct option*/
+      .background-introduct {
+        margin: 10px 0px 10px 0px;
+        display: flex;
+        height: 200px;
+        background-color: #000;
+      }
+      /*About option*/
+      .background-about {
+        margin: 10px 0px 10px 0px;
+        display: flex;
+        height: 200px;
+        background-color: #ff6600;
+      }
+      /*Product option*/
+      .background-products {
+        margin: 10px 0px 10px 0px;
+        display: flex;
+        height: 200px;
+        background-color: #000;
+      }
+      /*Contact option*/
+      .background-contact {
+        margin: 10px 0px 10px 0px;
+        display: flex;
+        height: 200px;
+        background-color: #ff6600;
+      }
+    </style>
+    <!-- end: Meta -->
+  </head>
+  <body>
+    <section class="header-site">
+      <nav class="top-bar">
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <nav class="web-info-bar">
+        <a href="#" class="web-logo">
+          <img
+            src="https://ifmsolutionsvn.com/wp-content/uploads/2019/12/LogoAI2.png"
+          />
+        </a>
+        <div class="web-info">
+          <p class="web-title"><a href="#">Web of IFM</a></p>
+          <p class="web-logan">Nơi test web</p>
+        </div>
+      </nav>
+    </section>
+    <section class="introduct-site">
+      <div class="background-introduct"></div>
+    </section>
+    <section class="about-site" id="about">
+      <div class="background-about"></div>
+    </section>
+    <section class="products-site" id="products">
+      <div class="background-products"></div>
+    </section>
+    <section class="contact-site" id="contact">
+      <div class="background-contact"></div>
+    </section>
+  </body>
+</html>
