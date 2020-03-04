@@ -7,6 +7,7 @@
     <meta name="description" content="Web Custom" />
     <meta name="author" content="Monz" />
     <meta name="keyword" content="Web" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       /*Top-bar option*/
       .top-bar {
@@ -47,41 +48,82 @@
       /*Header option*/
       .web-info-bar {
         margin: 0;
+        width: 100%;
+        height: 100%;
         display: flex;
-        align-items: center;
-        padding-top: 35px;
         line-height: 1em;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 35px 0px 10px 0px;
+        -webkit-box-align: start;
+        -webkit-box-direction: normal;
+        -webkit-box-orient: vertical;
       }
       .web-info-bar .web-logo {
         margin-right: 20px;
-        display: flex;
         box-sizing: inherit;
-        -webkit-box-align: start;
         align-items: flex-start;
+        -webkit-box-align: start;
+      }
+      .web-info-bar .web-logo img {
+        border: 0;
+        height: auto;
+        max-width: 215px;
+        box-sizing: inherit;
+        vertical-align: middle;
       }
       .web-info-bar .web-info {
-        margin: 0;
         color: #000;
+        display: block;
         font-weight: 400;
+        font-style: normal;
         font-family: "Courier New", Courier, monospace;
       }
       .web-info-bar .web-info .web-title a {
-        padding: 0;
+        width: 100%;
+        height: 100%;
         color: #000;
-        font-size: 1.8em;
+        font-size: 30px;
         font-weight: 600;
+        line-height: 1em;
         text-decoration: none;
       }
       .web-info-bar .web-info .web-logan {
         padding: 0;
-        font-size: 1em;
+        font-size: 20px;
+        line-height: 1em;
       }
       /*Introduct option*/
-      .background-introduct {
-        margin: 10px 0px 10px 0px;
+      .introduct-site {
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         display: flex;
-        height: 200px;
+        position: relative;
+        align-items: center;
+        margin: 10px 0px 10px 0px;
         background-color: #000;
+        background-image: url(https://ifmsolutionsvn.com/wp-content/uploads/2019/12/internetofthings.jpg);
+      }
+      .background-introduct {
+        width: 100%;
+        height: 100%;
+        opacity: 0.5;
+        position: absolute;
+        background-image: linear-gradient(to bottom left, #3366ff, #fff);
+      }
+      .introduct-text {
+        width: 100%;
+        color: #fff;
+        position: relative;
+        text-align: center;
+        box-sizing: border-box;
+      }
+      .introduct-text h2 {
+        font-size: 2em;
+        font-weight: 800;
+        text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
       }
       /*About option*/
       .background-about {
@@ -89,6 +131,7 @@
         display: flex;
         height: 200px;
         background-color: #ff6600;
+        background-image: url(https://ifmsolutionsvn.com/wp-content/uploads/2019/10/about-background.png);
       }
       /*Product option*/
       .background-products {
@@ -124,13 +167,21 @@
           />
         </a>
         <div class="web-info">
-          <p class="web-title"><a href="#">Web of IFM</a></p>
-          <p class="web-logan">Nơi test web</p>
+          <p class="web-title">
+            <a href="#">Công Ty TNHH Giải Pháp Công Nghệ IFM</a>
+          </p>
+          <p class="web-logan">
+            Không Ngừng Nghiên Cứu – Không Ngừng Phát Triển
+          </p>
         </div>
       </nav>
     </section>
     <section class="introduct-site">
       <div class="background-introduct"></div>
+      <div class="introduct-text">
+        <h2>Nâng Tầm Công Nghệ</h2>
+        <h2>Cùng Bạn Làm Chủ Công Nghệ</h2>
+      </div>
     </section>
     <section class="about-site" id="about">
       <div class="background-about"></div>
