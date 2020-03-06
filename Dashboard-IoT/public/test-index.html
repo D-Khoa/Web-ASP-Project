@@ -3,155 +3,16 @@
   <head>
     <!-- start: Meta -->
     <meta charset="utf-8" />
-    <title>Web Title</title>
-    <meta name="description" content="Web Custom" />
+    <title>Công Ty TNHH Giải Pháp Công Nghệ IFM</title>
+    <meta name="description" content="IFM Solutions VN" />
     <meta name="author" content="Monz" />
     <meta name="keyword" content="Web" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <style>
-      /*Top-bar option*/
-      .top-bar {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 35px;
-        display: block;
-        position: fixed;
-        z-index: 100000;
-        background-color: #777;
-      }
-      .top-bar ul {
-        margin: 0;
-        padding: 0;
-      }
-      .top-bar ul li {
-        color: blanchedalmond;
-        padding: 0;
-        width: auto;
-        float: left; /*chuyển dọc sang ngang*/
-        line-height: 35px; /*text canh giữa*/
-        margin-right: 10px;
-        list-style: none inside;
-      }
-      .top-bar ul li a {
-        color: blanchedalmond;
-        display: block;
-        padding: 0 10px;
-        font-size: 0.8em;
-        white-space: nowrap; /*cho chữ trong menu không bị xuống dòng*/
-        text-decoration: none; /*định dạng gạch đích chữ*/
-        text-transform: uppercase; /*chuyển sang chữ in hoa*/
-      }
-      .top-bar ul li:hover a {
-        color: chartreuse;
-      }
-      /*Header option*/
-      .web-info-bar {
-        margin: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        line-height: 1em;
-        align-items: flex-start;
-        flex-direction: column;
-        padding: 35px 0px 10px 0px;
-        -webkit-box-align: start;
-        -webkit-box-direction: normal;
-        -webkit-box-orient: vertical;
-      }
-      .web-info-bar .web-logo {
-        margin-right: 20px;
-        box-sizing: inherit;
-        align-items: flex-start;
-        -webkit-box-align: start;
-      }
-      .web-info-bar .web-logo img {
-        border: 0;
-        height: auto;
-        max-width: 215px;
-        box-sizing: inherit;
-        vertical-align: middle;
-      }
-      .web-info-bar .web-info {
-        color: #000;
-        display: block;
-        font-weight: 400;
-        font-style: normal;
-        font-family: "Courier New", Courier, monospace;
-      }
-      .web-info-bar .web-info .web-title a {
-        width: 100%;
-        height: 100%;
-        color: #000;
-        font-size: 30px;
-        font-weight: 600;
-        line-height: 1em;
-        text-decoration: none;
-      }
-      .web-info-bar .web-info .web-logan {
-        padding: 0;
-        font-size: 20px;
-        line-height: 1em;
-      }
-      /*Introduct option*/
-      .introduct-site {
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        position: relative;
-        align-items: center;
-        margin: 10px 0px 10px 0px;
-        background-color: #000;
-        background-image: url(https://ifmsolutionsvn.com/wp-content/uploads/2019/12/internetofthings.jpg);
-      }
-      .background-introduct {
-        width: 100%;
-        height: 100%;
-        opacity: 0.5;
-        position: absolute;
-        background-image: linear-gradient(to bottom left, #3366ff, #fff);
-      }
-      .introduct-text {
-        width: 100%;
-        color: #fff;
-        position: relative;
-        text-align: center;
-        box-sizing: border-box;
-      }
-      .introduct-text h2 {
-        font-size: 2em;
-        font-weight: 800;
-        text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
-      }
-      /*About option*/
-      .background-about {
-        margin: 10px 0px 10px 0px;
-        display: flex;
-        height: 200px;
-        background-color: #ff6600;
-        background-image: url(https://ifmsolutionsvn.com/wp-content/uploads/2019/10/about-background.png);
-      }
-      /*Product option*/
-      .background-products {
-        margin: 10px 0px 10px 0px;
-        display: flex;
-        height: 200px;
-        background-color: #000;
-      }
-      /*Contact option*/
-      .background-contact {
-        margin: 10px 0px 10px 0px;
-        display: flex;
-        height: 200px;
-        background-color: #ff6600;
-      }
-    </style>
+    <link href="css/test.css" rel="stylesheet" />
     <!-- end: Meta -->
   </head>
   <body>
-    <section class="header-site">
+    <!--<section class="header-site">
       <nav class="top-bar">
         <ul>
           <li><a href="#">Home</a></li>
@@ -191,6 +52,37 @@
     </section>
     <section class="contact-site" id="contact">
       <div class="background-contact"></div>
+    </section>-->
+    <!-- Start: MENU-->
+    <section class="top-bar">
+      <ul class="top-bar menu">
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Team</a></li>
+        <li><a href="#">Service</a></li>
+        <li><a href="#">Products</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+    </section>
+    <!-- End: MENU-->
+    <!-- Start: HEADER-->
+    <section class="header">
+      <a href="#" class="site-logo">
+        <img
+          src="https://ifmsolutionsvn.com/wp-content/uploads/2019/12/LogoAI2.png"
+        />
+      </a>
+      <a href="#" class="site-wrap">
+        <h1 class="site-title">Công Ty TNHH Giải Pháp Công Nghệ IFM</h1>
+        <h4 class="site-logan">
+          Không Ngừng Nghiên Cứu – Không Ngừng Phát Triển
+        </h4>
+      </a>
+    </section>
+    <!-- End: HEADER-->
+    <section id="review-bar">
+      <h2>Nâng Tầm Công Nghệ Việt</h2>
+      <h2>Cùng Bạn Làm Chủ Công Nghệ</h2>
     </section>
   </body>
 </html>
