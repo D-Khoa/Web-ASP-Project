@@ -64,99 +64,125 @@
     <!--<script src="js/firebase-config.js"></script>-->
   </head>
   <body>
-    <script>
-      window.addEventListener("load", function(event) {
-        CheckLogin();
-        AutoAddItems();
-      });
-    </script>
+    <section class="on-load">
+      <script>
+        window.addEventListener("load", function(event) {
+          CheckLogin();
+          AutoAddItems();
+          CheckIoTStatus();
+        });
+      </script>
+    </section>
     <!--start: Header-->
-    <div class="navbar">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a
-            class="btn btn-navbar"
-            data-toggle="collapse"
-            data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse"
-          >
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="https://ifmsolutionsvn.com/" target="_blank">
-            <img
-              src="img/logo-web.png"
-              width="230px"
-              height="80px"
-              class="brand logo-web"
-            />            
-          </a>
+    <section class="header">
+      <div class="navbar">
+        <div class="navbar-inner">
+          <div class="container-fluid">
+            <a
+              class="btn btn-navbar"
+              data-toggle="collapse"
+              data-target=".top-nav.nav-collapse,.sidebar-nav.nav-collapse"
+            >
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="https://ifmsolutionsvn.com/" target="_blank">
+              <img
+                src="img/logo-web.png"
+                width="230px"
+                height="80px"
+                class="brand logo-web"
+              />
+            </a>
             <div class="web-title">Công Ty TNHH Giải Pháp Công Nghệ IFM</div>
-            <div class="web-logan">Không Ngừng Nghiên Cứu – Không Ngừng Phát Triển</div>
-          <!-- start: User Dropdown -->
-          <div class="nav-no-collapse header-nav">
-            <ul class="nav pull-right">
-              <li class="dropdown">
-                <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-                  <i class="halflings-icon gray user"></i>
-                  <span id="user_name">Username</span>
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li class="dropdown-menu-title">
-                    <span>Account Settings</span>
-                  </li>
-                  <li>
-                    <a href="#"><i class="halflings-icon user"></i> Profile</a>
-                  </li>
-                  <li>
-                    <a href="#" onclick="Logout()"
-                      ><i class="halflings-icon off"></i> Logout</a
-                    >
-                  </li>
-                </ul>
-              </li>
-            </ul>
+            <div class="web-logan">
+              Không Ngừng Nghiên Cứu – Không Ngừng Phát Triển
+            </div>
+            <!-- start: User Dropdown -->
+            <div class="nav-no-collapse header-nav">
+              <ul class="nav pull-right">
+                <li class="dropdown">
+                  <a
+                    class="btn dropdown-toggle"
+                    data-toggle="dropdown"
+                    href="#"
+                  >
+                    <i class="halflings-icon gray user"></i>
+                    <span id="user_name">Username</span>
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu">
+                    <li class="dropdown-menu-title">
+                      <span>Account Settings</span>
+                    </li>
+                    <li>
+                      <a href="#"
+                        ><i class="halflings-icon user"></i> Profile</a
+                      >
+                    </li>
+                    <li>
+                      <a href="#" onclick="Logout()"
+                        ><i class="halflings-icon off"></i> Logout</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </div>
+            <!-- end: User Dropdown -->
           </div>
-          <!-- end: User Dropdown -->
         </div>
       </div>
-    </div>
+    </section>
     <!--end: Header-->
     <!-- start: Container Body -->
     <div class="container-fluid-full">
       <div class="row-fluid">
         <!-- start: Main Menu -->
-        <div id="sidebar-left" class="span2">
-          <div class="nav-collapse sidebar-nav">
-            <ul class="nav nav-tabs nav-stacked main-menu">
-              <li>
-                <a href="#" onclick="LoginData('index.html')" id="index_menu"
-                  ><i class="icon-bar-chart"></i
-                  ><span class="hidden-tablet"> Dashboard</span></a
-                >
-              </li>
-              <li>
-                <a href="#" onclick="LoginData('devices.html')" class="mod-user" id="device_menu"
-                  ><i class="icon-tasks"></i
-                  ><span class="hidden-tablet"> Devices</span></a
-                >
-              </li>
-              <li>
-                <a href="#" onclick="LoginData('members.html')" class="mod-user" id="member_menu"
-                  ><i class="icon-group"></i
-                  ><span class="hidden-tablet"> Members</span></a
-                >
-              </li>
-              <li>
-                <a href="#" onclick="Logout()"
-                  ><i class="icon-lock"></i
-                  ><span class="hidden-tablet"> Login Page</span></a
-                >
-              </li>
-            </ul>
+        <section class="main-menu">
+          <div id="sidebar-left" class="span2">
+            <div class="nav-collapse sidebar-nav">
+              <ul class="nav nav-tabs nav-stacked main-menu">
+                <li>
+                  <!--onclick="LoginData('index.html')"-->
+                  <a href="#" id="index_menu" onclick="CheckMenu('#dashboard')"
+                    ><i class="icon-bar-chart"></i
+                    ><span class="hidden-tablet"> Dashboard</span></a
+                  >
+                </li>
+                <li>
+                  <!--onclick="LoginData('devices.html')"-->
+                  <a
+                    href="#"
+                    class="mod-user"
+                    id="device_menu"
+                    onclick="CheckMenu('#devices')"
+                    ><i class="icon-tasks"></i
+                    ><span class="hidden-tablet"> Devices</span></a
+                  >
+                </li>
+                <li>
+                  <!--onclick="LoginData('members.html')"-->
+                  <a
+                    href="#"
+                    class="mod-user"
+                    id="member_menu"
+                    onclick="CheckMenu('#members')"
+                    ><i class="icon-group"></i
+                    ><span class="hidden-tablet"> Members</span></a
+                  >
+                </li>
+                <li>
+                  <a href="#" onclick="Logout()"
+                    ><i class="icon-lock"></i
+                    ><span class="hidden-tablet"> Login Page</span></a
+                  >
+                </li>
+              </ul>
+            </div>
           </div>
-        </div>
+        </section>
         <!-- end: Main Menu -->
         <!-- start: alert javascript -->
         <noscript>
@@ -173,118 +199,364 @@
         </noscript>
         <!-- end: alert javascript -->
         <!-- start: Content -->
-        <div id="content" class="span10">
-          <!-- start: custom actutors -->
-          <div class="box span6">
-            <div class="box-header">
-              <h2>
-                <i class="halflings-icon white list"></i>
-                <span class="break"></span>Actutors
-              </h2>
-              <div class="box-icon">
-                <a href="#" class="btn-minimize"
-                  ><i class="halflings-icon white chevron-up"></i
-                ></a>
-                <a href="#" class="btn-close"
-                  ><i class="halflings-icon white remove"></i
-                ></a>
-              </div>
+        <div id="content" class="span10" style="min-height: 356px;">
+          <!-- start: IoT Board status-->
+          <section id="iot_board_status">
+            <div class="row-fluid">
+              <ul class="breadcrumb">
+                <li id="iot_board">
+                  <i class="icon-signal"></i>
+                  <span id="iot_stt">IoT Board</span>
+                </li>
+              </ul>
             </div>
-            <div class="box-content">
-              <div class="controls">
-                <label class="control-label" for="actutor_id">ID:</label>
-                <input
-                  class="input-xlarge focused"
-                  id="actutor_id"
-                  type="text"
-                  placeholder="Type actutor id..."
-                />
-                <button
-                  class="btn btn-large btn-primary"
-                  id="btnAddActutor"
-                  onclick="AddActutorBtn(document.querySelector('#actutor_id').value)"
-                >
-                  Add Actutor
-                </button>
+          </section>
+          <!-- start: IoT Board status-->
+          <section id="dashboard">
+            <!-- start: actutors & sensors management-->
+            <section id="actutors_sensors_management">
+              <div class="row-fluid">
+                <!-- start: custom actutors -->
+                <div class="box span6">
+                  <div class="box-header">
+                    <h2>
+                      <i class="halflings-icon white list"></i>
+                      <span class="break"></span>Actutors
+                    </h2>
+                    <div class="box-icon">
+                      <a href="#" class="btn-minimize"
+                        ><i class="halflings-icon white chevron-up"></i
+                      ></a>
+                      <a href="#" class="btn-close"
+                        ><i class="halflings-icon white remove"></i
+                      ></a>
+                    </div>
+                  </div>
+                  <div class="box-content">
+                    <div class="controls">
+                      <label class="control-label" for="actutor_id">ID:</label>
+                      <input
+                        class="input-xlarge focused"
+                        id="actutor_id"
+                        type="text"
+                        placeholder="Type actutor id..."
+                      />
+                      <button
+                        class="btn btn-block btn-primary"
+                        id="btnAddActutor"
+                        onclick="AddActutorBtn(document.querySelector('#actutor_id').value)"
+                      >
+                        Add Actutor
+                      </button>
+                      <button
+                        class="mod-user btn btn-block btn-primary"
+                        id="btnRemoveActutor"
+                        onclick="RemoveActutorButton(document.querySelector('#actutor_id').value)"
+                      >
+                        Remove Actutor
+                      </button>
+                    </div>
+                    <div id="actutor_bar">
+                      <label class="control-label">Actutors:</label>
+                    </div>
+                  </div>
+                </div>
+                <!-- end: custom actutors -->
+                <!-- start: custom sensors -->
+                <div class="box span6">
+                  <div class="box-header">
+                    <h2>
+                      <i class="halflings-icon white list"></i>
+                      <span class="break"></span>Sensors
+                    </h2>
+                    <div class="box-icon">
+                      <a href="#" class="btn-minimize"
+                        ><i class="halflings-icon white chevron-up"></i
+                      ></a>
+                      <a href="#" class="btn-close"
+                        ><i class="halflings-icon white remove"></i
+                      ></a>
+                    </div>
+                  </div>
+                  <div class="box-content">
+                    <div class="controls">
+                      <label class="control-label" for="sensor_id">ID:</label>
+                      <input
+                        class="input-xlarge focused"
+                        id="sensor_id"
+                        type="text"
+                        placeholder="Type sensor id..."
+                      />
+                      <button
+                        class="btn btn-block btn-primary"
+                        id="btnAddSensor"
+                        onclick="AddSensorLabel(document.querySelector('#sensor_id').value)"
+                      >
+                        Add Sensor
+                      </button>
+                      <button
+                        class="mod-user btn btn-block btn-primary"
+                        id="btnRemoveSensor"
+                        onclick="RemoveSensorLabel(document.querySelector('#sensor_id').value)"
+                      >
+                        Remove Sensor
+                      </button>
+                    </div>
+                    <div id="sensor_bar">
+                      <label class="control-label"
+                        >Sensors: click on sensor for get detail</label
+                      >
+                    </div>
+                  </div>
+                </div>
+                <!-- end: custom sensors -->
               </div>
-              <div id="actutor_bar">
-                <label class="control-label">Actutors:</label>
-              </div>
-            </div>
-          </div>
-          <!-- end: custom actutors -->
-          <!-- start: custom sensors -->
-          <div class="box span6">
-            <div class="box-header">
-              <h2>
-                <i class="halflings-icon white list"></i>
-                <span class="break"></span>Sensors
-              </h2>
-              <div class="box-icon">
-                <a href="#" class="btn-minimize"
-                  ><i class="halflings-icon white chevron-up"></i
-                ></a>
-                <a href="#" class="btn-close"
-                  ><i class="halflings-icon white remove"></i
-                ></a>
-              </div>
-            </div>
-            <div class="box-content">
-              <div class="controls">
-                <label class="control-label" for="sensor_id">ID:</label>
-                <input
-                  class="input-xlarge focused"
-                  id="sensor_id"
-                  type="text"
-                  placeholder="Type sensor id..."
-                />
-                <input
-                  type="button"
-                  class="btn btn-large btn-primary"
-                  id="btnAddSensor"
-                  value="Add Sensor"
-                  onclick="AddSensorLabel(document.querySelector('#sensor_id').value)"
-                />
-              </div>
-              <div id="sensor_bar">
-                <label class="control-label">Sensors: click on sensor for get detail</label>
-              </div>
-            </div>
-          </div>
-          <!-- end: custom sensors -->
-          <!-- start: realtime chart -->
-          <div class="row-fluid sortable">
-            <div class="box span12" id="chartbox">
-              <div class="box-header">
-                <h2>
-                  <i class="halflings-icon white list"></i
-                  ><span class="break"></span><h2 id="realtimebox">Sensor Data</h2>
-                </h2>
-                <div class="box-icon">
-                  <a href="#" class="btn-minimize"
-                    ><i class="halflings-icon white chevron-up"></i
-                  ></a>
-                  <a href="#" class="btn-close"
-                    ><i class="halflings-icon white remove"></i
-                  ></a>
+            </section>
+            <!-- end: actutors & sensors management-->
+            <!-- start: timer and schedule -->
+            <!--<section id="timer_tools">
+              <div class="row-fluid">
+                <div class="box span6">
+                  <div class="box-header">
+                    <h2>
+                      <i class="halflings-icon white list"></i>
+                      <span class="break"></span>Timer
+                    </h2>
+                    <div class="box-icon">
+                      <a href="#" class="btn-minimize"
+                        ><i class="halflings-icon white chevron-up"></i
+                      ></a>
+                      <a href="#" class="btn-close"
+                        ><i class="halflings-icon white remove"></i
+                      ></a>
+                    </div>
+                  </div>
+                  <div class="box-content">
+                    <div class="controls">
+                      <label class="control-label" for="timer_actutor_id">Actutor ID:</label>
+                      <input
+                        class="input-xlarge focused"
+                        id="timer_actutor_id"
+                        type="text"
+                        placeholder="Type actutor id..."
+                      />
+                      <label class="control-label" for="time_set">Time:</label>
+                      <input
+                        class="input-small focused"
+                        id="time_set_h"
+                        type="text"
+                        placeholder="Type hours..."
+                      />
+                      <input
+                        class="input-small focused"
+                        id="time_set_m"
+                        type="text"
+                        placeholder="Type minute..."
+                      />
+                      <button
+                        class="btn btn-block btn-primary"
+                        id="btnAddTimer"
+                        onclick="AddTimerButton(document.querySelector('#timer_id').value)"
+                      >
+                        Add Timer
+                      </button>
+                      <button
+                        class="mod-user btn btn-block btn-primary"
+                        id="btnRemoveTimer"
+                        onclick="RemoveTimerButton(document.querySelector('#timer_id').value)"
+                      >
+                        Remove Timer
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div class="box-content">                
-                <p>
-                  Time between updates:
-                  <input
-                    id="updateInterval"
-                    type="text"
-                    value=""
-                    style="text-align: right; width:5em"
-                  />
-                  milliseconds
-				</p>
-				<div id="realtimechart" style="height:190px;"></div>
+            </section>-->
+            <!-- end: timer and schedule -->
+            <!-- start: realtime chart -->
+            <section id="sensor_realtime_chart">
+              <div class="row-fluid sortable">
+                <div class="box span12" id="chartbox">
+                  <div class="box-header">
+                    <h2>
+                      <i class="halflings-icon white list"></i
+                      ><span class="break"></span>
+                      <h2 id="realtimebox">Sensor Data</h2>
+                    </h2>
+                    <div class="box-icon">
+                      <a href="#" class="btn-minimize"
+                        ><i class="halflings-icon white chevron-up"></i
+                      ></a>
+                      <a href="#" class="btn-close"
+                        ><i class="halflings-icon white remove"></i
+                      ></a>
+                    </div>
+                  </div>
+                  <div class="box-content">
+                    <p>
+                      Time between updates:
+                      <input
+                        id="updateInterval"
+                        type="text"
+                        value=""
+                        style="text-align: right; width:5em"
+                      />
+                      milliseconds
+                    </p>
+                    <div id="realtimechart" style="height:190px;"></div>
+                  </div>
+                </div>
+              </div>
+            </section>
+            <!-- end: realtime chart -->
+          </section>
+          <section id="devices" style="display: none;">
+            <!-- start: add new actutors & sensors -->
+            <div class="row-fluid">
+              <!-- start: custom actutors -->
+              <div class="box span6">
+                <div class="box-header">
+                  <h2>
+                    <i class="halflings-icon white list"></i>
+                    <span class="break"></span>Actutors
+                  </h2>
+                  <div class="box-icon">
+                    <a href="#" class="btn-minimize"
+                      ><i class="halflings-icon white chevron-up"></i
+                    ></a>
+                    <a href="#" class="btn-close"
+                      ><i class="halflings-icon white remove"></i
+                    ></a>
+                  </div>
+                </div>
+                <div class="box-content">
+                  <div class="controls">
+                    <label class="control-label" for="newactutor_id">ID:</label>
+                    <input
+                      class="input-xlarge focused"
+                      id="newactutor_id"
+                      type="text"
+                      placeholder="Type actutor id..."
+                    />
+                    <label class="control-label" for="newactutor_name"
+                      >Name:</label
+                    >
+                    <input
+                      class="input-xlarge focused"
+                      id="newactutor_name"
+                      type="text"
+                      placeholder="Type actutor name..."
+                    />
+                    <button
+                      class="btn btn-large btn-primary"
+                      id="btnAddNewActutor"
+                      onclick="AddNewActutor()"
+                    >
+                      Add Actutor
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- end: custom actutors -->
+              <!-- start: custom sensors -->
+              <div class="box span6">
+                <div class="box-header">
+                  <h2>
+                    <i class="halflings-icon white list"></i>
+                    <span class="break"></span>Sensors
+                  </h2>
+                  <div class="box-icon">
+                    <a href="#" class="btn-minimize"
+                      ><i class="halflings-icon white chevron-up"></i
+                    ></a>
+                    <a href="#" class="btn-close"
+                      ><i class="halflings-icon white remove"></i
+                    ></a>
+                  </div>
+                </div>
+                <div class="box-content">
+                  <div class="controls">
+                    <label class="control-label" for="newsensor_id">ID:</label>
+                    <input
+                      class="input-xlarge focused"
+                      id="newsensor_id"
+                      type="text"
+                      placeholder="Type sensor id..."
+                    />
+                    <label class="control-label" for="newsensor_name"
+                      >Name:</label
+                    >
+                    <input
+                      class="input-xlarge focused"
+                      id="newsensor_name"
+                      type="text"
+                      placeholder="Type sensor name..."
+                    />
+                    <input
+                      type="button"
+                      class="btn btn-large btn-primary"
+                      id="btnAddNewSensor"
+                      value="Add Sensor"
+                      onclick="AddNewSensor()"
+                    />
+                  </div>
+                </div>
+              </div>
+              <!-- end: custom sensors -->
+            </div>
+            <!-- end: add new actutors & sensors -->
+          </section>
+          <section id="members" style="display: none;">
+            <!-- start: members -->
+            <div class="row-fluid">
+              <div class="box span6">
+                <div class="box-header">
+                  <h2>
+                    <i class="halflings-icon white list"></i>
+                    <span class="break"></span>Members
+                  </h2>
+                  <div class="box-icon">
+                    <a href="#" class="btn-minimize"
+                      ><i class="halflings-icon white chevron-up"></i
+                    ></a>
+                    <a href="#" class="btn-close"
+                      ><i class="halflings-icon white remove"></i
+                    ></a>
+                  </div>
+                </div>
+                <div class="box-content">
+                  <div class="controls">
+                    <label class="control-label" for="member_name"
+                      >Username:</label
+                    >
+                    <input
+                      class="input-xlarge focused"
+                      id="member_name"
+                      type="text"
+                      placeholder="Type member name..."
+                    />
+                    <label class="control-label" for="member_password"
+                      >Password:</label
+                    >
+                    <input
+                      class="input-xlarge focused"
+                      id="member_password"
+                      type="text"
+                      placeholder="Type member password..."
+                    />
+                    <button
+                      class="btn btn-large btn-primary"
+                      id="btnAddNewMember"
+                      onclick="AddNewMember()"
+                    >
+                      Add Member
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-          <!-- end: realtime chart -->
+            <!-- end: members -->
+          </section>
         </div>
         <!-- end: Content -->
       </div>
@@ -292,51 +564,56 @@
     <!-- end: Container Body -->
     <div class="clearfix"></div>
     <!--Footer-->
-    <footer>
-      <p>
-        <span style="text-align:left;float:left"
-          >&copy; 2013
-          <a
-            href="http://themifycloud.com/downloads/janux-free-responsive-admin-dashboard-template/"
-            alt="Bootstrap_Metro_Dashboard"
-            >JANUX Responsive Dashboard</a
-          ></span
-        >
-      </p>
-    </footer>
+    <section class="footer">
+      <footer>
+        <p>
+          <span style="text-align:left;float:left"
+            >&copy; 2013
+            <a
+              href="http://themifycloud.com/downloads/janux-free-responsive-admin-dashboard-template/"
+              alt="Bootstrap_Metro_Dashboard"
+              >JANUX Responsive Dashboard</a
+            ></span
+          >
+        </p>
+      </footer>
+    </section>
     <!-- start: JavaScript-->
-    <script src="js/global.js"></script>
-    <script src="js/device_realtime.js"></script>
-    <script src="js/jquery-1.9.1.min.js"></script>
-    <script src="js/jquery-migrate-1.0.0.min.js"></script>
-    <script src="js/jquery-ui-1.10.0.custom.min.js"></script>
-    <script src="js/jquery.ui.touch-punch.js"></script>
-    <script src="js/modernizr.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.cookie.js"></script>
-    <script src="js/fullcalendar.min.js"></script>
-    <script src="js/jquery.dataTables.min.js"></script>
-    <script src="js/excanvas.js"></script>
-    <script src="js/jquery.flot.js"></script>
-    <script src="js/jquery.flot.pie.js"></script>
-    <script src="js/jquery.flot.stack.js"></script>
-    <script src="js/jquery.flot.resize.min.js"></script>
-    <script src="js/jquery.chosen.min.js"></script>
-    <script src="js/jquery.uniform.min.js"></script>
-    <script src="js/jquery.cleditor.min.js"></script>
-    <script src="js/jquery.noty.js"></script>
-    <script src="js/jquery.elfinder.min.js"></script>
-    <script src="js/jquery.raty.min.js"></script>
-    <script src="js/jquery.iphone.toggle.js"></script>
-    <script src="js/jquery.uploadify-3.1.min.js"></script>
-    <script src="js/jquery.gritter.min.js"></script>
-    <script src="js/jquery.imagesloaded.js"></script>
-    <script src="js/jquery.masonry.min.js"></script>
-    <script src="js/jquery.knob.modified.js"></script>
-    <script src="js/jquery.sparkline.min.js"></script>
-    <script src="js/counter.js"></script>
-    <script src="js/retina.js"></script>
-    <script src="js/custom.js"></script>
+    <section class="javascript">
+      <script src="js/global.js"></script>
+      <script src="js/login.js"></script>
+      <script src="js/device_realtime.js"></script>
+      <script src="js/jquery-1.9.1.min.js"></script>
+      <script src="js/jquery-migrate-1.0.0.min.js"></script>
+      <script src="js/jquery-ui-1.10.0.custom.min.js"></script>
+      <script src="js/jquery.ui.touch-punch.js"></script>
+      <script src="js/modernizr.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/jquery.cookie.js"></script>
+      <script src="js/fullcalendar.min.js"></script>
+      <script src="js/jquery.dataTables.min.js"></script>
+      <script src="js/excanvas.js"></script>
+      <script src="js/jquery.flot.js"></script>
+      <script src="js/jquery.flot.pie.js"></script>
+      <script src="js/jquery.flot.stack.js"></script>
+      <script src="js/jquery.flot.resize.min.js"></script>
+      <script src="js/jquery.chosen.min.js"></script>
+      <script src="js/jquery.uniform.min.js"></script>
+      <script src="js/jquery.cleditor.min.js"></script>
+      <script src="js/jquery.noty.js"></script>
+      <script src="js/jquery.elfinder.min.js"></script>
+      <script src="js/jquery.raty.min.js"></script>
+      <script src="js/jquery.iphone.toggle.js"></script>
+      <script src="js/jquery.uploadify-3.1.min.js"></script>
+      <script src="js/jquery.gritter.min.js"></script>
+      <script src="js/jquery.imagesloaded.js"></script>
+      <script src="js/jquery.masonry.min.js"></script>
+      <script src="js/jquery.knob.modified.js"></script>
+      <script src="js/jquery.sparkline.min.js"></script>
+      <script src="js/counter.js"></script>
+      <script src="js/retina.js"></script>
+      <script src="js/custom.js"></script>
+    </section>
     <!-- end: JavaScript-->
   </body>
 </html>

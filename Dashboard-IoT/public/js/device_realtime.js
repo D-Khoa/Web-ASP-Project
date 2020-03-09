@@ -1,8 +1,33 @@
+function CheckIoTStatus() {
+  const iotboard = document.getElementById("iot_board");
+  const iotstt = document.getElementById("iot_stt");
+  const userRef = dbRef.ref("mods/" + userID);
+  userRef.on('value', function (snapshot) {
+    var stt = snapshot.val().status
+    if (stt) {
+      iotboard.style.backgroundColor = "#009f75";
+      iotboard.style.color = "#fff";
+      iotboard.style.textShadow = "none";
+      iotboard.style.padding = "10px";
+      iotstt.style.textShadow = "none";
+      iotstt.innerText = "IoT Board - Online";
+    }
+    else {
+      iotboard.style.backgroundColor = "#ef4444";
+      iotboard.style.color = "#000";
+      iotboard.style.textShadow = "none";
+      iotboard.style.padding = "10px";
+      iotstt.style.textShadow = "none";
+      iotstt.innerText = "IoT Board - Offline";
+    }
+  });
+}
+
 //Add new actutor for current user
 function AddNewActutor() {
   //Get id and name of actutor
-  const actId = document.querySelector("#actutor_id").value;
-  const actname = document.querySelector("#actutor_name").value;
+  const actId = document.querySelector("#newactutor_id").value;
+  const actname = document.querySelector("#newactutor_name").value;
   //Address of actutor
   const userRef = dbRef.ref("mods/" + userID + "/actutors/" + actId);
   //Create actutor
@@ -22,8 +47,8 @@ function AddNewActutor() {
 //Add new sensor for current user
 function AddNewSensor() {
   //Get id and name of sensor
-  const senID = document.querySelector("#sensor_id").value;
-  const senName = document.querySelector("#sensor_name").value;
+  const senID = document.querySelector("#newsensor_id").value;
+  const senName = document.querySelector("#newsensor_name").value;
   //Address of sensor
   const userRef = dbRef.ref("mods/" + userID + "/sensors/" + senID);
   //Create sensor
@@ -109,6 +134,29 @@ function AddActutorBtn(actId) {
   });
 }
 
+//Remove actutor button
+function RemoveActutorButton(actId) {
+  const actbtn = document.getElementById(actId);
+  if (actbtn != null) actbtn.parentNode.removeChild(actbtn);
+  userRef.once("value").then(function (snapshot) {
+    if (snapshot.exists()) {
+      itemArray = snapshot.val().btnactutors;
+      if (itemArray.includes(actId)) {
+        itemArray = itemArray.replace(',' + actId, '');
+        userRef.update({
+          btnactutors: itemArray
+        }).then(function () {
+          console.log("Removed: ", actId);
+        }).catch(function (error) {
+          console.log("Got an error: ", error);
+        });
+      }
+    }
+  }).catch(function (error) {
+    console.log("Got an error: ", error);
+  });
+}
+
 //Set sensor data = 0
 var sensordata = 0;
 //Set chart array data = 0
@@ -169,6 +217,31 @@ function AddSensorLabel(sensorID) {
     sensordata = 0;
     //Draw new chart
     charts();
+  });
+}
+
+//Remove sensor label
+function RemoveSensorLabel(sensorID) {
+  const userRef = dbRef.ref("mods/" + userID);
+  const sensorlb = document.getElementById(sensorID);
+  var itemArray = null;
+  if (sensorlb != null) sensorlb.parentNode.removeChild(sensorlb);
+  userRef.once("value").then(function (snapshot) {
+    if (snapshot.exists()) {
+      itemArray = snapshot.val().btnsensors;
+      if (itemArray.includes(sensorID)) {
+        itemArray = itemArray.replace(',' + sensorID, '');
+        userRef.update({
+          btnsensors: itemArray
+        }).then(function () {
+          console.log("Removed: ", sensorID);
+        }).catch(function (error) {
+          console.log("Got an error: ", error);
+        });
+      }
+    }
+  }).catch(function (error) {
+    console.log("Got an error: ", error);
   });
 }
 
@@ -258,4 +331,12 @@ function AutoAddItems() {
     .catch(function (error) {
       console.log("Got an error: ", error);
     });
+}
+
+function AddTimerButton(timerID) {
+
+}
+
+function RemoveTimerButton(timerID) {
+
 }

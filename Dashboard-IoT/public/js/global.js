@@ -2,6 +2,7 @@
 const authRef = firebase.auth();
 const dbRef = firebase.database();
 const docRef = firebase.firestore();
+const dbURL = "https://web-api-33bdf.firebaseio.com/";
 //Default username
 var display_current_user = "User Name";
 //User id
@@ -55,20 +56,49 @@ function CheckLogin() {
       allModElement[i].style.display = "none";
     }
   }
-  var pageName = location.pathname.split("/").pop();
+  /*var pageName = location.pathname.split("/").pop();
   switch (pageName) {
-    case "index.html":
+    case "dashboard":
       document.querySelector("#index_menu").style.background = "#578EBE";
       break;
-    case "devices.html":
+    case "devices":
       document.querySelector("#device_menu").style.background = "#578EBE";
       break;
-    case "members.html":
+    case "members":
       document.querySelector("#member_menu").style.background = "#578EBE";
+      break;
+  }*/
+}
+
+function CheckMenu(sectionID) {
+  window.location.href = sectionID;
+  const dashboard = document.getElementById("dashboard");
+  const devices = document.getElementById("devices");
+  const members = document.getElementById("members");
+  const dashboardmenu = document.getElementById("index_menu");
+  const devicesmenu = document.getElementById("device_menu");
+  const membersmenu = document.getElementById("member_menu");
+  dashboard.style.display = "none";
+  devices.style.display = "none";
+  members.style.display = "none";
+  dashboardmenu.style.background = "#1C2B36";
+  devicesmenu.style.background = "#1C2B36";
+  membersmenu.style.background = "#1C2B36";
+  switch (sectionID) {
+    case "#dashboard":
+      dashboardmenu.style.background = "#578EBE";
+      dashboard.style.display = "block";
+      break;
+    case "#devices":
+      devicesmenu.style.background = "#578EBE";
+      devices.style.display = "block";
+      break;
+    case "#members":
+      membersmenu.style.background = "#578EBE";
+      members.style.display = "block";
       break;
   }
 }
-
 //Send user info when change page
 function LoginData(url) {
   var queryString = "?para1=" + display_current_user + "&para2=" + userID + "&para3=" + isMod;

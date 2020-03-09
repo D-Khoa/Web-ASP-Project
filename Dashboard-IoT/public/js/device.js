@@ -174,4 +174,4 @@ function AddNewSensor(){
 		}).catch(function(error){
 		console.log("Got an error: ", error);
 	});
-}			
+}
