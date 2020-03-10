@@ -200,23 +200,75 @@
         <!-- end: alert javascript -->
         <!-- start: Content -->
         <div id="content" class="span10" style="min-height: 356px;">
-          <!-- start: IoT Board status-->
-          <section id="iot_board_status">
-            <div class="row-fluid">
-              <ul class="breadcrumb">
-                <li id="iot_board">
-                  <i class="icon-signal"></i>
-                  <span id="iot_stt">IoT Board</span>
-                </li>
-              </ul>
-            </div>
-          </section>
-          <!-- start: IoT Board status-->
           <section id="dashboard">
+            <!-- start: IoT Board status-->
+            <section id="iot_board_status">
+              <div class="nav-no-collapse row-fluid">
+                <ul class="nav breadcrumb">
+                  <!-- start: status -->
+                  <li id="iot_board">
+                    <i class="icon-signal"></i>
+                    <span id="iot_stt">IoT Board</span>
+                  </li>
+                  <!-- end: status -->
+                  <!-- start: add tools elements -->
+                  <li class="btn dropdown hidden-phone" id="add_tool">
+                    <i class="icon-plus"></i> Add Tools
+                    <ul class="dropdown-menu">
+                      <li onclick="AddActutorBtn()">
+                        <a href="#">
+                          <i class="icon-off"></i>
+                          <span> Add actutor</span>
+                        </a>
+                      </li>
+                      <li onclick="AddSensorLabel()">
+                        <a href="#">
+                          <i class="icon-bell"></i>
+                          <span> Add sensor</span>
+                        </a>
+                      </li>
+                      <li onclick="AddTimerButton()">
+                        <a href="#">
+                          <i class="icon-time"></i>
+                          <span> Add timer</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <!-- end: add tools elements -->
+                  <!-- start: remove tools elements-->
+                  <li class="btn dropdown hidden-phone" id="remove_tools">
+                    <i class="icon-minus"></i> Remove Tools
+                    <ul class="dropdown-menu">
+                      <li onclick="RemoveActutorButton()">
+                        <a href="#">
+                          <i class="icon-off"></i>
+                          <span> Remove actutor</span>
+                        </a>
+                      </li>
+                      <li onclick="RemoveSensorLabel()">
+                        <a href="#">
+                          <i class="icon-bell"></i>
+                          <span> Remove sensor</span>
+                        </a>
+                      </li>
+                      <li onclick="RemoveTimerButton()">
+                        <a href="#">
+                          <i class="icon-time"></i>
+                          <span> Remove timer</span>
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                  <!-- end: remove tools elements-->
+                </ul>
+              </div>
+            </section>
+            <!-- end: IoT Board status-->
             <!-- start: actutors & sensors management-->
             <section id="actutors_sensors_management">
               <div class="row-fluid">
-                <!-- start: custom actutors -->
+                <!-- start: custom actutors --
                 <div class="box span6">
                   <div class="box-header">
                     <h2>
@@ -244,7 +296,7 @@
                       <button
                         class="btn btn-block btn-primary"
                         id="btnAddActutor"
-                        onclick="AddActutorBtn(document.querySelector('#actutor_id').value)"
+                        onclick="AddActutorBtn()"
                       >
                         Add Actutor
                       </button>
@@ -261,8 +313,8 @@
                     </div>
                   </div>
                 </div>
-                <!-- end: custom actutors -->
-                <!-- start: custom sensors -->
+                <-- end: custom actutors -->
+                <!-- start: custom sensors --
                 <div class="box span6">
                   <div class="box-header">
                     <h2>
@@ -309,12 +361,12 @@
                     </div>
                   </div>
                 </div>
-                <!-- end: custom sensors -->
+                <-- end: custom sensors --
               </div>
             </section>
-            <!-- end: actutors & sensors management-->
-            <!-- start: timer and schedule -->
-            <!--<section id="timer_tools">
+            <-- end: actutors & sensors management-->
+                <!-- start: timer and schedule --
+            <section id="timer_tools">
               <div class="row-fluid">
                 <div class="box span6">
                   <div class="box-header">
@@ -333,7 +385,9 @@
                   </div>
                   <div class="box-content">
                     <div class="controls">
-                      <label class="control-label" for="timer_actutor_id">Actutor ID:</label>
+                      <label class="control-label" for="timer_actutor_id"
+                        >Actutor ID:</label
+                      >
                       <input
                         class="input-xlarge focused"
                         id="timer_actutor_id"
@@ -369,9 +423,38 @@
                       </button>
                     </div>
                   </div>
+                </div>-->
+                <div class="box span12">
+                  <div class="box-header">
+                    <h2>
+                      <i class="halflings-icon white list"></i>
+                      <span class="break"></span>Control Board
+                    </h2>
+                    <div class="box-icon">
+                      <a href="#" class="btn-minimize"
+                        ><i class="halflings-icon white chevron-up"></i
+                      ></a>
+                      <a href="#" class="btn-close"
+                        ><i class="halflings-icon white remove"></i
+                      ></a>
+                    </div>
+                  </div>
+                  <div class="box-content">
+                    <div class="controls">
+                      <div id="actutor_bar">
+                        <label class="control-label">Actutors:</label>
+                      </div>
+                      <div id="sensor_bar">
+                        <label class="control-label">Sensors:</label>
+                      </div>
+                      <div id="timer_bar">
+                        <label class="control-label">Timers:</label>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </section>-->
+            </section>
             <!-- end: timer and schedule -->
             <!-- start: realtime chart -->
             <section id="sensor_realtime_chart">

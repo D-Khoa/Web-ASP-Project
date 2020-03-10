@@ -68,8 +68,11 @@ function AddNewSensor() {
 
 //Add actutors buttons into index.html page with actutor id
 function AddActutorBtn(actId) {
+  if (actId == null) {
+    actId = prompt("Input actutor ID:");
+  }
   //If actutor empty then skip
-  if (actId === "") return;
+  if (actId === null || actId === "") return;
   //If actutor buttons is exists in index.html page then alert
   if (document.getElementById(actId)) {
     window.alert("Actutor:" + actId + " is exists");
@@ -136,6 +139,10 @@ function AddActutorBtn(actId) {
 
 //Remove actutor button
 function RemoveActutorButton(actId) {
+  if (actId == null) {
+    actId = prompt("Input actutor ID:");
+  }
+  if (actId === null || actId === "") return;
   const actbtn = document.getElementById(actId);
   if (actbtn != null) actbtn.parentNode.removeChild(actbtn);
   userRef.once("value").then(function (snapshot) {
@@ -165,8 +172,11 @@ var data = [],
 var tempID;
 //Add label sensor with sensor id
 function AddSensorLabel(sensorID) {
+  if (sensorID == null) {
+    sensorID = prompt("Input sensor ID:");
+  }
   //If sensor id empty then skip
-  if (sensorID === "") return;
+  if (sensorID === null | sensorID === "") return;
   //If label sensor is exist then alert
   if (document.getElementById(sensorID)) {
     window.alert("Sensor:" + sensorID + " is exists");
@@ -222,6 +232,11 @@ function AddSensorLabel(sensorID) {
 
 //Remove sensor label
 function RemoveSensorLabel(sensorID) {
+  if (sensorID == null) {
+    sensorID = prompt("Input sensor ID:");
+  }
+  //If sensor id empty then skip
+  if (sensorID === null | sensorID === "") return;
   const userRef = dbRef.ref("mods/" + userID);
   const sensorlb = document.getElementById(sensorID);
   var itemArray = null;
@@ -333,7 +348,7 @@ function AutoAddItems() {
     });
 }
 
-function AddTimerButton(timerID) {
+function AddTimerButton(timerID, timeSet) {
 
 }
 
