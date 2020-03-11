@@ -88,8 +88,6 @@ function AddActutorBtn(actId) {
   element.id = actId;
   //Add actutor button into parent
   actField.appendChild(element);
-  //Update list button actutors
-  UpdateUserActutor(actId);
   userRef
     .once("value")
     .then(function (snapshot) {
@@ -100,6 +98,8 @@ function AddActutorBtn(actId) {
         if (snapshot.val().state)
           element.className = "btn btn-large btn-success btn-actutor";
         else element.className = "btn btn-large btn-inverse btn-actutor";
+        //Update list button actutors
+        UpdateUserActutor(actId);
       } else {
         window.alert("This actutor is not exists!");
         element.parentNode.removeChild(element);
@@ -193,8 +193,6 @@ function AddSensorLabel(sensorID) {
   element.style.cursor = "pointer";
   //Add label sensor into parent
   sensorField.appendChild(element);
-  //Update list sensor of user
-  UpdateUserSensor(sensorID);
   //Get info of sensor
   userRef.on("value", function (snapshot) {
     if (snapshot.exists()) {
@@ -203,9 +201,12 @@ function AddSensorLabel(sensorID) {
       if (snapshot.val().state)
         element.className = "label label-success label-sensor";
       else element.className = "label label-sensor";
+      //Update list sensor of user
+      UpdateUserSensor(sensorID);
     } else {
       window.alert("This sensor is not exists!");
       element.parentNode.removeChild(element);
+      return;
     }
   });
   var btnClick = false;
@@ -336,8 +337,10 @@ function AutoAddItems() {
       if (snapshot.exists()) {
         arrayActID = snapshot.val().btnactutors.split(",");
         arraySenID = snapshot.val().btnsensors.split(",");
+        arrayTimerID = snapshot.val().btntimers.split(",");
         arrayActID.forEach(element => AddActutorBtn(element));
         arraySenID.forEach(element => AddSensorLabel(element));
+        arrayTimerID.forEach(element => AddTimerButton(element));
       } else {
         // No user is signed in.
         window.location.href = "login.html";
@@ -347,11 +350,102 @@ function AutoAddItems() {
       console.log("Got an error: ", error);
     });
 }
+function AddTimerButton(timerID) {
+  if (timerID == null || timerID == "") return;
+  const timerRef = dbRef.ref("mods/" + userID + "/timers/" + timerID);
+  const timerbar = document.querySelector("#timer_bar");
+  var element = document.createElement("p");
+  timerRef.once('value').then(function (snapshot) {
+    if (snapshot.exists()) {
+      var timeSet = snapshot.val().timer;
+      if (snapshot.val().state == 'ON')
+        element.style.backgroundColor = "#009f75";
+      else element.style.backgroundColor = "#ef4444";
+      element.id = timerID;
+      element.innerHTML = timerID.split('-')[1] + " - " + timeSet;
+      timerbar.appendChild(element);
+      UpdateUserTimer(timerID);
+    } else {
+      window.alert("This timer is not exists!");
+      element.parentNode.removeChild(element);
+    }
+  }).catch(function (error) {
+    console.log("Got an error: ", error);
+  });
+}
 
-function AddTimerButton(timerID, timeSet) {
-
+function AddNewTimer(actID, timeSet, switchState) {
+  if (actID == null) {
+    actID = prompt("Input actutor ID:");
+  }
+  if (timeSet == null) {
+    timeSet = prompt("Input timer (HH:mm):")
+  }
+  if (switchState == null) {
+    switchState = prompt("Do you want button turn on or turn off? Turn (ON/OFF default:ON): ")
+  }
+  if (actID == null || actID == "" || timeSet == null || timeSet == "") return;
+  if (switchState == null || switchState == "") switchState = "ON";
+  //Address of actutor
+  const timerID = "timer-" + actID;
+  const timerRef = dbRef.ref("mods/" + userID + "/timers/" + timerID);
+  const actutorRef = dbRef.ref("mods/" + userID + "/actutors/" + actID);
+  actutorRef.once('value').then(function (snapshot) {
+    if (snapshot.exists()) {
+      timerRef.once('value').then(function (snapshot) {
+        if (snapshot.exists()) {
+          if (!confirm("This timer is exist! Are you sure change it?")) return;
+        }
+        timerRef.set({
+          timer: timeSet,
+          state: switchState
+        })
+          .then(function () {
+            alert("Add timer successful!");
+            AddTimerButton(timerID);
+          })
+          .catch(function (error) {
+            console.log("Got an error: ", error);
+          });
+      });
+    }
+    else {
+      alert("This actutor id is not exist! Please check and try again!");
+    }
+  });
 }
 
 function RemoveTimerButton(timerID) {
 
+}
+
+function UpdateUserTimer(itemID) {
+  const userRef = dbRef.ref("mods/" + userID);
+  var itemArray = null;
+  userRef
+    .once("value")
+    .then(function (snapshot) {
+      if (snapshot.exists()) {
+        itemArray = snapshot.val().btntimers;
+        //If list sensors isn't contains sensor then add it
+        if (!itemArray.includes(itemID)) {
+          if (itemArray != null && itemArray != "") itemArray += "," + itemID;
+          else itemArray = itemID;
+        }
+        //Update new list sensor
+        userRef
+          .update({
+            btntimers: itemArray
+          })
+          .then(function () {
+            console.log("Update successful!");
+          })
+          .catch(function (error) {
+            console.log("Got an error: ", error);
+          });
+      }
+    })
+    .catch(function (error) {
+      console.log("Got an error: ", error);
+    });
 }

@@ -32,3 +32,23 @@ function sleep(milliseconds) {
         currentDate = Date.now();
     } while (currentDate - date < milliseconds);
 }
+
+exports.checkTimer = functions
+    .region('asia-northeast1')
+    .database
+    .ref('/mods/{userID}')
+    .onWrite((change, context) => {
+        const userID = context.params.userID;
+        var d = new date();
+        var t = d.getHours() + ":" + d.getMinutes();
+        console.log('user id:', userID);
+        var timer = change.ref('/timers/{timerID}').val().timer;
+        var state = change.ref('/timers/{timerID}').val().state;
+        var actID = change.ref('/timers/{timerID}').params.timerID;
+        console.log('act id:', actID);
+        if (t == timer) {
+            if(state == 'ON'){
+            }
+        }
+        return 0;
+    });
