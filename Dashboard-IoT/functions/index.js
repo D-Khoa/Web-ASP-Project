@@ -12,43 +12,55 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 exports.checkIoTstatus = functions
-    .region('asia-northeast1')
     .database
     .ref('/mods/{userID}/status')
     .onWrite((change, context) => {
         const userID = context.params.userID;
         var stt = change.after.val();
-        console.log('status:', userID, stt);
-        sleep(3000);
+        //console.log('status:', userID, stt);
+        const actRef = admin.database().ref(`mods/${userID}/actutors/`);
+        actRef.once('value').then(function (snap) {
+            snap.forEach(function (childsnap) {
+                //console.log(childsnap.key);
+                sleep(3000, userID, childsnap.key);
+            });
+        });
         stt = false;
-        console.log('status:', userID, stt);
+        //console.log('status:', userID, stt);
         return change.after.ref.parent.child('status').set(stt);
     });
 
-function sleep(milliseconds) {
-    const date = Date.now();
-    let currentDate = null;
-    do {
-        currentDate = Date.now();
-    } while (currentDate - date < milliseconds);
-}
-
-exports.checkTimer = functions
-    .region('asia-northeast1')
-    .database
-    .ref('/mods/{userID}')
-    .onWrite((change, context) => {
-        const userID = context.params.userID;
-        var d = new date();
-        var t = d.getHours() + ":" + d.getMinutes();
-        console.log('user id:', userID);
-        var timer = change.ref('/timers/{timerID}').val().timer;
-        var state = change.ref('/timers/{timerID}').val().state;
-        var actID = change.ref('/timers/{timerID}').params.timerID;
-        console.log('act id:', actID);
-        if (t == timer) {
-            if(state == 'ON'){
+function sleep(milliseconds, userID, actId) {
+    const date = new Date;
+    date.setHours(date.getHours() + 7);
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const actRef = admin.database().ref(`mods/${userID}/actutors/${actId}`);
+    console.log(hours + ":" + minutes);
+    actRef.once('value', snap => {
+        if (snap.exists()) {
+            //console.log(snap.key);
+            if (snap.hasChild('timerON')) {
+                var t = snap.child('timerON').val().split(':');
+                if (hours == t[0] && minutes == t[1] && !snap.child('state').val()) {
+                    actRef.child('state').set(true);
+                    console.log(actId + " ON");
+                }
+            }
+            if (snap.hasChild('timerOFF')) {
+                var t = snap.child('timerOFF').val().split(':');
+                if (hours == t[0] && minutes == t[1] && snap.child('state').val()) {
+                    actRef.child('state').set(false);
+                    console.log(actId + " OFF");
+                }
             }
         }
-        return 0;
+    }).catch(function (error) {
+        console.log(error);
     });
+    let currentDate = null;
+    do {
+        currentDate = new Date;
+        currentDate.setHours(currentDate.getHours() + 7);
+    } while (currentDate - date < milliseconds);
+}

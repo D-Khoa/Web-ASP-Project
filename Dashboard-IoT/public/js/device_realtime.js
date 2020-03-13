@@ -82,10 +82,15 @@ function AddActutorBtn(actId) {
   const userRef = dbRef.ref("mods/" + userID + "/actutors/" + actId);
   //Parent of actutor buttons
   const actField = document.querySelector("#actutor_bar");
+  const timerField = document.querySelector("#timer_bar");
   //Create new button
   var element = document.createElement("button");
+  var timereOnlement = document.createElement("div");
+  var timereOfflement = document.createElement("div");
   //Button id = actutor id
   element.id = actId;
+  timereOnlement.id = actId + "_timerON";  
+  timereOfflement.id = actId + "_timerOFF";
   //Add actutor button into parent
   actField.appendChild(element);
   userRef
@@ -100,6 +105,18 @@ function AddActutorBtn(actId) {
         else element.className = "btn btn-large btn-inverse btn-actutor";
         //Update list button actutors
         UpdateUserActutor(actId);
+        if (snapshot.hasChild("timerON")) {
+          timereOnlement.style.padding = "5px";
+          timereOnlement.style.background = "#009f75";
+          timereOnlement.innerHTML = actId + "_timerON: " + snapshot.child("timerON").val();
+          timerField.appendChild(timereOnlement);
+        }
+        if (snapshot.hasChild("timerOFF")) {
+          timereOfflement.style.padding = "5px";
+          timereOfflement.style.background = "#ef4444";
+          timereOfflement.innerHTML = actId + "_timerOFF: " + snapshot.child("timerOFF").val();
+          timerField.appendChild(timereOfflement);
+        }
       } else {
         window.alert("This actutor is not exists!");
         element.parentNode.removeChild(element);
@@ -337,10 +354,8 @@ function AutoAddItems() {
       if (snapshot.exists()) {
         arrayActID = snapshot.val().btnactutors.split(",");
         arraySenID = snapshot.val().btnsensors.split(",");
-        arrayTimerID = snapshot.val().btntimers.split(",");
         arrayActID.forEach(element => AddActutorBtn(element));
         arraySenID.forEach(element => AddSensorLabel(element));
-        arrayTimerID.forEach(element => AddTimerButton(element));
       } else {
         // No user is signed in.
         window.location.href = "login.html";
@@ -350,102 +365,70 @@ function AutoAddItems() {
       console.log("Got an error: ", error);
     });
 }
-function AddTimerButton(timerID) {
-  if (timerID == null || timerID == "") return;
-  const timerRef = dbRef.ref("mods/" + userID + "/timers/" + timerID);
-  const timerbar = document.querySelector("#timer_bar");
-  var element = document.createElement("p");
-  timerRef.once('value').then(function (snapshot) {
-    if (snapshot.exists()) {
-      var timeSet = snapshot.val().timer;
-      if (snapshot.val().state == 'ON')
-        element.style.backgroundColor = "#009f75";
-      else element.style.backgroundColor = "#ef4444";
-      element.id = timerID;
-      element.innerHTML = timerID.split('-')[1] + " - " + timeSet;
-      timerbar.appendChild(element);
-      UpdateUserTimer(timerID);
-    } else {
-      window.alert("This timer is not exists!");
-      element.parentNode.removeChild(element);
-    }
-  }).catch(function (error) {
-    console.log("Got an error: ", error);
-  });
-}
 
 function AddNewTimer(actID, timeSet, switchState) {
   if (actID == null) {
     actID = prompt("Input actutor ID:");
   }
   if (timeSet == null) {
-    timeSet = prompt("Input timer (HH:mm):")
+    var timeSeth = 24;
+    while (timeSeth > 23 || isNaN(timeSeth)) {
+      timeSeth = prompt("Input hours:", "");
+    }
+    var timeSetm = 60;
+    while (timeSetm > 59 || isNaN(timeSetm)) {
+      timeSetm = prompt("Input minute:", "");
+    }
+    timeSet = timeSeth + ":" + timeSetm;
   }
   if (switchState == null) {
-    switchState = prompt("Do you want button turn on or turn off? Turn (ON/OFF default:ON): ")
+    switchState = prompt("Do you want button turn on or turn off? Turn (ON/OFF default:ON): ", "ON")
+    switchState = switchState.toUpperCase();
   }
   if (actID == null || actID == "" || timeSet == null || timeSet == "") return;
-  if (switchState == null || switchState == "") switchState = "ON";
-  //Address of actutor
-  const timerID = "timer-" + actID;
-  const timerRef = dbRef.ref("mods/" + userID + "/timers/" + timerID);
+  const timerID = "timer" + switchState;
   const actutorRef = dbRef.ref("mods/" + userID + "/actutors/" + actID);
   actutorRef.once('value').then(function (snapshot) {
     if (snapshot.exists()) {
-      timerRef.once('value').then(function (snapshot) {
-        if (snapshot.exists()) {
-          if (!confirm("This timer is exist! Are you sure change it?")) return;
-        }
-        timerRef.set({
-          timer: timeSet,
-          state: switchState
-        })
-          .then(function () {
-            alert("Add timer successful!");
-            AddTimerButton(timerID);
-          })
-          .catch(function (error) {
-            console.log("Got an error: ", error);
-          });
-      });
+      actutorRef.child(timerID).set(timeSet)
+        .then(function () {
+          console.log(timerID + " : " + timeSet);
+        }).catch(function (error) {
+          console.log(error);
+        });
+      alert("Set " + snapshot.key + " " + switchState + " at " + timeSet);
     }
     else {
       alert("This actutor id is not exist! Please check and try again!");
     }
   });
+  location.reload();
 }
 
-function RemoveTimerButton(timerID) {
-
-}
-
-function UpdateUserTimer(itemID) {
-  const userRef = dbRef.ref("mods/" + userID);
-  var itemArray = null;
-  userRef
-    .once("value")
-    .then(function (snapshot) {
-      if (snapshot.exists()) {
-        itemArray = snapshot.val().btntimers;
-        //If list sensors isn't contains sensor then add it
-        if (!itemArray.includes(itemID)) {
-          if (itemArray != null && itemArray != "") itemArray += "," + itemID;
-          else itemArray = itemID;
-        }
-        //Update new list sensor
-        userRef
-          .update({
-            btntimers: itemArray
-          })
-          .then(function () {
-            console.log("Update successful!");
-          })
-          .catch(function (error) {
-            console.log("Got an error: ", error);
-          });
+function RemoveTimerButton(actID, switchState) {
+  if (actID == null) {
+    actID = prompt("Input actutor ID:");
+  }
+  if (switchState == null) {
+    switchState = prompt("Do you want button turn on or turn off? Turn (ON/OFF default:ON): ", "ON")
+    switchState = switchState.toUpperCase();
+  }
+  if (actID == null || actID == "") return;
+  const timerID = "timer" + switchState;
+  const actutorRef = dbRef.ref("mods/" + userID + "/actutors/" + actID + "/" + timerID);
+  actutorRef.once("value").then(function (snapshot) {
+    if (snapshot.exists()) {
+      if (confirm("Are you sure delete timer " + switchState + " " + actID + " at " + snapshot.val())) {
+        actutorRef.remove().then(function () {       
+          location.reload();   
+          alert("Timer removed!");
+        });
       }
-    })
-    .catch(function (error) {
-      console.log("Got an error: ", error);
-    });
+    }
+    else {
+      alert("Timer is not exist. Please check again!");
+    }
+  }).catch(function (error) {
+    console.log(error);
+  });
 }
