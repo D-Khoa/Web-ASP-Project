@@ -49,6 +49,7 @@ function AddNewSensor() {
   //Get id and name of sensor
   const senID = document.querySelector("#newsensor_id").value;
   const senName = document.querySelector("#newsensor_name").value;
+  const senUnit = document.querySelector("#newsensor_unit").value;
   //Address of sensor
   const userRef = dbRef.ref("mods/" + userID + "/sensors/" + senID);
   //Create sensor
@@ -56,6 +57,7 @@ function AddNewSensor() {
     .set({
       name: senName,
       state: false,
+      unit: senUnit,
       value: 0
     })
     .then(function () {
@@ -89,7 +91,7 @@ function AddActutorBtn(actId) {
   var timereOfflement = document.createElement("div");
   //Button id = actutor id
   element.id = actId;
-  timereOnlement.id = actId + "_timerON";  
+  timereOnlement.id = actId + "_timerON";
   timereOfflement.id = actId + "_timerOFF";
   //Add actutor button into parent
   actField.appendChild(element);
@@ -186,7 +188,7 @@ var sensordata = 0;
 //Set chart array data = 0
 var data = [],
   totalPoints = 300;
-var tempID;
+var tempID = "None";
 //Add label sensor with sensor id
 function AddSensorLabel(sensorID) {
   if (sensorID == null) {
@@ -246,6 +248,102 @@ function AddSensorLabel(sensorID) {
     //Draw new chart
     charts();
   });
+}
+
+function AddSensorGauge(sensorID, sensorColor) {
+  if (sensorID == null) {
+    sensorID = prompt("Input sensor ID:");
+  }
+  if (sensorColor == null) {
+    sensorColor = prompt("Choose color:", "red");
+    sensorColor = sensorColor.toLowerCase();
+  }
+  //If sensor id empty then skip
+  if (sensorID === null | sensorID === "") return;
+  //Address of sensor
+  const userRef = dbRef.ref("mods/" + userID + "/sensors/" + sensorID);
+  var element;
+  userRef.on("value", function (snapshot) {
+    if (snapshot.exists()) {
+      if (document.getElementById(sensorID + "_gauge"))
+        ChangeGaugeValue(sensorID, snapshot.val().value);
+      else
+        element = AddGauge("#sensor_bar", sensorID, sensorColor, snapshot.val().unit, snapshot.val().value);
+
+    }
+    else {
+      alert("This sensor is not exist!");
+      userRef.off("value");
+    }
+  })
+  circle_progess();
+  var btnClick = false;
+  //Click event
+  element.addEventListener("click", function () {
+    btnClick = true;
+    if (btnClick) tempID = element.name;
+    //Get chartbox and chart from index.html
+    const chartbox = document.querySelector("#chartbox");
+    var chart = document.querySelector("#realtimechart");
+    //Remove old chart and create a new when click
+    chart.parentNode.removeChild(chart);
+    chart = document.createElement("div");
+    chart.id = "realtimechart";
+    chart.style = "height:190px";
+    chartbox.appendChild(chart);
+    //Reset data
+    data = Array(totalPoints).fill(0);
+    sensordata = 0;
+    //Draw new chart
+    charts();
+  });
+}
+
+function AddGauge(parentID, sensorID, gaugeColor, gaugeUnit, gaugeValue) {
+  //Parent of label sensor
+  const sensorField = document.querySelector(parentID);
+  var element = document.createElement("div");
+  element.className = "span2";
+  element.addEventListener("onTablet", function () {
+    element.className = "span4";
+  });
+  element.id = sensorID + "_gauge";
+  element.name = sensorID;
+  var elementbox = document.createElement("div");
+  elementbox.id = sensorID + "_gauge_box";
+  elementbox.classList.add('circleStatsItemBox');
+  elementbox.classList.add(gaugeColor);
+  var elementheader = document.createElement("div");
+  elementheader.id = sensorID + "_gauge_header";
+  elementheader.classList.add("header");
+  elementheader.innerHTML = sensorID;
+  var elementunit = document.createElement("span");
+  elementunit.id = sensorID + "_gauge_unit";
+  elementunit.classList.add("percent");
+  elementunit.innerHTML = gaugeUnit;
+  var elementcirclestat = document.createElement("div");
+  elementcirclestat.id = sensorID + "_gauge_stat";
+  elementcirclestat.classList.add("circleStat");
+  var elementvalue = document.createElement("input");
+  elementvalue.id = sensorID + "_gauge_value";
+  elementvalue.classList.add("whiteCircle");
+  elementvalue.type = "text";
+  if (gaugeValue != null) elementvalue.value = gaugeValue;
+  else elementvalue.value = "0";
+
+  element.appendChild(elementbox);
+  elementbox.appendChild(elementheader);
+  elementbox.appendChild(elementunit);
+  elementbox.appendChild(elementcirclestat);
+  elementcirclestat.appendChild(elementvalue);
+  sensorField.appendChild(element);
+  return element;
+}
+
+function ChangeGaugeValue(sensorID, gaugeValue) {
+  const elementvalue = document.getElementById(sensorID + "_gauge_value");
+  if (gaugeValue != null) elementvalue.value = gaugeValue;
+  else elementvalue.value = "0";
 }
 
 //Remove sensor label
@@ -355,7 +453,8 @@ function AutoAddItems() {
         arrayActID = snapshot.val().btnactutors.split(",");
         arraySenID = snapshot.val().btnsensors.split(",");
         arrayActID.forEach(element => AddActutorBtn(element));
-        arraySenID.forEach(element => AddSensorLabel(element));
+        //arraySenID.forEach(element => AddSensorLabel(element));
+        arraySenID.forEach(element => AddSensorGauge(element, "red"));
       } else {
         // No user is signed in.
         window.location.href = "login.html";
@@ -419,8 +518,8 @@ function RemoveTimerButton(actID, switchState) {
   actutorRef.once("value").then(function (snapshot) {
     if (snapshot.exists()) {
       if (confirm("Are you sure delete timer " + switchState + " " + actID + " at " + snapshot.val())) {
-        actutorRef.remove().then(function () {       
-          location.reload();   
+        actutorRef.remove().then(function () {
+          location.reload();
           alert("Timer removed!");
         });
       }

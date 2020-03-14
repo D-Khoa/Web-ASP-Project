@@ -221,7 +221,7 @@
                           <span> Add actutor</span>
                         </a>
                       </li>
-                      <li onclick="AddSensorLabel()">
+                      <li onclick="AddSensorGauge()">
                         <a href="#">
                           <i class="icon-bell"></i>
                           <span> Add sensor</span>
@@ -288,9 +288,9 @@
                       <div id="actutor_bar">
                         <label class="control-label">Actutors:</label>
                       </div>
-                      <div id="sensor_bar">
+                      <!--<div id="sensor_bar">
                         <label class="control-label">Sensors:</label>
-                      </div>
+                      </div>-->
                       <div id="timer_bar">
                         <label class="control-label">Timers:</label>
                       </div>
@@ -300,6 +300,10 @@
               </div>
             </section>
             <!-- end: timer and schedule -->
+            <section id="sensor_gause">
+              <div class="row-fluid hideInIE8 circleStats" id="sensor_bar">
+              </div>
+            </section>
             <!-- start: realtime chart -->
             <section id="sensor_realtime_chart">
               <div class="row-fluid sortable">
@@ -418,6 +422,15 @@
                       id="newsensor_name"
                       type="text"
                       placeholder="Type sensor name..."
+                    />
+                    <label class="control-label" for="newsensor_unit"
+                      >Unit:</label
+                    >
+                    <input
+                      class="input-xlarge focused"
+                      id="newsensor_unit"
+                      type="text"
+                      placeholder="Type sensor unit..."
                     />
                     <input
                       type="button"

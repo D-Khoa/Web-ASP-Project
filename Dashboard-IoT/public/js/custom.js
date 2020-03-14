@@ -743,8 +743,8 @@ function circle_progess() {
 
 		var value = $(this).find(".value > .number").html();
 		var unit = $(this).find(".value > .unit").html();
-		var percent = $(this).find("input").val() / 100;
-
+		//var percent = $(this).find("input").val() / 100;
+		var percent = $(this).find("input").val();
 		countSpeed = 2300 * percent;
 
 		endValue = value * percent;
@@ -1705,7 +1705,7 @@ function charts() {
 			//Address of sensor value
 			const dataRef = dbRef.ref("mods/" + userID + "/sensors/" + tempID + "/value");
 			const stateRef = dbRef.ref("mods/" + userID + "/sensors/" + tempID);
-			document.querySelector("#realtimebox").innerHTML = tempID;
+			document.querySelector("#realtimebox").innerHTML = "Sensor Data - " + tempID;
 			dataRef.once("value").then(function (sensorVal) {
 				if (sensorVal.exists()) {
 					stateRef.onDisconnect().update({
@@ -1714,7 +1714,7 @@ function charts() {
 					sensordata = sensorVal.val();
 				}
 			});
-			
+
 			var y = sensordata;
 			if (y < 0)
 				y = 0;
