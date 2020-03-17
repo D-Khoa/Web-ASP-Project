@@ -136,7 +136,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Class\EncryptDecrypt.cs" />
     <Compile Include="Controllers\FoodController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="DBFood.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

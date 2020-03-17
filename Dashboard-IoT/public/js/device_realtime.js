@@ -262,21 +262,20 @@ function AddSensorGauge(sensorID, sensorColor) {
   if (sensorID === null | sensorID === "") return;
   //Address of sensor
   const userRef = dbRef.ref("mods/" + userID + "/sensors/" + sensorID);
-  var element;
+  var element = document.getElementById(sensorID + "_gauge");
   userRef.on("value", function (snapshot) {
     if (snapshot.exists()) {
-      if (document.getElementById(sensorID + "_gauge"))
+      if (element != null)
         ChangeGaugeValue(sensorID, snapshot.val().value);
       else
         element = AddGauge("#sensor_bar", sensorID, sensorColor, snapshot.val().unit, snapshot.val().value);
-
     }
     else {
       alert("This sensor is not exist!");
       userRef.off("value");
     }
   })
-  circle_progess();
+
   var btnClick = false;
   //Click event
   element.addEventListener("click", function () {
@@ -337,6 +336,7 @@ function AddGauge(parentID, sensorID, gaugeColor, gaugeUnit, gaugeValue) {
   elementbox.appendChild(elementcirclestat);
   elementcirclestat.appendChild(elementvalue);
   sensorField.appendChild(element);
+  circle_progess();
   return element;
 }
 

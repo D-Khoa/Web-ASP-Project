@@ -739,19 +739,19 @@ function circle_progess() {
 
 
 
-	$(".circleStatsItemBox").each(function () {
+	/*$(".circleStatsItemBox").each(function () {
 
-		var value = $(this).find(".value > .number").html();
-		var unit = $(this).find(".value > .unit").html();
+		//var value = $(this).find(".value > .number").html();
+		//var unit = $(this).find(".value > .unit").html();
 		//var percent = $(this).find("input").val() / 100;
 		var percent = $(this).find("input").val();
-		countSpeed = 2300 * percent;
+		countSpeed = 1000;
 
-		endValue = value * percent;
+		//endValue = value * percent;
+		endValue = percent;
 
-		$(this).find(".count > .unit").html(unit);
-		$(this).find(".count > .number").countTo({
-
+		//$(this).find(".count > .unit").html(unit);
+		/*$(this).find(".footer > .number").countTo({
 			from: 0,
 			to: endValue,
 			speed: countSpeed,
@@ -761,7 +761,7 @@ function circle_progess() {
 
 		//$(this).find(".count").html(value*percent + unit);
 
-	});
+	});*/
 
 }
 
