@@ -1,0 +1,119 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/CSS/style.css")
+    @Scripts.Render("~/Javascript/startup.js")
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+</head>
+<!--
+@*<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>*@
+-->
+<body>
+    <div class="nav-top">
+        <div class="col-2 left">
+            <p>Đây là tiêu đề top</p>
+        </div>
+        <div class="col-2 right">
+            <ul class="right">
+                <li><a href="#" id="top-a">Chào mừng Fts</a></li>
+                <li>
+                    <a href="@Url.Action("Logout","Account",)>
+                        <input type="button" value="Log out" class="mes-btn btn-medium right" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="clear-float"></div>
+    </div>
+    <div class="nav-header">
+        <h1>API TEST</h1>
+    </div>
+    <div class="mes-tab-control">
+        <a href="#" class="mes-tab-control header disable" id="tab-header-user" onclick="OpenTab(event, 'tab-page-user')">User</a>
+        <a href="#" class="mes-tab-control header disable" id="tab-header-control" onclick="OpenTab(event, 'tab-page-control')">Control</a>
+        <a href="#" class="mes-tab-control header disable" id="tab-header-role" onclick="OpenTab(event, 'tab-page-role')">Role</a>
+    </div>
+    <div class="nav-ribbon">
+        <div class="mes-tab-content hidden" id="tab-page-user">
+            <div class="ribbon-panel">
+                <a href="#" class="ribbon-panel button disable" id="btn-user-search">Search</a>
+                <a href="#" class="ribbon-panel button disable" id="btn-user-create">Create</a>
+                <a href="#" class="ribbon-panel button disable" id="btn-user-update">Update</a>
+                <a href="#" class="ribbon-panel button disable" id="btn-user-delete">Delete</a>
+            </div>
+        </div>
+        <div class="mes-tab-content hidden" id="tab-page-control">
+            <div class="ribbon-panel">
+                <a href="#" class="ribbon-panel button disable" id="btn-control-search">Search</a>
+                <a href="#" class="ribbon-panel button disable" id="btn-control-create">Create</a>
+                <a href="#" class="ribbon-panel button disable" id="btn-control-update">Update</a>
+                <a href="#" class="ribbon-panel button disable" id="btn-control-delete">Delete</a>
+            </div>
+        </div>
+        <div class="mes-tab-content hidden" id="tab-page-role">
+            <div class="ribbon-panel">
+                <a href="#" class="ribbon-panel button disable" id="btn-role-search">Search</a>
+                <a href="#" class="ribbon-panel button disable" id="btn-role-create">Create</a>
+                <a href="#" class="ribbon-panel button disable" id="btn-role-update">Update</a>
+                <a href="#" class="ribbon-panel button disable" id="btn-role-delete">Delete</a>
+            </div>
+        </div>
+        <div class="clear-float"></div>
+    </div>
+    <div class="container body-content">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            if (!string.IsNullOrEmpty(ViewBag.roleid))
+            {
+                string[] list = ViewBag.roleid.Split(',');
+                foreach (string name in list)
+                {
+                    <script>CheckRole('@name');</script>
+                }
+            }
+        }
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - NDK</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/Javascript/controller.js")
+</body>
+</html>

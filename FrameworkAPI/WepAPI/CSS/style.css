@@ -1,0 +1,271 @@
+body {
+    --color: #000;
+    --back-color: #fff;
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    display: block;
+    color: var(--color);
+    background-color: var(--back-color);
+}
+
+a {
+    text-decoration: none;
+}
+
+.disable {
+    pointer-events: none;
+    opacity: 0.2;
+}
+
+.hidden {
+    display: none;
+}
+
+.show {
+    display: block;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.nav-top {
+    --color: #fff;
+    --back-color: #000;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    display: block;
+    position: fixed;
+    z-index: 100000;
+    padding: 0px 10px 10px 10px;
+    color: var(--color);
+    background-color: var(--back-color);
+}
+
+.nav-header {
+    top: 50px;
+    width: 100%;
+    height: auto;
+    display: block;
+    padding-top: 50px;
+    padding-left: 10px;
+    color: var(--color);
+    background-color: var(--back-color);
+}
+/***************BEGIN: CSS for Ribbon Menu********************/
+.mes-tab-control {
+    overflow: hidden;
+    width: auto;
+    height: auto;
+    border: none;
+    padding: 10px;
+    display: block;
+    color: var(--color);
+    background-color: var(--back-color);
+}
+
+    .mes-tab-control.header {
+        float: left;
+        margin: 5px;
+        padding: 5px;
+        text-align: center;
+        vertical-align: central;
+        border: none;
+        border-bottom: 5px solid #d3d3d3;
+        color: var(--color);
+        background-color: var(--back-color);
+        transition: 0.3s;
+    }
+
+        .mes-tab-control.header:hover {
+            --color: #fff;
+            --back-color: rgba(0, 0, 0, 0.4);
+            color: var(--color);
+            background-color: var(--back-color);
+        }
+
+        .mes-tab-control.header.active {
+            --color: #fff;
+            --back-color: #000;
+            border-bottom: 5px solid #ff7f50;
+            color: var(--color);
+            background-color: var(--back-color);
+        }
+
+.mes-tab-content {
+    /*border: 1px solid #000;*/
+    border-top: none;
+    padding: 0px;
+    color: var(--color);
+    background-color: var(--back-color);
+}
+
+.nav-ribbon {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #000;
+    color: var(--color);
+    background-color: var(--back-color);
+}
+
+.ribbon-panel {
+    float: left;
+    width: auto;
+    height: 100%;
+    border: none;
+    margin: 5px;
+    padding: 5px;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    color: var(--color);
+    background-color: var(--back-color);
+}
+
+    .ribbon-panel.button {
+        border: 1px solid #000;
+        color: var(--color);
+        background-color: var(--back-color);
+        transition: 0.3s;
+    }
+
+        .ribbon-panel.button:hover {
+            --color: #fff;
+            --back-color: rgba(0, 0, 0, 0.4);
+            color: var(--color);
+            background-color: var(--back-color);
+        }
+
+        .ribbon-panel.button.active {
+            --color: #fff;
+            --back-color: #000;
+            color: var(--color);
+            background-color: var(--back-color);
+        }
+/***************END: CSS for Ribbon Menu********************/
+/***************BEGIN: Login Menu********************/
+.login-body {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: var(--color);
+    /*background: url("../img/background.jpg") center no-repeat;*/
+    background-color: var(--back-color);
+}
+
+.mes-form-control {
+    padding: 10px 15px 10px 10px;
+    width: auto;
+    height: auto;
+    margin: 100px;
+    border-radius: 20px;
+    text-align: left;
+    display: inline-block;
+    color: var(--color);
+    background-color: var(--back-color);
+}
+
+    .mes-form-control h1 {
+        text-align: center;
+        color: var(--color);
+        background-color: var(--back-color);
+    }
+
+.mes-form-group {
+    padding: 10px;
+}
+
+.mes-form-input {
+    width: 100%;
+}
+/***************END: Login Menu********************/
+/***************START: Buttons********************/
+.btn-small {
+    width: 40px;
+    height: 20px;
+}
+
+.btn-medium {
+    width: 80px;
+    height: 40px;
+}
+
+.btn-large {
+    width: 120px;
+    height: 60px;
+}
+
+.mes-btn {
+    border: none;
+    padding: 5px;
+    color: var(--color);
+    background-color: var(--back-color);
+    transition: 0.3s;
+}
+
+    .mes-btn:hover {
+        --color: #fff;
+        --back-color: rgba(0, 0, 0, 0.4);
+        color: var(--color);
+        background-color: var(--back-color);
+    }
+
+    .mes-btn:active {
+        --color: #fff;
+        --back-color: #000;
+        color: var(--color);
+        background-color: var(--back-color);
+    }
+/***************END: Buttons********************/
+/***************START: Columns********************/
+.col-2 {
+    width: 50%;
+    height: auto;
+    display: inline-block;
+}
+
+    .col-2 ul {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+        .col-2 ul li {
+            float: left;
+            margin-left: 5px;
+            margin-right: 5px;
+            list-style-type: none;
+            text-decoration: none;
+        }
+
+.col-3 {
+    width: 33%;
+    height: auto;
+    padding: 0px;
+}
+
+.clear-float {
+    clear: both;
+}
+/***************END: Columns********************/
+/***************START: Text & Colors********************/
+.bg-red {
+    background-color: #ff0000;
+}
+
+.text-red {
+    color: #ff0000;
+}
+
+.txt-danger {
+    color: #ff0000;
+}
+/***************END: Text & Colors********************/

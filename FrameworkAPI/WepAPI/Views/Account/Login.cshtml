@@ -1,0 +1,59 @@
+﻿@model WepAPI.Models.User.UserLog
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Login - API Web</title>
+    <link href="~/CSS/style.css" rel="stylesheet" />
+</head>
+<body class="login-body">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="mes-form-control">
+            <h1>Login</h1>
+            <div class="mes-form-group">
+                @Html.ValidationMessage("Error", new { @class = "txt-danger" })
+            </div>
+            <div class="mes-form-group">
+                <div class="col-2 left">
+                    <label>Usercode</label>
+                </div>
+                <div class="col-2 right">
+                    <input type="text" id="user_cd" name="user_cd" class="mes-form-input" />
+                </div>
+                <div class="clear-float"></div>
+                <div>@Html.ValidationMessageFor(model => model.user_cd, "", new { @class = "txt-danger" })</div>
+            </div>
+
+            <div class="mes-form-group">
+                <div class="col-2 left">
+                    <label>Password</label>
+                </div>
+                <div class="col-2 right">
+                    <input type="password" id="user_password" name="user_password" class="mes-form-input" />
+                </div>
+                <div class="clear-float"></div>
+                <div>@Html.ValidationMessageFor(model => model.user_password, "", new { @class = "txt-danger" })</div>
+            </div>
+
+            <div class="mes-form-group">
+                <div class="col-2 left">
+                    <a href="@Url.Action("Register")">
+                        <input type="button" value="Register" class="mes-btn btn-medium left" />
+                    </a>
+                </div>
+                <div class="col-2 right">
+                    <input type="submit" value="Login" class="mes-btn btn-medium right" />
+                </div>
+                <div class="clear-float"></div>
+            </div>
+        </div>
+    }
+    <script src="~/Javascript/controller.js"></script>
+</body>
+</html>

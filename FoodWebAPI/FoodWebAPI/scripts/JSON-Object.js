@@ -1,6 +1,8 @@
-﻿function GET(tbl) {
+﻿const webAPI = 'http://localhost:50485/api/';
+
+function GET(tbl) {
     const id = document.querySelector('#dataid').value;
-    var myurl = 'http://localhost:50485/api/' + tbl + '/' + id;
+    var myurl = webAPI + tbl + '/' + id;
     $.getJSON(myurl, function (data) {
 
         var name = `${data.name}`;
