@@ -34,7 +34,7 @@ namespace WepAPI.Controllers
             //Chuyển đổi thông tin user sang dạng json
             string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
             //Khai báo client api
-            var client = new RestClient("https://localhost:44310/api/login/logio");
+            var client = new RestClient(WebInfo.apiURL + "login/logio");
             client.Timeout = -1;
             //Khai báo dạng request là put
             var request = new RestRequest(Method.PUT);
@@ -47,7 +47,11 @@ namespace WepAPI.Controllers
             user = Newtonsoft.Json.JsonConvert.DeserializeObject<UserLog>(response.Content);
             //Nếu trả về code OK thì chuyển sang trang chủ
             if (response.IsSuccessful)
-                return RedirectToAction("Index", "Main", new { role = user.userRoles, message = "Wellcome " + user.user_cd });
+            {
+                //Lấy usercode
+                WebInfo.loginUserCD = user.user_cd;
+                return RedirectToAction("Index", "Main", new { role = user.userRoles, username = user.user_cd });
+            }
             else
             {
                 ErrorMessage errorMessage = new ErrorMessage();
@@ -74,7 +78,7 @@ namespace WepAPI.Controllers
             //Chuyển đổi thông tin user sang dạng json
             string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
             //Khai báo client api
-            var client = new RestClient("https://localhost:44310/api/UserLog/PostUserLog");
+            var client = new RestClient(WebInfo.apiURL + "UserLog/PostUserLog");
             client.Timeout = -1;
             //Khai báo dạng request là post
             var request = new RestRequest(Method.POST);
@@ -115,7 +119,7 @@ namespace WepAPI.Controllers
             //Chuyển đổi thông tin user sang dạng json
             string jsonUser = Newtonsoft.Json.JsonConvert.SerializeObject(user);
             //Khai báo client api
-            var client = new RestClient("https://localhost:44310/api/login/logio");
+            var client = new RestClient(WebInfo.apiURL + "login/logio");
             client.Timeout = -1;
             //Khai báo dạng request là put
             var request = new RestRequest(Method.PUT);
@@ -128,7 +132,7 @@ namespace WepAPI.Controllers
             user = Newtonsoft.Json.JsonConvert.DeserializeObject<UserLog>(response.Content);
             //Nếu trả về code OK thì chuyển sang trang chủ
             if (response.IsSuccessful)
-                return RedirectToAction("Index", "Main", new { role = user.userRoles, message = "Good bye " + user.user_cd });
+                return RedirectToAction("Index", "Main", new { role = user.userRoles, username = "Good bye " + user.user_cd });
             else
             {
                 ErrorMessage errorMessage = new ErrorMessage();
