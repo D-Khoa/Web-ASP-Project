@@ -1,0 +1,23 @@
+﻿@page
+@model CRUD_Web_MES.Pages.Account.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h1>Register</h1>
+<div style="border: 1px solid #000000; border-radius: 10px;">
+    <form action="/" method="post">
+        <div class="row" style="padding-left:15px; padding-top:30px;">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-1">
+                        <label asp-for="user.u10002">Fist Name</label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="user.u10002" class="form-control"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
