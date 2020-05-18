@@ -1,0 +1,59 @@
+﻿@model MES_IFM_MVC.Models.Account.aa0001
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>Register</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Register">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="aa0001c11" class="control-label">Fist Name</label>
+                <input asp-for="aa0001c11" class="form-control" />
+                <span asp-validation-for="aa0001c11" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="aa0001c12" class="control-label">Last Name</label>
+                <input asp-for="aa0001c12" class="form-control" />
+                <span asp-validation-for="aa0001c12" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="aa0001c13" class="control-label">Email</label>
+                <input asp-for="aa0001c13" class="form-control" />
+                <span asp-validation-for="aa0001c13" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="aa0001c14" class="control-label">Tel</label>
+                <input asp-for="aa0001c14" class="form-control" />
+                <span asp-validation-for="aa0001c14" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="aa0001c16" class="control-label"></label>
+                <input asp-for="aa0001c16" class="form-control" />
+                <span asp-validation-for="aa0001c16" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="aa0001c21" class="control-label">Password</label>
+                <input type="password" asp-for="aa0001c21" class="form-control" />
+                <span asp-validation-for="aa0001c21" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="aa0001c22" class="control-label">Confirm Password</label>
+                <input type="password" asp-for="aa0001c22" class="form-control" />
+                <span asp-validation-for="aa0001c22" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Register" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
