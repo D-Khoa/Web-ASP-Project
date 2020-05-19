@@ -48,18 +48,18 @@ namespace MES_IFM_MVC.Models.Account
         /// <summary>
         /// firstname
         /// </summary>
-        [Required(AllowEmptyStrings =false,ErrorMessage ="Please enter your first name")]
+        //[Required(AllowEmptyStrings =false,ErrorMessage ="Please enter your first name")]
         public string aa0001c11 { get; set; }   //firstname
         /// <summary>
         /// lastname
         /// </summary>
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your last name")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your last name")]
         public string aa0001c12 { get; set; }   //lastname
         /// <summary>
         /// mail
         /// </summary>
-        [EmailAddress(ErrorMessage = "Please enter a valid mail")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your mail")]
+        //[EmailAddress(ErrorMessage = "Please enter a valid mail")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your mail")]
         public string aa0001c13 { get; set; }   //mail
         /// <summary>
         /// phone
@@ -83,14 +83,14 @@ namespace MES_IFM_MVC.Models.Account
         /// <summary>
         /// pass
         /// </summary>
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your password")]
-        [StringLength(maximumLength:100, MinimumLength = 6, ErrorMessage = "Password must contain at least 6 characters")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Please enter your password")]
+        //[StringLength(maximumLength:100, MinimumLength = 6, ErrorMessage = "Password must contain at least 6 characters")]
         public string aa0001c21 { get; set; }   //pass
         /// <summary>
         /// confirm pass / token
         /// </summary>
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Please confirm your password")]
-        [Compare(otherProperty: "aa0001c21", ErrorMessage = "Password and Confirm Password does not match")]
+        //[Required(AllowEmptyStrings = false, ErrorMessage = "Please confirm your password")]
+        //[Compare(otherProperty: "aa0001c21", ErrorMessage = "Password and Confirm Password does not match")]
         public string aa0001c22 { get; set; }   //confirm pass
         /// <summary>
         /// status

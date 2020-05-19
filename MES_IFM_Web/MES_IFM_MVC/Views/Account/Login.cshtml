@@ -9,26 +9,19 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Login">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form method="post">
+            <div class="text-danger">@ViewBag.Message</div>
             <div class="form-group">
                 <label asp-for="aa0001c13" class="control-label">Email</label>
                 <input asp-for="aa0001c13" class="form-control" />
-                <span asp-validation-for="aa0001c13" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="aa0001c21" class="control-label">Password</label>
-                <input asp-for="aa0001c21" class="form-control" />
-                <span asp-validation-for="aa0001c21" class="text-danger"></span>
+                <input type="password" asp-for="aa0001c21" class="form-control" />
             </div>
-            <div class="form-group">
-                <input type="submit" value="Login" class="btn btn-default" />
-            </div>
+            <button type="submit" asp-action="Login" asp-controller="Account" class="btn btn-success">Login</button>
+            <a asp-action="/Register" class="btn btn-success">Register</a>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 

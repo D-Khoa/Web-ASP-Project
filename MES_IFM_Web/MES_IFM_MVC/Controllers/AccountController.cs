@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using MES_IFM_MVC.Models;
 using MES_IFM_MVC.Models.Account;
-using MES_IFM_MVC.Models.MailContact;
-using MES_IFM_MVC.Models.SQL;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace MES_IFM_MVC.Controllers
 {
@@ -27,44 +26,44 @@ namespace MES_IFM_MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(aa0001 user)
+        public IActionResult Register(aa0001 user)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                MD5 algorithm = MD5.Create();
-                string salt = EncryptData.RandomSalt(12);
-                aa0001 outUser = new aa0001
-                {
-                    aa0001c07 = user.aa0001c13,
-                    aa0001c08 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                    aa0001c11 = user.aa0001c11,
-                    aa0001c12 = user.aa0001c12,
-                    aa0001c13 = user.aa0001c13,
-                    aa0001c14 = user.aa0001c14,
-                    aa0001c16 = user.aa0001c16,
-                    aa0001c20 = salt,
-                    aa0001c21 = EncryptData.StringToHash(user.aa0001c21, salt, algorithm),
-                    aa0001c15 = "0",
-                    aa0001c23 = "Not active",
-                    aa0001c26 = EncryptData.StringToHash(user.aa0001c13, salt, algorithm),
-                    aa0001c30 = "None"
-                };
-                string checkmail = _db.aa0001
-                    .Where(a => a.aa0001c13 == outUser.aa0001c13)
-                    .Select(a => a.aa0001c13).ToString();
-                if (checkmail == outUser.aa0001c13)
-                    return Content(string.Format("This mail {0} is aready exist!", outUser.aa0001c13));
-                _db.aa0001.Add(outUser);
-                await _db.SaveChangesAsync();
-                MailInfo mailInfo = new MailInfo();
-                mailInfo.mailTo = outUser.aa0001c13;
-                mailInfo.mailSubject = "Active Account";
-                mailInfo.mailMessage = "https://localhost:44304/Account/ActiveUser/outUser.aa0001c13";
-                SendMail.SendMailAuto(mailInfo);
+                return View(user);
+            }
+            if (string.IsNullOrEmpty(user.aa0001c13))
+            {
+                ViewBag.Message = "Please enter your email for register!";
+                return View();
+            }
+            if (string.IsNullOrEmpty(user.aa0001c21) || user.aa0001c21.Length < 6)
+            {
+                ViewBag.Message = "Password must contain at least 6 characters!";
+                return View();
+            }
+            if (string.IsNullOrEmpty(user.aa0001c22) || user.aa0001c22 != user.aa0001c21)
+            {
+                ViewBag.Message = "Password and confirm password are not match!";
+                return View();
+            }
+            string baseUrl = "https://localhost:44304/";
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(baseUrl);
+            var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+            client.DefaultRequestHeaders.Accept.Add(contentType);
+            string stringData = JsonConvert.SerializeObject(user);
+            var contentData = new StringContent(stringData, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync("/api/account", contentData).Result;
+            string stringResponse = response.Content.ReadAsStringAsync().Result;
+            string result = JsonConvert.DeserializeObject<string>(stringResponse);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
                 return Redirect("/Account/Login");
             }
             else
             {
+                ViewBag.Message = result;
                 return View(user);
             }
         }
@@ -75,45 +74,63 @@ namespace MES_IFM_MVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(aa0001 user)
+        public IActionResult Login(aa0001 user)
         {
-            //if (ModelState.IsValid)
-            //{
-                MD5 algorithm = MD5.Create();
-                aa0001 checkUser = _db.aa0001
-                    .Where(a => a.aa0001c13 == user.aa0001c13)
-                    .Select(a => a).FirstOrDefault();
-                if(checkUser.aa0001c15 == "0")
-                    return Content("User is not active!");
-                string pass = EncryptData.StringToHash(user.aa0001c21, checkUser.aa0001c20, algorithm);
-                if (checkUser.aa0001c21 != pass)
-                    return Content("User and password are not match!");
-                string token = checkUser.aa0001c13 + DateTime.Now.ToString("yyyyMMddHHmmss");
-                token.StringToHash(checkUser.aa0001c20, algorithm);
-                var remoteIpAddress = Request.HttpContext.Connection.RemoteIpAddress;
-                checkUser.aa0001c22 = token;
-                checkUser.aa0001c23 = "Online";
-                checkUser.aa0001c24 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                checkUser.aa0001c25 = remoteIpAddress.MapToIPv4().ToString();
-                user = checkUser;
-                await _db.SaveChangesAsync();
-                return Redirect("/Home/Index");
-            //}
-            //else
-            //{
-            //    return View(user);
-            //}
+            if (string.IsNullOrEmpty(user.aa0001c13))
+            {
+                ViewBag.Message = "Please enter your email for login!";
+                return View();
+            }
+            if (string.IsNullOrEmpty(user.aa0001c21))
+            {
+                ViewBag.Message = "Please enter your password for login!";
+                return View();
+            }
+            string baseUrl = "https://localhost:44304/";
+            HttpClient client = new HttpClient();
+            client.BaseAddress = new Uri(baseUrl);
+            var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+            client.DefaultRequestHeaders.Accept.Add(contentType);
+            string stringData = JsonConvert.SerializeObject(user);
+            var contentData = new StringContent(stringData, Encoding.UTF8, "application/json");
+            HttpResponseMessage response = client.PostAsync("/api/security", contentData).Result;
+            string result = response.Content.ReadAsStringAsync().Result;
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                JWT jwt = JsonConvert.DeserializeObject<JWT>(result);
+                HttpContext.Session.SetString("token", jwt.Token);
+            }
+            else
+            {
+                string message = JsonConvert.DeserializeObject<string>(result);
+                ViewBag.Message = message;
+                return View(user);
+            }
+            return Redirect("/Home/Index");
         }
 
+        [HttpGet]
         public IActionResult ActiveUser(string userMail)
         {
-            ViewBag.Mail = userMail;
             aa0001 checkUser = _db.aa0001
                 .Where(a => a.aa0001c13 == userMail)
                 .Select(a => a).FirstOrDefault();
+            if (checkUser == null)
+            {
+                return View("Invalid email");
+            }
             checkUser.aa0001c15 = "1";
+            _db.Update(checkUser);
             _db.SaveChangesAsync();
+            ViewBag.Message = string.Format("Email {0} is actived!", userMail);
             return View();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Remove("token");
+            ViewBag.Message = "Your logged out successfully!";
+            return Redirect("/Home/Index");
         }
     }
 }
