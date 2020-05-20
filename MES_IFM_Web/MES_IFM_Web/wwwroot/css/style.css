@@ -1,45 +1,36 @@
 * {
-  box-sizing: border-box;
+  /* box-sizing: border-box; */
 }
 
 body {
   font-family: Arial;
-  padding: 10px;
+  padding: 0px;
   background: #f1f1f1;
+  margin: 0px;
 }
 /* Table container*/
 .container {
   width: 100%;
-  display: table;
+  /* display: table; */
 }
 
 .container-col {
-  display: table-cell;
-  padding: 10px;
+  display: flex;
+  padding: 20px;
 }
 
-@media only screen and (max-width: 600px) {
-  .container-col {
-    width: 100%;
-    display: block;
-  }
-  .header-title h1,
-  p {
-    text-align: center;
-  }
-}
 /* Header/Blog Title */
 .header {
-  padding: 30px;
+  /* padding: 30px; */
   text-align: center;
   background: white;
 }
 
 .header.container {
-  background: rgb(78, 231, 252);
+  /* background: rgb(78, 231, 252); */
   background: linear-gradient(
     180deg,
-    rgba(78, 231, 252, 1) 0%,
+    #3366ff 0%,
     rgba(255, 255, 255, 1) 100%
   );
 }
@@ -68,29 +59,37 @@ body {
 }
 /* Style the top navigation bar */
 .topnav {
-  top: 0;
-  left: 0;
+  /* top: 0; */
+  /* left: 0; */
   width: 100%;
-  z-index: 10000;
-  position: fixed;
+  /* z-index: 10000; */
+  /* position: fixed; */
   overflow: hidden;
-  background-color: #333;
+  background: linear-gradient(180deg, #f2f2f2 0%, #82869a 100%);
+  border-radius: 6px;
+  box-shadow: 5px 5px 5px 5px lightsteelblue;
 }
 
 /* Style the topnav links */
 .topnav a {
   float: left;
   display: block;
-  color: #f2f2f2;
+  color: #000;
   text-align: center;
-  padding: 14px 16px;
+  padding: 10px;
   text-decoration: none;
+  /* border: 1px solid #000; */
+  border-radius: 5px;
+  /* background: linear-gradient(0deg, #f2f2f2, transparent); */
+  /* box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.5); */
+  margin: 5px;
 }
 
 /* Change color on hover */
 .topnav a:hover {
-  background-color: #ddd;
-  color: black;
+  background-color: #02020287;
+  color: #ff6600;
+  text-decoration: underline;
 }
 
 /* Create two unequal columns that floats next to each other */
@@ -137,6 +136,27 @@ body {
   margin-top: 20px;
 }
 
+.ico-home{
+    background: url('your-image-url.jpg');
+    height: 20px;
+    width: 20px;
+    display: block;
+    /* Other styles here */
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 800px) {
   .leftcolumn,
@@ -151,5 +171,17 @@ body {
   .topnav a {
     float: none;
     width: 100%;
+  }
+}
+
+/* Table container*/
+@media only screen and (max-width: 600px) {
+  .container-col {
+    width: 100%;
+    display: block;
+  }
+  .header-title h1,
+  p {
+    text-align: center;
   }
 }

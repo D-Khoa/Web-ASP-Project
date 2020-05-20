@@ -57,6 +57,8 @@ namespace MES_IFM_MVC.Controllers.Api
             aa0001 checkUser = _db.aa0001
                 .Where(a => a.aa0001c13 == user.aa0001c13)
                 .Select(a => a).FirstOrDefault();
+            if (checkUser == null)
+                return BadRequest("Mail is not exist!");
             if (checkUser.aa0001c15 == "0")
                 return BadRequest("User is not active!");
             user.aa0001c20 = checkUser.aa0001c20;
