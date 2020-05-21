@@ -1,142 +1,167 @@
 * {
-  /* box-sizing: border-box; */
+    /* box-sizing: border-box; */
 }
 
 body {
-  font-family: Arial;
-  padding: 0px;
-  background: #f1f1f1;
-  margin: 0px;
+    font-family: Arial;
+    padding: 0px;
+    background: #f1f1f1;
+    margin: 0px;
 }
 /* Table container*/
 .container {
-  width: 100%;
-  /* display: table; */
+    width: 100%;
+    /* display: table; */
 }
 
 .container-col {
-  display: flex;
-  padding: 20px;
+    display: flex;
+    padding: 20px;
 }
 
 /* Header/Blog Title */
 .header {
-  /* padding: 30px; */
-  text-align: center;
-  background: white;
+    /* padding: 30px; */
+    text-align: center;
+    background: white;
 }
 
-.header.container {
-  /* background: rgb(78, 231, 252); */
-  background: linear-gradient(
-    180deg,
-    #3366ff 0%,
-    rgba(255, 255, 255, 1) 100%
-  );
-}
+    .header.container {
+        /* background: rgb(78, 231, 252); */
+        background: linear-gradient( 180deg, #3366ff 0%, rgba(255, 255, 255, 1) 100% );
+    }
 
-.header h1 {
-  font-size: 50px;
-  color: #000;
-}
+    .header h1 {
+        font-size: 50px;
+        color: #000;
+    }
 
 .header-link {
-  text-align: center;
-  vertical-align: middle;
+    text-align: center;
+    vertical-align: middle;
 }
 
 .header-logo {
-  margin: auto;
-  width: auto;
-  max-width: 100%;
-  display: block;
+    margin: auto;
+    width: auto;
+    max-width: 100%;
+    display: block;
 }
 
 .header-title {
-  color: #000;
-  text-align: left;
-  text-decoration: none;
+    color: #000;
+    text-align: left;
+    text-decoration: none;
 }
 /* Style the top navigation bar */
-.topnav {
-  /* top: 0; */
-  /* left: 0; */
-  width: 100%;
-  /* z-index: 10000; */
-  /* position: fixed; */
-  overflow: hidden;
-  background: linear-gradient(180deg, #f2f2f2 0%, #82869a 100%);
-  border-radius: 6px;
-  box-shadow: 5px 5px 5px 5px lightsteelblue;
+.menu-nav {
+    /* top: 0; */
+    /* left: 0; */
+    width: 100%;
+    /* z-index: 10000; */
+    /* position: fixed; */
+    overflow: hidden;
+    background: linear-gradient(180deg, #f2f2f2 0%, #82869a 100%);
+    border-radius: 6px;
+    box-shadow: 5px 5px 5px 5px lightsteelblue;
 }
 
-/* Style the topnav links */
-.topnav a {
-  float: left;
-  display: block;
-  color: #000;
-  text-align: center;
-  padding: 10px;
-  text-decoration: none;
-  /* border: 1px solid #000; */
-  border-radius: 5px;
-  /* background: linear-gradient(0deg, #f2f2f2, transparent); */
-  /* box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.5); */
-  margin: 5px;
-}
+    /* Style the topnav links */
+    .menu-nav a {
+        float: left;
+        display: block;
+        color: #000;
+        text-align: center;
+        padding: 10px;
+        text-decoration: none;
+        /* border: 1px solid #000; */
+        border-radius: 5px;
+        /* background: linear-gradient(0deg, #f2f2f2, transparent); */
+        /* box-shadow: 2px 2px 0px 0px rgba(0,0,0,0.5); */
+        margin: 5px;
+    }
 
-/* Change color on hover */
-.topnav a:hover {
-  background-color: #02020287;
-  color: #ff6600;
-  text-decoration: underline;
-}
+        /* Change color on hover */
+        .menu-nav a:hover {
+            background-color: #02020287;
+            color: #ff6600;
+            text-decoration: underline;
+        }
 
 /* Create two unequal columns that floats next to each other */
 /* Left column */
 .leftcolumn {
-  float: left;
-  width: 75%;
+    float: left;
+    width: 75%;
 }
 
 /* Right column */
 .rightcolumn {
-  float: left;
-  width: 25%;
-  background-color: #f1f1f1;
-  padding-left: 20px;
+    float: left;
+    width: 25%;
+    background-color: #f1f1f1;
+    padding-left: 20px;
 }
 
 /* Fake image */
 .fakeimg {
-  background-color: #aaa;
-  width: 100%;
-  padding: 20px;
+    background-color: #aaa;
+    width: 100%;
+    padding: 20px;
 }
 
 /* Add a card effect for articles */
 .card {
-  background-color: white;
-  padding: 20px;
-  margin-top: 20px;
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
 }
 
+.form-card {
+    width: 50%;
+    margin: auto;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 10px 20px 20px 20px;
+    box-shadow: 5px 5px 5px 5px silver;
+    background: linear-gradient(190deg, #f2f2f2 0%, #82869a 100%);
+}
+
+    .form-card h1 {
+        font-weight: 800;
+        text-align: center;
+    }
+
+.form-card-btn {
+    width: 20%;
+    height: 20%;
+    margin: auto;
+    color: black;
+    border-radius: 5px;
+    background: silver;
+    box-shadow: rgba(0,0,0,0.4) 5px 5px 5px;
+}
+
+    .form-card-btn:hover {
+        color: #ff6600;
+        background-color: #02020287;
+    }
 /* Clear floats after the columns */
 .row:after {
-  content: "";
-  display: table;
-  clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
 
 /* Footer */
 .footer {
-  padding: 20px;
-  text-align: center;
-  background: #ddd;
-  margin-top: 20px;
+    padding: 20px;
+    text-align: center;
+    background: #ddd;
+    margin-top: 20px;
 }
 
-.ico-home{
+.ico-home {
     background: url('your-image-url.jpg');
     height: 20px;
     width: 20px;
@@ -145,43 +170,45 @@ body {
 }
 
 .grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 10px;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
 }
+
 .grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 20px;
-  font-size: 30px;
-  text-align: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
 }
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 800px) {
-  .leftcolumn,
-  .rightcolumn {
-    width: 100%;
-    padding: 0;
-  }
+    .leftcolumn,
+    .rightcolumn {
+        width: 100%;
+        padding: 0;
+    }
 }
 
 /* Responsive layout - when the screen is less than 400px wide, make the navigation links stack on top of each other instead of next to each other */
 @media screen and (max-width: 400px) {
-  .topnav a {
-    float: none;
-    width: 100%;
-  }
+    .menu-nav a {
+        float: none;
+        width: 100%;
+    }
 }
 
 /* Table container*/
 @media only screen and (max-width: 600px) {
-  .container-col {
-    width: 100%;
-    display: block;
-  }
-  .header-title h1,
-  p {
-    text-align: center;
-  }
+    .container-col {
+        width: 100%;
+        display: block;
+    }
+
+    .header-title h1,
+    p {
+        text-align: center;
+    }
 }

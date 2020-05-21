@@ -2,7 +2,15 @@
 @{
     ViewData["Title"] = "ActiveUser";
 }
-
-<h2>ActiveUser</h2>
+@section Scripts{
+    <script>
+        $(function () {
+            $("#menu-user").hide();
+            $("#btn-login").hide();
+        });
+    </script>
+}
+<h2>Active Mail</h2>
 
 <p>@ViewBag.Message</p>
+<a asp-action="Login">Back to login.</a>

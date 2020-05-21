@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using MES_IFM_MVC.Models;
 using MES_IFM_MVC.Models.SQL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace MES_IFM_MVC
@@ -31,9 +25,9 @@ namespace MES_IFM_MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            MESSQL.ConnectionString = Configuration.GetConnectionString("DefaultConnectionString");
+            MESSQL.ConnectionString = Configuration.GetConnectionString("DeployConnectionString");
             services.AddDbContext<MESContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
+                options.UseSqlServer(Configuration.GetConnectionString("DeployConnectionString")));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -58,7 +52,7 @@ namespace MES_IFM_MVC
             });
 
             services.AddSession();
-            services.AddMemoryCache();
+            //services.AddMemoryCache();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,7 +69,7 @@ namespace MES_IFM_MVC
             }
 
             app.UseHttpsRedirection();
-            app.UseCookiePolicy();
+            //app.UseCookiePolicy();
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseSession();
@@ -85,6 +79,7 @@ namespace MES_IFM_MVC
                     name: "default",
                     template: "{controller=Account}/{action=Login}/{id?}");
             });
+            app.UseDeveloperExceptionPage();
         }
     }
 }

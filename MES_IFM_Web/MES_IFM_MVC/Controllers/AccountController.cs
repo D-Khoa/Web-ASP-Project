@@ -14,7 +14,8 @@ namespace MES_IFM_MVC.Controllers
     public class AccountController : Controller
     {
         private readonly MESContext _db;
-
+        //private string baseUrl = "https://localhost:44304/";
+        private string baseUrl = "https://192.168.1.68:8080/";
         public AccountController(MESContext db)
         {
             _db = db;
@@ -32,6 +33,11 @@ namespace MES_IFM_MVC.Controllers
             {
                 return View(user);
             }
+            if (string.IsNullOrEmpty(user.aa0001c11))
+            {
+                ViewBag.Message = "Please enter your first name for register!";
+                return View();
+            }
             if (string.IsNullOrEmpty(user.aa0001c13))
             {
                 ViewBag.Message = "Please enter your email for register!";
@@ -47,8 +53,11 @@ namespace MES_IFM_MVC.Controllers
                 ViewBag.Message = "Password and confirm password are not match!";
                 return View();
             }
-            string baseUrl = "https://localhost:44304/";
-            HttpClient client = new HttpClient();
+            HttpClientHandler clienthandler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
+            };
+            HttpClient client = new HttpClient(clienthandler);
             client.BaseAddress = new Uri(baseUrl);
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Add(contentType);
@@ -86,8 +95,12 @@ namespace MES_IFM_MVC.Controllers
                 ViewBag.Message = "Please enter your password for login!";
                 return View();
             }
-            string baseUrl = "https://localhost:44304/";
-            HttpClient client = new HttpClient();
+            HttpClientHandler clienthandler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
+            };
+
+            HttpClient client = new HttpClient(clienthandler);
             client.BaseAddress = new Uri(baseUrl);
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Add(contentType);
@@ -110,19 +123,21 @@ namespace MES_IFM_MVC.Controllers
         }
 
         [HttpGet]
-        public IActionResult ActiveUser(string userMail)
+        public IActionResult ActiveUser([FromQuery] string email)
         {
             aa0001 checkUser = _db.aa0001
-                .Where(a => a.aa0001c13 == userMail)
+                .Where(a => a.aa0001c13 == email)
                 .Select(a => a).FirstOrDefault();
             if (checkUser == null)
             {
-                return View("Invalid email");
+                ViewBag.Message = string.Format("Email {0} invaild!", email);
+                return View();
             }
             checkUser.aa0001c15 = "1";
+            checkUser.aa0001c23 = "Actived";
             _db.Update(checkUser);
             _db.SaveChangesAsync();
-            ViewBag.Message = string.Format("Email {0} is actived!", userMail);
+            ViewBag.Message = string.Format("Email {0} is actived!", email);
             return View();
         }
 

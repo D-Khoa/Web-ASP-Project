@@ -78,5 +78,15 @@ namespace MES_IFM_MVC.Controllers.Api
                 return Unauthorized();
             }
         }
+
+        //[HttpPut]
+        //public IActionResult UpdateRole([FromBody] aa0001 user)
+        //{
+        //    aa0001 checkUser = _db.aa0001
+        //        .Where(a => a.aa0001c13 == user.aa0001c13)
+        //        .Select(a => a).FirstOrDefault();
+        //    if (checkUser == null)
+        //        return BadRequest("Mail is not exist!");
+        //}
     }
 }
