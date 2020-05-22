@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,7 +16,7 @@ namespace MES_IFM_MVC.Controllers
     {
         private readonly MESContext _db;
         //private string baseUrl = "https://localhost:44304/";
-        private string baseUrl = "https://192.168.1.68:8080/";
+        private readonly string baseUrl = "https://192.168.1.68:8080/";
         public AccountController(MESContext db)
         {
             _db = db;
@@ -57,8 +58,10 @@ namespace MES_IFM_MVC.Controllers
             {
                 ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
             };
-            HttpClient client = new HttpClient(clienthandler);
-            client.BaseAddress = new Uri(baseUrl);
+            HttpClient client = new HttpClient(clienthandler)
+            {
+                BaseAddress = new Uri(baseUrl)
+            };
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Add(contentType);
             string stringData = JsonConvert.SerializeObject(user);
@@ -100,8 +103,10 @@ namespace MES_IFM_MVC.Controllers
                 ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
             };
 
-            HttpClient client = new HttpClient(clienthandler);
-            client.BaseAddress = new Uri(baseUrl);
+            HttpClient client = new HttpClient(clienthandler)
+            {
+                BaseAddress = new Uri(baseUrl)
+            };
             var contentType = new MediaTypeWithQualityHeaderValue("application/json");
             client.DefaultRequestHeaders.Accept.Add(contentType);
             string stringData = JsonConvert.SerializeObject(user);
@@ -146,6 +151,32 @@ namespace MES_IFM_MVC.Controllers
             HttpContext.Session.Remove("token");
             ViewBag.Message = "Your logged out successfully!";
             return Redirect("/Home/Index");
+        }
+
+        public IActionResult Users()
+        {
+            HttpClientHandler clienthandler = new HttpClientHandler
+            {
+                ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
+            };
+            HttpClient client = new HttpClient(clienthandler)
+            {
+                BaseAddress = new Uri(baseUrl)
+            };
+            var contentType = new MediaTypeWithQualityHeaderValue("application/json");
+            client.DefaultRequestHeaders.Accept.Add(contentType);
+            HttpResponseMessage response = client.GetAsync("/api/account").Result;
+            string stringResponse = response.Content.ReadAsStringAsync().Result;
+            List<aa0001> result = JsonConvert.DeserializeObject<List<aa0001>>(stringResponse);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return View(result);
+            }
+            else
+            {
+                ViewBag.Message = result;
+                return View();
+            }
         }
     }
 }

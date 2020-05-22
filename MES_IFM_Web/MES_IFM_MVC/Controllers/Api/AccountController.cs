@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
+using System.Threading.Tasks;
 using MES_IFM_MVC.Models;
 using MES_IFM_MVC.Models.Account;
 using MES_IFM_MVC.Models.MailContact;
@@ -12,19 +14,19 @@ namespace MES_IFM_MVC.Controllers.Api
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly MESContext _db;
+        private readonly MESContext _context;
         //string baseUrL = "https://localhost:44304";
-        private string baseUrl = "https://192.168.1.68:8080/";
+        private readonly string baseUrl = "https://192.168.1.68:8080";
 
         public AccountController(MESContext db)
         {
-            _db = db;
+            _context = db;
         }
 
         [HttpPost]
-        public IActionResult Register([FromBody] aa0001 user)
+        public async Task<IActionResult> Register([FromBody] aa0001 user)
         {
-            string checkUser = _db.aa0001
+            string checkUser = _context.aa0001
                 .Where(a => a.aa0001c13 == user.aa0001c13)
                 .Select(a => a.aa0001c13).FirstOrDefault();
             if (!string.IsNullOrEmpty(checkUser))
@@ -46,12 +48,14 @@ namespace MES_IFM_MVC.Controllers.Api
                 aa0001c23 = "Not active",
                 aa0001c26 = EncryptData.StringToHash(user.aa0001c13, salt, algorithm),
             };
-            _db.aa0001.Add(outUser);
-            _db.SaveChangesAsync();
-            MailInfo mailInfo = new MailInfo();
-            mailInfo.mailTo = outUser.aa0001c13;
-            mailInfo.mailSubject = string.Format("Active Account From {0}", baseUrl);
-            mailInfo.mailMessage = string.Format("{0}/Api/Account/ActiveEmail/?email={1}", baseUrl, outUser.aa0001c13);
+            _context.aa0001.Add(outUser);
+            await _context.SaveChangesAsync();
+            MailInfo mailInfo = new MailInfo
+            {
+                mailTo = outUser.aa0001c13,
+                mailSubject = string.Format("Active Account From {0}", baseUrl),
+                mailMessage = string.Format("{0}/Account/ActiveUser/?email={1}", baseUrl, outUser.aa0001c13)
+            };
             SendMail.SendMailAuto(mailInfo);
             return Ok("Your are registed! Please check mail and active your account!");
         }
@@ -71,5 +75,32 @@ namespace MES_IFM_MVC.Controllers.Api
         //    _db.SaveChangesAsync();
         //    return Ok(string.Format("Email {0} is actived!",email));
         //}
+
+        [HttpGet]
+        public IActionResult GetAllUsers()
+        {
+            if (_context.aa0001.Count() > 0)
+                return Ok(_context.aa0001);
+            else
+                return NotFound("Don't have any users!");
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUser([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _context.aa0001.FindAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
+        }
     }
 }

@@ -23,14 +23,14 @@ namespace MES_IFM_MVC.Controllers.Api
 
         // GET: api/Process
         [HttpGet]
-        public IEnumerable<aa0003> Getaa0003()
+        public IEnumerable<aa0003> GetAllProcess()
         {
             return _context.aa0003;
         }
 
         // GET: api/Process/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Getaa0003([FromRoute] int id)
+        public async Task<IActionResult> GetProcess([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -49,7 +49,7 @@ namespace MES_IFM_MVC.Controllers.Api
 
         // PUT: api/Process/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Putaa0003([FromRoute] int id, [FromBody] aa0003 aa0003)
+        public async Task<IActionResult> UpdateProcess([FromRoute] int id, [FromBody] aa0003 aa0003)
         {
             if (!ModelState.IsValid)
             {
@@ -69,7 +69,7 @@ namespace MES_IFM_MVC.Controllers.Api
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!aa0003Exists(id))
+                if (!ProcessExist(id))
                 {
                     return NotFound();
                 }
@@ -84,7 +84,7 @@ namespace MES_IFM_MVC.Controllers.Api
 
         // POST: api/Process
         [HttpPost]
-        public async Task<IActionResult> Postaa0003([FromBody] aa0003 aa0003)
+        public async Task<IActionResult> CreateProcess([FromBody] aa0003 aa0003)
         {
             if (!ModelState.IsValid)
             {
@@ -99,7 +99,7 @@ namespace MES_IFM_MVC.Controllers.Api
 
         // DELETE: api/Process/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Deleteaa0003([FromRoute] int id)
+        public async Task<IActionResult> DeleteProcess([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
@@ -118,7 +118,7 @@ namespace MES_IFM_MVC.Controllers.Api
             return Ok(aa0003);
         }
 
-        private bool aa0003Exists(int id)
+        private bool ProcessExist(int id)
         {
             return _context.aa0003.Any(e => e.aa0003c01 == id);
         }
