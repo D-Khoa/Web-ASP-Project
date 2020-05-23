@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/jquery.dataTables.min.css" />
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="js/jquery-3.5.1.js"
+    ></script>
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="js/jquery.dataTables.min.js"
+    ></script>
+  </head>
+
+  <body>
+    <script>
+      $(document).ready(function () {
+        $("#working-shift").DataTable();
+      });
+      function showDialog(formID, formOption) {
+        var formCurrent = document.getElementById(formID);
+        var formTitle = document.getElementById('form-title');
+        var formAdd = document.getElementById('shift-form-add');
+        var formUpdate = document.getElementById('shift-form-update');
+        formCurrent.style.display = 'block';
+        switch(formOption){
+            case 'add':
+            formTitle.innerHTML = "Add New Shift";
+            formAdd.style.display = 'flex';
+            break;
+            case 'update':
+            formTitle.innerHTML = "Update Shift";
+            formUpdate.style.display = 'flex';
+            break;
+            case 'close':
+            formAdd.style.display = 'none';
+            formUpdate.style.display = 'none';
+            formCurrent.style.display = 'none';
+            break;
+        }
+      }
+    </script>
+    <section class="header">
+      <div class="container">
+        <a
+          href="#"
+          class="container-item"
+          style="flex-grow: 1; flex-shrink: 10;"
+        >
+          <img
+            width="100"
+            height="30"
+            src="https://ifmsolutionsvn.com/wp-content/uploads/2019/12/LogoAI2.png"
+            class="img"
+            alt="IFM-Solutions"
+          />
+        </a>
+        <h2 class="container-item" style="flex-grow: 4;">
+          Manufacturing Execution Systems
+        </h2>
+      </div>
+    </section>
+
+    <section class="menu-nav">
+        <div class="container">
+          <a class="container-item" href="/index.html">Home</a>
+          <div class="container-item">
+            <div class="dropdown">
+              <a class="dropdown-btn" href="#">Working Status</a>
+              <div class="dropdown-content">
+                <a href="#">Add machine</a>
+                <a href="#">Update machine status</a>
+                <a href="/working.html">Show working status</a>
+              </div>
+            </div>
+          </div>
+          <div class="container-item">
+            <div class="dropdown">
+              <a class="dropdown-btn" href="#">Process</a>
+              <div class="dropdown-content">
+                <a href="#">Add new process</a>
+                <a href="#">Process detail</a>
+                <a href="#">Show all process</a>
+              </div>
+            </div>
+          </div>
+          <div class="container-item">
+            <div class="dropdown">
+              <a class="dropdown-btn" href="#">Machine</a>
+              <div class="dropdown-content">
+                <a href="#">Add new machine</a>
+                <a href="#">Machine detail</a>
+                <a href="/machine.html">Show all machine</a>
+              </div>
+            </div>
+          </div>
+          <div class="container-item">
+            <div class="dropdown">
+              <a class="dropdown-btn" href="#">Master</a>
+              <div class="dropdown-content">
+                <a href="/workingshift.html">Working shift</a>
+                <a href="#">Process status</a>
+                <a href="#">Machine status</a>
+                <a href="#">Site detail</a>
+              </div>
+            </div>
+          </div>
+          <div class="container-item">
+            <div class="dropdown">
+              <a class="dropdown-btn" href="#">Users</a>
+              <div class="dropdown-content">
+                <a href="#">User detail</a>
+                <a href="#">Roles management</a>
+                <a href="#">Show all users</a>
+              </div>
+            </div>
+          </div>
+          <a class="container-item" href="/login.html" style="float: right;">Log out</a>
+        </div>
+      </section>
+  
+    <section style="margin-top: 20px;">
+      <div class="container">
+        <a
+          class="container-item btn"
+          href="#"
+          onclick="showDialog('shift-form','add');"
+        >
+          <span class="ico ico-plus"></span>Add Shift</a
+        >
+        <a
+          class="container-item btn"
+          href="#"
+          onclick="showDialog('shift-form','update');"
+        >
+          <span class="ico ico-update"></span>Update Shift</a
+        >
+      </div>
+      <table id="working-shift" class="display" style="width: 100%;">
+        <thead>
+          <tr>
+            <th>Shift ID</th>
+            <th>Shift Name</th>
+            <th>Begin Time</th>
+            <th>End Time</th>
+            <th>Update User</th>
+            <th>Update Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>WS0001</td>
+            <td>Shift 1</td>
+            <td>6:00</td>
+            <td>14:00</td>
+            <td>Administrator</td>
+            <td>2020-05-23 8:47:45</td>
+          </tr>
+          <tr>
+            <td>WS0002</td>
+            <td>Shift 2</td>
+            <td>14:00</td>
+            <td>22:00</td>
+            <td>Administrator</td>
+            <td>2020-05-23 8:49:53</td>
+          </tr>
+          <tr>
+            <td>WS0003</td>
+            <td>Shift 3</td>
+            <td>22:00</td>
+            <td>6:00</td>
+            <td>Administrator</td>
+            <td>2020-05-23 8:52:47</td>
+          </tr>
+          <tr>
+            <td>WS0004</td>
+            <td>Office Hours</td>
+            <td>8:00</td>
+            <td>17:00</td>
+            <td>Administrator</td>
+            <td>2020-05-23 8:55:20</td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th>Shift ID</th>
+            <th>Shift Name</th>
+            <th>Begin Time</th>
+            <th>End Time</th>
+            <th>Update User</th>
+            <th>Update Date</th>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+    <section class="form-dialog" id="shift-form">
+      <div class="menu-nav container" style="margin-bottom: 20px;">
+        <h2 class="container-item" id="form-title">
+          Add New Shift
+        </h2>
+        <a href="#" onclick="showDialog('shift-form','close')">X</a>
+      </div>
+      <div class="container">
+        <label class="container-item">Shift ID:</label>
+        <input class="container-item" />
+      </div>
+      <div class="container">
+        <label class="container-item">Shift Name:</label>
+        <input class="container-item" />
+      </div>
+      <div class="container">
+        <label class="container-item">Begin Time:</label>
+        <input type="time" class="container-item" />
+      </div>
+      <div class="container">
+        <label class="container-item">End Time:</label>
+        <input type="time" class="container-item" />
+      </div>
+      <div class="container" id="shift-form-add" style="display: none;">
+        <a class="container-item btn btn-success">Add</a>
+        <a class="container-item btn">Cancel</a>
+      </div>
+      <div class="container" id="shift-form-update" style="display: none;">
+        <a class="container-item btn btn-danger">Delete</a>
+        <a class="container-item btn btn-success">Update</a>
+        <a class="container-item btn">Cancel</a>
+      </div>
+    </section>
+    <section class="footer">
+      <h3>&copy; Copyright IFM Solutions Company</h3>
+    </section>
+  </body>
+</html>

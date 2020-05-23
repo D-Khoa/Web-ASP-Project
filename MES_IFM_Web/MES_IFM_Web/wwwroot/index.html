@@ -17,76 +17,7 @@
   </head>
 
   <body>
-    <script>
-      $(document).ready(function () {
-        $("#example").DataTable({
-          columns: [
-            {
-              data: "Machine",
-            },
-            {
-              data: 'Status',
-              render: function (data, type) {
-                if (type === "display") {
-                  var stt = "";
-                  switch (data) {
-                    case 'Working':
-                      stt = 'green';
-                      break;
-                    case 'Stop':
-                      stt = 'red';
-                      break;
-                    case 'Repair':
-                      stt = 'yellow';
-                      break;
-                  }
-                  return '<div class="circlestt '+ stt +'"></div>';
-                }
-                return data;
-              }
-            },
-            {
-              data: "Process",
-            },
-            {
-              data: "Line",
-            },
-            {
-              data: "Dept",
-            },
-            {
-              data: "Site",
-            },
-            {
-              data: "Plan",
-              render: function (data, type) {
-                if (type === "display") {
-                  var stt = "";
-                  switch (data) {
-                    case 'Working':
-                      stt = 'green';
-                      break;
-                    case 'Stop':
-                      stt = 'red';
-                      break;
-                    case 'Repair':
-                      stt = 'yellow';
-                      break;
-                  }
-                  return '<div class="circlestt '+ stt +'"></div>';
-                }
-                return data;
-              }
-            }
-          ]
-        });
-      });
-      $("#example tbody").on("click", "tr", function () {
-        var data = table.row(this).data();
-        alert("You clicked on " + data[0] + "'s row");
-      });
-    </script>
-    <div class="header">
+    <section class="header">
       <div class="container">
         <a
           href="#"
@@ -105,182 +36,68 @@
           Manufacturing Execution Systems
         </h2>
       </div>
-    </div>
-    <div class="menu-nav">
+    </section>
+
+    <section class="menu-nav">
       <div class="container">
-        <a class="container-item" href="#">Home</a>
-        <a class="container-item" href="#">Working Status</a>
-        <a class="container-item" href="#">Process</a>
-        <a class="container-item" href="#">Machine</a>
-        <a class="container-item" href="#">Master</a>
-        <a class="container-item" href="#">Users</a>
-        <a class="container-item" href="#" style="float: right;">Log out</a>
+        <a class="container-item" href="/index.html">Home</a>
+        <div class="container-item">
+          <div class="dropdown">
+            <a class="dropdown-btn" href="#">Working Status</a>
+            <div class="dropdown-content">
+              <a href="#">Add machine</a>
+              <a href="#">Update machine status</a>
+              <a href="/working.html">Show working status</a>
+            </div>
+          </div>
+        </div>
+        <div class="container-item">
+          <div class="dropdown">
+            <a class="dropdown-btn" href="#">Process</a>
+            <div class="dropdown-content">
+              <a href="#">Add new process</a>
+              <a href="#">Process detail</a>
+              <a href="#">Show all process</a>
+            </div>
+          </div>
+        </div>
+        <div class="container-item">
+          <div class="dropdown">
+            <a class="dropdown-btn" href="#">Machine</a>
+            <div class="dropdown-content">
+              <a href="#">Add new machine</a>
+              <a href="#">Machine detail</a>
+              <a href="/machine.html">Show all machine</a>
+            </div>
+          </div>
+        </div>
+        <div class="container-item">
+          <div class="dropdown">
+            <a class="dropdown-btn" href="#">Master</a>
+            <div class="dropdown-content">
+              <a href="/workingshift.html">Working shift</a>
+              <a href="#">Process status</a>
+              <a href="#">Machine status</a>
+              <a href="#">Site detail</a>
+            </div>
+          </div>
+        </div>
+        <div class="container-item">
+          <div class="dropdown">
+            <a class="dropdown-btn" href="#">Users</a>
+            <div class="dropdown-content">
+              <a href="#">User detail</a>
+              <a href="#">Roles management</a>
+              <a href="#">Show all users</a>
+            </div>
+          </div>
+        </div>
+        <a class="container-item" href="/login.html" style="float: right;">Log out</a>
       </div>
-    </div>
-    <div style="margin: 20px;">
-      <span class="circlestt red"></span>
-      <table id="example" class="display" style="width: 100%;">
-        <thead>
-          <tr>
-            <th>Machine</th>
-            <th>Status</th>
-            <th>Process</th>
-            <th>Line</th>
-            <th>Dept</th>
-            <th>Site</th>
-            <th>Plan</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>MC0001</td>
-            <td>Stop</td>
-            <td>P0005</td>
-            <td>Line A</td>
-            <td>Production 1</td>
-            <td>Factory 3</td>
-            <td>Stop</td>
-          </tr>
-          <tr>
-            <td>MC0002</td>
-            <td>Working</td>
-            <td>P0004</td>
-            <td>Line A</td>
-            <td>Production 1</td>
-            <td>Factory 3</td>
-            <td>Working</td>
-          </tr>
-          <tr>
-            <td>MC0003</td>
-            <td>Working</td>
-            <td>P0002</td>
-            <td>Line A</td>
-            <td>Production 1</td>
-            <td>Factory 3</td>
-            <td>Stop</td>
-          </tr>
-          <tr>
-            <td>MC0004</td>
-            <td>Repair</td>
-            <td>P0005</td>
-            <td>Line A</td>
-            <td>Production 1</td>
-            <td>Factory 3</td>
-            <td>Working</td>
-          </tr>
-          <tr>
-            <td>MC0001</td>
-            <td>Stop</td>
-            <td>P0005</td>
-            <td>Line B</td>
-            <td>Production 1</td>
-            <td>Factory 3</td>
-            <td>Stop</td>
-          </tr>
-          <tr>
-            <td>MC0002</td>
-            <td>Working</td>
-            <td>P0004</td>
-            <td>Line B</td>
-            <td>Production 1</td>
-            <td>Factory 3</td>
-            <td>Working</td>
-          </tr>
-          <tr>
-            <td>MC0003</td>
-            <td>Working</td>
-            <td>P0002</td>
-            <td>Line B</td>
-            <td>Production 1</td>
-            <td>Factory 3</td>
-            <td>Stop</td>
-          </tr>
-          <tr>
-            <td>MC0004</td>
-            <td>Repair</td>
-            <td>P0005</td>
-            <td>Line C</td>
-            <td>Production 1</td>
-            <td>Factory 3</td>
-            <td>Working</td>
-          </tr>
-          <tr>
-            <td>MC0001</td>
-            <td>Stop</td>
-            <td>P0005</td>
-            <td>Line C</td>
-            <td>Production 1</td>
-            <td>Factory 3</td>
-            <td>Stop</td>
-          </tr>
-          <tr>
-            <td>MC0002</td>
-            <td>Working</td>
-            <td>P0004</td>
-            <td>Line C</td>
-            <td>Production 1</td>
-            <td>Factory 3</td>
-            <td>Working</td>
-          </tr>
-          <tr>
-            <td>MC0003</td>
-            <td>Working</td>
-            <td>P0002</td>
-            <td>Line C</td>
-            <td>Production 1</td>
-            <td>Factory 3</td>
-            <td>Stop</td>
-          </tr>
-          <tr>
-            <td>MC0004</td>
-            <td>Repair</td>
-            <td>P0005</td>
-            <td>Line E</td>
-            <td>Production 1</td>
-            <td>Factory 2</td>
-            <td>Working</td>
-          </tr>
-          <tr>
-            <td>MC0001</td>
-            <td>Stop</td>
-            <td>P0005</td>
-            <td>Line A</td>
-            <td>Production 1</td>
-            <td>Factory 2</td>
-            <td>Stop</td>
-          </tr>
-          <tr>
-            <td>MC0002</td>
-            <td>Working</td>
-            <td>P0004</td>
-            <td>Line A</td>
-            <td>Production 1</td>
-            <td>Factory 1</td>
-            <td>Working</td>
-          </tr>
-          <tr>
-            <td>MC0003</td>
-            <td>Working</td>
-            <td>P0002</td>
-            <td>Line A</td>
-            <td>Production 1</td>
-            <td>Factory 2</td>
-            <td>Stop</td>
-          </tr>
-          <tr>
-            <td>MC0004</td>
-            <td>Working</td>
-            <td>P0005</td>
-            <td>Line A</td>
-            <td>Production 1</td>
-            <td>Factory 1</td>
-            <td>Working</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="footer">
+    </section>
+
+    <section class="footer">
       <h3>&copy; Copyright IFM Solutions Company</h3>
-    </div>
+    </section>
   </body>
 </html>

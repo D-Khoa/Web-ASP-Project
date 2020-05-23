@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/jquery.dataTables.min.css" />
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="js/jquery-3.5.1.js"
+    ></script>
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="js/jquery.dataTables.min.js"
+    ></script>
+  </head>
+
+  <body style="background: white;">
+    <script>
+      $(document).ready(function () {
+        $("#btn-logout").hide();
+      });
+    </script>
+    <section class="header">
+      <div class="container">
+        <a
+          href="#"
+          class="container-item"
+          style="flex-grow: 1; flex-shrink: 10;"
+        >
+          <img
+            width="100"
+            height="30"
+            src="https://ifmsolutionsvn.com/wp-content/uploads/2019/12/LogoAI2.png"
+            class="img"
+            alt="IFM-Solutions"
+          />
+        </a>
+        <h2 class="container-item" style="flex-grow: 4;">
+          Manufacturing Execution Systems
+        </h2>
+      </div>
+    </section>
+
+    <section class="menu-nav">
+        <div class="container">
+          <a class="container-item" href="/index.html">Home</a>
+          <div class="container-item">
+            <div class="dropdown">
+              <a class="dropdown-btn" href="#">Working Status</a>
+              <div class="dropdown-content">
+                <a href="#">Add machine</a>
+                <a href="#">Update machine status</a>
+                <a href="/working.html">Show working status</a>
+              </div>
+            </div>
+          </div>
+          <div class="container-item">
+            <div class="dropdown">
+              <a class="dropdown-btn" href="#">Process</a>
+              <div class="dropdown-content">
+                <a href="#">Add new process</a>
+                <a href="#">Process detail</a>
+                <a href="#">Show all process</a>
+              </div>
+            </div>
+          </div>
+          <div class="container-item">
+            <div class="dropdown">
+              <a class="dropdown-btn" href="#">Machine</a>
+              <div class="dropdown-content">
+                <a href="#">Add new machine</a>
+                <a href="#">Machine detail</a>
+                <a href="/machine.html">Show all machine</a>
+              </div>
+            </div>
+          </div>
+          <div class="container-item">
+            <div class="dropdown">
+              <a class="dropdown-btn" href="#">Master</a>
+              <div class="dropdown-content">
+                <a href="/workingshift.html">Working shift</a>
+                <a href="#">Process status</a>
+                <a href="#">Machine status</a>
+                <a href="#">Site detail</a>
+              </div>
+            </div>
+          </div>
+          <div class="container-item">
+            <div class="dropdown">
+              <a class="dropdown-btn" href="#">Users</a>
+              <div class="dropdown-content">
+                <a href="#">User detail</a>
+                <a href="#">Roles management</a>
+                <a href="#">Show all users</a>
+              </div>
+            </div>
+          </div>
+          <a class="container-item" href="/login.html" style="float: right;">Log out</a>
+        </div>
+      </section>
+  
+    <section class="form-dialog" id="login-form" style="display: block;">
+        <div class="menu-nav container" style="margin-bottom: 20px;">
+          <h2 class="container-item" id="login-title">
+            Login
+          </h2>
+        </div>
+        <div class="container">
+          <label class="container-item">Username:</label>
+          <input class="container-item" />
+        </div>
+        <div class="container">
+          <label class="container-item">Password:</label>
+          <input type="Password" class="container-item" />
+        </div>
+        <!--<div class="container">
+          <label class="container-item">Begin Time:</label>
+          <input type="time" class="container-item" />
+        </div>
+        <div class="container">
+          <label class="container-item">End Time:</label>
+          <input type="time" class="container-item" />
+        </div>
+        <div class="container" id="shift-form-add" style="display: none;">
+          <a class="container-item btn btn-success">Add</a>
+          <a class="container-item btn">Cancel</a>
+        </div>-->
+        <div class="container">
+          <a class="container-item btn btn-info">Register</a>
+          <a class="container-item btn btn-success">Login</a>
+          <a class="container-item btn">Cancel</a>
+        </div>
+      </section>
+    <section class="footer">
+      <h3>&copy; Copyright IFM Solutions Company</h3>
+    </section>
+  </body>
+</html>
