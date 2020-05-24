@@ -39,7 +39,7 @@ namespace IFM_MES_WebControl
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, MESContext db)
         {
             if (env.IsDevelopment())
             {
@@ -51,6 +51,8 @@ namespace IFM_MES_WebControl
                 app.UseHsts();
             }
 
+            db.Database.EnsureCreated();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -61,6 +63,7 @@ namespace IFM_MES_WebControl
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseDeveloperExceptionPage();
         }
     }
 }

@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/jquery.dataTables.min.css" />
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="js/jquery-3.5.1.js"
+    ></script>
+    <script
+      language="JavaScript"
+      type="text/javascript"
+      src="js/jquery.dataTables.min.js"
+    ></script>
+  </head>
+
+  <body>
+    <script>
+      $(document).ready(function () {
+        $("#example").DataTable({
+          columns: [
+            { data: "Date" },
+            { data: "Process" },
+            { data: "Actual/Plan" },
+            { data: "UPH",
+            render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  if (data > 90) {
+                      stt = "green";
+                  }
+                  else if (data > 70) {
+                      stt = "yellow";
+                    }
+                   else   if (data > 60) {
+                      stt = "red";
+                    }
+                    else {
+                      stt = "gray";
+                    }
+                  return '<div class="circle-stt ' + stt + '" style = "height: 20px; text-align: center;">'+data+'</div>' ;
+                }
+                return data;
+              },
+             },
+            {
+              data: "6:00~7:00",
+              render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  switch (data) {
+                    case "Working":
+                      stt = "green";
+                      break;
+                    case "Stop":
+                      stt = "red";
+                      break;
+                    case "Repair":
+                      stt = "yellow";
+                      break;
+                    case "No Plan":
+                      stt = "gray";
+                      break;
+                  }
+                  return '<div class="rect-stt ' + stt + '"></div>';
+                }
+                return data;
+              },
+            },
+            {
+              data: "7:00~8:00",
+              render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  switch (data) {
+                    case "Working":
+                      stt = "green";
+                      break;
+                    case "Stop":
+                      stt = "red";
+                      break;
+                    case "Repair":
+                      stt = "yellow";
+                      break;
+                    case "No Plan":
+                      stt = "gray";
+                      break;
+                  }
+                  return '<div class="rect-stt ' + stt + '"></div>';
+                }
+                return data;
+              },
+            },
+            {
+              data: "8:00~9:00",
+              render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  switch (data) {
+                    case "Working":
+                      stt = "green";
+                      break;
+                    case "Stop":
+                      stt = "red";
+                      break;
+                    case "Repair":
+                      stt = "yellow";
+                      break;
+                    case "No Plan":
+                      stt = "gray";
+                      break;
+                  }
+                  return '<div class="rect-stt ' + stt + '"></div>';
+                }
+                return data;
+              },
+            },
+            {
+              data: "9:00~10:00",
+              render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  switch (data) {
+                    case "Working":
+                      stt = "green";
+                      break;
+                    case "Stop":
+                      stt = "red";
+                      break;
+                    case "Repair":
+                      stt = "yellow";
+                      break;
+                    case "No Plan":
+                      stt = "gray";
+                      break;
+                  }
+                  return '<div class="rect-stt ' + stt + '"></div>';
+                }
+                return data;
+              },
+            },
+            {
+              data: "10:00~11:00",
+              render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  switch (data) {
+                    case "Working":
+                      stt = "green";
+                      break;
+                    case "Stop":
+                      stt = "red";
+                      break;
+                    case "Repair":
+                      stt = "yellow";
+                      break;
+                    case "No Plan":
+                      stt = "gray";
+                      break;
+                  }
+                  return '<div class="rect-stt ' + stt + '"></div>';
+                }
+                return data;
+              },
+            },
+            {
+              data: "11:00~12:00",
+              render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  switch (data) {
+                    case "Working":
+                      stt = "green";
+                      break;
+                    case "Stop":
+                      stt = "red";
+                      break;
+                    case "Repair":
+                      stt = "yellow";
+                      break;
+                    case "No Plan":
+                      stt = "gray";
+                      break;
+                  }
+                  return '<div class="rect-stt ' + stt + '"></div>';
+                }
+                return data;
+              },
+            },
+            {
+              data: "12:00~13:00",
+              render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  switch (data) {
+                    case "Working":
+                      stt = "green";
+                      break;
+                    case "Stop":
+                      stt = "red";
+                      break;
+                    case "Repair":
+                      stt = "yellow";
+                      break;
+                    case "No Plan":
+                      stt = "gray";
+                      break;
+                  }
+                  return '<div class="rect-stt ' + stt + '"></div>';
+                }
+                return data;
+              },
+            },
+            {
+              data: "13:00~14:00",
+              render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  switch (data) {
+                    case "Working":
+                      stt = "green";
+                      break;
+                    case "Stop":
+                      stt = "red";
+                      break;
+                    case "Repair":
+                      stt = "yellow";
+                      break;
+                    case "No Plan":
+                      stt = "gray";
+                      break;
+                  }
+                  return '<div class="rect-stt ' + stt + '"></div>';
+                }
+                return data;
+              },
+            },
+            {
+              data: "14:00~15:00",
+              render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  switch (data) {
+                    case "Working":
+                      stt = "green";
+                      break;
+                    case "Stop":
+                      stt = "red";
+                      break;
+                    case "Repair":
+                      stt = "yellow";
+                      break;
+                    case "No Plan":
+                      stt = "gray";
+                      break;
+                  }
+                  return '<div class="rect-stt ' + stt + '"></div>';
+                }
+                return data;
+              },
+            },
+            {
+              data: "15:00~16:00",
+              render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  switch (data) {
+                    case "Working":
+                      stt = "green";
+                      break;
+                    case "Stop":
+                      stt = "red";
+                      break;
+                    case "Repair":
+                      stt = "yellow";
+                      break;
+                    case "No Plan":
+                      stt = "gray";
+                      break;
+                  }
+                  return '<div class="rect-stt ' + stt + '"></div>';
+                }
+                return data;
+              },
+            },
+            {
+              data: "16:00~17:00",
+              render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  switch (data) {
+                    case "Working":
+                      stt = "green";
+                      break;
+                    case "Stop":
+                      stt = "red";
+                      break;
+                    case "Repair":
+                      stt = "yellow";
+                      break;
+                    case "No Plan":
+                      stt = "gray";
+                      break;
+                  }
+                  return '<div class="rect-stt ' + stt + '"></div>';
+                }
+                return data;
+              },
+            },
+            {
+              data: "17:00~18:00",
+              render: function (data, type) {
+                if (type === "display") {
+                  var stt = "";
+                  switch (data) {
+                    case "Working":
+                      stt = "green";
+                      break;
+                    case "Stop":
+                      stt = "red";
+                      break;
+                    case "Repair":
+                      stt = "yellow";
+                      break;
+                    case "No Plan":
+                      stt = "gray";
+                      break;
+                  }
+                  return '<div class="rect-stt ' + stt + '"></div>';
+                }
+                return data;
+              },
+            },
+          ],
+        });
+        $("#btn-menu-working").toggleClass("active");
+      });
+
+      function showDialog(formID, formOption) {
+        var formCurrent = document.getElementById(formID);
+        var formTitle = document.getElementById("form-title");
+        var formAdd = document.getElementById("shift-form-add");
+        var formUpdate = document.getElementById("shift-form-update");
+        formCurrent.style.display = "block";
+        switch (formOption) {
+          case "add":
+            formTitle.innerHTML = "Add New Process";
+            formAdd.style.display = "flex";
+            break;
+          case "update":
+            formTitle.innerHTML = "Update Process";
+            formUpdate.style.display = "flex";
+            break;
+          case "close":
+            formAdd.style.display = "none";
+            formUpdate.style.display = "none";
+            formCurrent.style.display = "none";
+            break;
+        }
+      }
+    </script>
+
+    <section class="header">
+      <div class="container">
+        <a
+          href="#"
+          class="container-item"
+          style="flex-grow: 1; flex-shrink: 10;"
+        >
+          <img
+            width="100"
+            height="30"
+            src="https://ifmsolutionsvn.com/wp-content/uploads/2019/12/LogoAI2.png"
+            class="img"
+            alt="IFM-Solutions"
+          />
+        </a>
+        <h2 class="container-item" style="flex-grow: 4;">
+          Manufacturing Execution Systems
+        </h2>
+      </div>
+    </section>
+
+    <section class="menu-nav">
+      <div class="container">
+        <a class="container-item" href="index.html">Home</a>
+        <div class="container-item">
+          <div class="dropdown">
+            <a class="dropdown-btn" href="#">Working Status</a>
+            <div class="dropdown-content">
+              <a href="#">Add machine</a>
+              <a href="#">Update machine status</a>
+              <a href="working.html">Show working status</a>
+            </div>
+          </div>
+        </div>
+        <div class="container-item">
+          <div class="dropdown">
+            <a class="dropdown-btn" href="#">Process</a>
+            <div class="dropdown-content">
+              <a href="#">Add new process</a>
+              <a href="#">Process detail</a>
+              <a href="#">Show all process</a>
+            </div>
+          </div>
+        </div>
+        <div class="container-item">
+          <div class="dropdown">
+            <a class="dropdown-btn" href="#">Machine</a>
+            <div class="dropdown-content">
+              <a href="#">Add new machine</a>
+              <a href="#">Machine detail</a>
+              <a href="machine.html">Show all machine</a>
+            </div>
+          </div>
+        </div>
+        <div class="container-item">
+          <div class="dropdown">
+            <a class="dropdown-btn" href="#">Master</a>
+            <div class="dropdown-content">
+              <a href="workingshift.html">Working shift</a>
+              <a href="process.html">Process status</a>
+              <a href="#">Machine status</a>
+              <a href="site.html">Site detail</a>
+            </div>
+          </div>
+        </div>
+        <div class="container-item">
+          <div class="dropdown">
+            <a class="dropdown-btn" href="#">Users</a>
+            <div class="dropdown-content">
+              <a href="#">User detail</a>
+              <a href="#">Roles management</a>
+              <a href="#">Show all users</a>
+            </div>
+          </div>
+        </div>
+        <a class="container-item" href="login.html" style="float: right;"
+          >Log out</a
+        >
+      </div>
+    </section>
+
+    <section style="margin: 20px;">
+      <div class="container">
+          <label class="container-item">Date: </label>
+          <input type="date" class="container-item"/>
+          <label class="container-item">Shift: </label>
+          <select class="container-item">
+              <option value="Shift1">Shift 1</option>
+              <option value="Shift1">Shift 2</option>
+              <option value="Shift1">Shift 3</option>
+              <option value="Shift1">Office Hours</option>
+          </select>
+          <label class="container-item">Site: </label>
+          <select class="container-item">
+              <option value="Shift1">Factory 1</option>
+              <option value="Shift1">Factory 2</option>
+              <option value="Shift1">Factory 3</option>
+              <option value="Shift1">Factory 4</option>
+          </select>
+          <label class="container-item">Line: </label>
+          <select class="container-item">
+              <option value="Shift1">Line A</option>
+              <option value="Shift1">Line B</option>
+              <option value="Shift1">Line C</option>
+              <option value="Shift1">Line D</option>
+          </select>
+            <label class="container-item">Process:</label>
+            <select class="container-item">
+              <option value="">P0001</option>
+              <option value="">P0002</option>
+              <option value="">P0003</option>
+              <option value="">P0004</option>
+              <option value="">P0005</option>
+              <option value="">P0006</option>
+              <option value="">P0007</option>
+              <option value="">P0008</option>
+              <option value="">Show All</option>
+            </select>
+      </div>
+      <table id="example" class="display" style="width: 100%; font-size: 12px;">
+        <thead style="margin: 0px; padding: 0px;">
+          <tr style="padding: 0px !important;">
+            <th>Date</th>
+            <th>Process</th>
+            <th>Actual/Plan</th>
+            <th>UPH</th>
+            <th>6:00</th>
+            <th>7:00</th>
+            <th>8:00</th>
+            <th>9:00</th>
+            <th>10:00</th>
+            <th>11:00</th>
+            <th>12:00</th>
+            <th>13:00</th>
+            <th>14:00</th>
+            <th>15:00</th>
+            <th>16:00</th>
+            <th>17:00</th>
+          </tr>
+        </thead>
+        <tbody style="margin: 0px; padding: 0px;">
+          <tr style="padding: 0px !important;">
+            <td style="padding: 0px !important;">05-20</td>
+            <td style="padding: 0px !important;">P0001</td>
+            <td style="padding: 0px !important;">Actual</td>
+            <td style="padding: 0px !important;">75</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Repair</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Repair</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+          </tr>
+          <tr style="padding: 0px !important;">
+            <td style="padding: 0px !important;">05-20</td>
+            <td style="padding: 0px !important;">P0001</td>
+            <td style="padding: 0px !important;">Plan</td>
+            <td style="padding: 0px !important;">100</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+          </tr>
+          <tr style="padding: 0px !important;">
+            <td style="padding: 0px !important;">05-20</td>
+            <td style="padding: 0px !important;">P0004</td>
+            <td style="padding: 0px !important;">Actual</td>
+            <td style="padding: 0px !important;">125</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+          </tr>
+          <tr style="padding: 0px !important;">
+            <td style="padding: 0px !important;">05-20</td>
+            <td style="padding: 0px !important;">P0004</td>
+            <td style="padding: 0px !important;">Plan</td>
+            <td style="padding: 0px !important;">100</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+          </tr>
+          <tr style="padding: 0px !important;">
+            <td style="padding: 0px !important;">05-20</td>
+            <td style="padding: 0px !important;">P0002</td>
+            <td style="padding: 0px !important;">Actual</td>
+            <td style="padding: 0px !important;">62.5</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Repair</td>
+            <td style="padding: 0px !important;">Stop</td>
+            <td style="padding: 0px !important;">Stop</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+          </tr>
+          <tr style="padding: 0px !important;">
+            <td style="padding: 0px !important;">05-20</td>
+            <td style="padding: 0px !important;">P0002</td>
+            <td style="padding: 0px !important;">Plan</td>
+            <td style="padding: 0px !important;">100</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+          </tr>
+          <tr style="padding: 0px !important;">
+            <td style="padding: 0px !important;">05-20</td>
+            <td style="padding: 0px !important;">P0003</td>
+            <td style="padding: 0px !important;">Actual</td>
+            <td style="padding: 0px !important;">100</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+          </tr>
+          <tr style="padding: 0px !important;">
+            <td style="padding: 0px !important;">05-20</td>
+            <td style="padding: 0px !important;">P0003</td>
+            <td style="padding: 0px !important;">Plan</td>
+            <td style="padding: 0px !important;">100</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">Working</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+            <td style="padding: 0px !important;">No Plan</td>
+          </tr>
+        </tbody>
+        <tfoot style="margin: 0px; padding: 0px;">
+          <tr style="padding: 0px !important;">
+            <th>Date</th>
+            <th>Process</th>
+            <th>Actual/Plan</th>
+            <th>UPH</th>
+            <th>6:00</th>
+            <th>7:00</th>
+            <th>8:00</th>
+            <th>9:00</th>
+            <th>10:00</th>
+            <th>11:00</th>
+            <th>12:00</th>
+            <th>13:00</th>
+            <th>14:00</th>
+            <th>15:00</th>
+            <th>16:00</th>
+            <th>17:00</th>
+          </tr>
+        </tfoot>
+      </table>
+    </section>
+
+    <section class="form-dialog" id="shift-form">
+      <div class="menu-nav container" style="margin-bottom: 20px;">
+        <h2 class="container-item" id="form-title" style="width: auto;">
+          Add New Process
+        </h2>
+        <a href="#" onclick="showDialog('shift-form','close')">X</a>
+      </div>
+      <div class="container">
+        <label class="container-item">Process ID:</label>
+        <input class="container-item" />
+      </div>
+      <div class="container">
+        <label class="container-item">Process Name:</label>
+        <input class="container-item" />
+      </div>
+      <div class="container">
+        <label class="container-item">Line:</label>
+        <select class="container-item">
+          <option value="">Line A</option>
+          <option value="">Line B</option>
+          <option value="">Line C</option>
+          <option value="">Line D</option>
+        </select>
+      </div>
+      <div class="container">
+        <label class="container-item">Dept:</label>
+        <select class="container-item">
+          <option value="">Production 1</option>
+          <option value="">Production 2</option>
+          <option value="">Production 3</option>
+          <option value="">Production 4</option>
+        </select>
+      </div>
+      <div class="container">
+        <label class="container-item">Site:</label>
+        <select class="container-item">
+          <option value="">Factory 1</option>
+          <option value="">Factory 2</option>
+          <option value="">Factory 3</option>
+          <option value="">Factory 4</option>
+        </select>
+      </div>
+      <div class="container">
+        <label class="container-item">Update User:</label>
+        <input type="text" class="container-item" />
+      </div>
+      <div class="container">
+        <label class="container-item">Update Date:</label>
+        <input type="date" class="container-item" />
+      </div>
+      <div class="container" id="shift-form-add" style="display: none;">
+        <a class="container-item btn btn-success">Add</a>
+        <a class="container-item btn">Cancel</a>
+      </div>
+      <div class="container" id="shift-form-update" style="display: none;">
+        <a class="container-item btn btn-danger">Delete</a>
+        <a class="container-item btn btn-success">Update</a>
+        <a class="container-item btn">Cancel</a>
+      </div>
+    </section>
+
+    <section class="footer">
+      <h3>&copy; Copyright IFM Solutions Company</h3>
+    </section>
+  </body>
+</html>

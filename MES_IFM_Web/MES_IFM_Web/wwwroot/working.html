@@ -40,7 +40,7 @@
                       stt = "yellow";
                       break;
                   }
-                  return '<div class="circle-stt ' + stt + '"></div>';
+                  return '<div class="circle-stt ' + stt + '"></div>' + data;
                 }
                 return data;
               },
@@ -56,6 +56,15 @@
             },
             {
               data: "Site",
+            },
+            {
+              data: "Work Shift",
+            },
+            {
+              data: "Begin Time",
+            },
+            {
+              data: "End Time",
             },
             {
               data: "Plan",
@@ -76,14 +85,38 @@
                       stt = "gray";
                       break;
                   }
-                  return '<div class="circle-stt ' + stt + '"></div>';
+                  return '<div class="circle-stt ' + stt + '"></div>' + data;
                 }
                 return data;
               },
             },
           ],
         });
+        $("#btn-menu-working").toggleClass("active");
       });
+      function showDialog(formID, formOption) {
+        var formCurrent = document.getElementById(formID);
+        var formTitle = document.getElementById("form-title");
+        var formAdd = document.getElementById("shift-form-add");
+        var formUpdate = document.getElementById("shift-form-update");
+        formCurrent.style.display = "block";
+        switch (formOption) {
+          case "add":
+            formTitle.innerHTML = "Add Machine";
+            formAdd.style.display = "flex";
+            break;
+          case "update":
+            formTitle.innerHTML = "Update Machine Status";
+            formUpdate.style.display = "flex";
+            break;
+          case "close":
+            formAdd.style.display = "none";
+            formUpdate.style.display = "none";
+            formCurrent.style.display = "none";
+            break;
+        }
+      }
+    
     </script>
 
     <section class="header">
@@ -109,14 +142,14 @@
 
     <section class="menu-nav">
       <div class="container">
-        <a class="container-item" href="/index.html">Home</a>
+        <a class="container-item" href="index.html">Home</a>
         <div class="container-item">
           <div class="dropdown">
             <a class="dropdown-btn" href="#">Working Status</a>
             <div class="dropdown-content">
               <a href="#">Add machine</a>
               <a href="#">Update machine status</a>
-              <a href="/working.html">Show working status</a>
+              <a href="working.html">Show working status</a>
             </div>
           </div>
         </div>
@@ -136,7 +169,7 @@
             <div class="dropdown-content">
               <a href="#">Add new machine</a>
               <a href="#">Machine detail</a>
-              <a href="/machine.html">Show all machine</a>
+              <a href="machine.html">Show all machine</a>
             </div>
           </div>
         </div>
@@ -144,10 +177,10 @@
           <div class="dropdown">
             <a class="dropdown-btn" href="#">Master</a>
             <div class="dropdown-content">
-              <a href="/workingshift.html">Working shift</a>
+              <a href="workingshift.html">Working shift</a>
               <a href="#">Process status</a>
               <a href="#">Machine status</a>
-              <a href="#">Site detail</a>
+              <a href="site.html">Site detail</a>
             </div>
           </div>
         </div>
@@ -161,11 +194,27 @@
             </div>
           </div>
         </div>
-        <a class="container-item" href="/login.html" style="float: right;">Log out</a>
+        <a class="container-item" href="login.html" style="float: right;">Log out</a>
       </div>
     </section>
 
-    <section style="margin: 30px;">
+    <section style="margin: 20px;">
+      <div class="container">
+        <a
+          class="container-item btn"
+          href="#"
+          onclick="showDialog('shift-form','add');"
+        >
+          <span class="ico ico-plus"></span>Add Machine</a
+        >
+        <a
+          class="container-item btn"
+          href="#"
+          onclick="showDialog('shift-form','update');"
+        >
+          <span class="ico ico-update"></span>Update Machine Status</a
+        >
+      </div>
       <table id="example" class="display" style="width: 100%;">
         <thead>
           <tr>
@@ -175,6 +224,9 @@
             <th>Line</th>
             <th>Dept</th>
             <th>Site</th>
+            <th>Work Shift</th>
+            <th>Begin Time</th>
+            <th>End Time</th>
             <th>Plan</th>
           </tr>
         </thead>
@@ -186,6 +238,9 @@
             <td>Line A</td>
             <td>Production 1</td>
             <td>Factory 3</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Working</td>
           </tr>
           <tr>
@@ -195,6 +250,9 @@
             <td>Line A</td>
             <td>Production 1</td>
             <td>Factory 3</td>
+            <td>Shift 1</td>
+            <th>8:00</th>
+            <th>8:30</th>
             <td>Working</td>
           </tr>
           <tr>
@@ -204,6 +262,9 @@
             <td>Line A</td>
             <td>Production 1</td>
             <td>Factory 3</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Working</td>
           </tr>
           <tr>
@@ -213,6 +274,9 @@
             <td>Line A</td>
             <td>Production 1</td>
             <td>Factory 3</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>None</td>
           </tr>
           <tr>
@@ -222,6 +286,9 @@
             <td>Line B</td>
             <td>Production 1</td>
             <td>Factory 3</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>None</td>
           </tr>
           <tr>
@@ -231,6 +298,9 @@
             <td>Line B</td>
             <td>Production 1</td>
             <td>Factory 3</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Working</td>
           </tr>
           <tr>
@@ -240,6 +310,9 @@
             <td>Line B</td>
             <td>Production 1</td>
             <td>Factory 3</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Stop</td>
           </tr>
           <tr>
@@ -249,6 +322,9 @@
             <td>Line C</td>
             <td>Production 1</td>
             <td>Factory 3</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Working</td>
           </tr>
           <tr>
@@ -258,6 +334,9 @@
             <td>Line C</td>
             <td>Production 1</td>
             <td>Factory 3</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Working</td>
           </tr>
           <tr>
@@ -267,6 +346,9 @@
             <td>Line C</td>
             <td>Production 1</td>
             <td>Factory 3</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Working</td>
           </tr>
           <tr>
@@ -276,6 +358,9 @@
             <td>Line C</td>
             <td>Production 1</td>
             <td>Factory 3</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Stop</td>
           </tr>
           <tr>
@@ -285,6 +370,9 @@
             <td>Line E</td>
             <td>Production 1</td>
             <td>Factory 2</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Working</td>
           </tr>
           <tr>
@@ -294,6 +382,9 @@
             <td>Line A</td>
             <td>Production 1</td>
             <td>Factory 2</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Stop</td>
           </tr>
           <tr>
@@ -303,6 +394,9 @@
             <td>Line A</td>
             <td>Production 1</td>
             <td>Factory 1</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Working</td>
           </tr>
           <tr>
@@ -312,6 +406,9 @@
             <td>Line A</td>
             <td>Production 1</td>
             <td>Factory 2</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Stop</td>
           </tr>
           <tr>
@@ -321,6 +418,9 @@
             <td>Line A</td>
             <td>Production 1</td>
             <td>Factory 1</td>
+            <td>Shift 1</td>
+            <th>6:00</th>
+            <th>18:00</th>
             <td>Working</td>
           </tr>
         </tbody>
@@ -332,10 +432,101 @@
             <th>Line</th>
             <th>Dept</th>
             <th>Site</th>
+            <th>Work Shift</th>
+            <th>Begin Time</th>
+            <th>End Time</th>
             <th>Plan</th>
           </tr>
         </tfoot>
       </table>
+    </section>
+
+    <section class="form-dialog" id="shift-form">
+      <div class="menu-nav container" style="margin-bottom: 20px;">
+        <h2 class="container-item" id="form-title" style="width: auto;">
+          Add Machine
+        </h2>
+        <a href="#" onclick="showDialog('shift-form','close')">X</a>
+      </div>
+      <div class="container">
+        <label class="container-item">Machine:</label>
+        <input class="container-item" />
+      </div>
+      <div class="container">
+        <label class="container-item"> Status:</label>
+        <select id="cmb-status" class="container-item">
+          <option value="Working">Working</option>
+          <option value="Repair">Repair</option>
+          <option value="Stop">Stop</option>
+          <option value="No Plan">No Plan</option>
+        </select>
+      </div>
+      <div class="container">
+        <label class="container-item">Site:</label>
+        <select class="container-item">
+          <option value="">Factory 1</option>
+          <option value="">Factory 2</option>
+          <option value="">Factory 3</option>
+          <option value="">Factory 4</option>
+        </select>
+      </div>
+      <div class="container">
+        <label class="container-item">Dept:</label>
+        <select class="container-item">
+          <option value="">Production 1</option>
+          <option value="">Production 2</option>
+          <option value="">Production 3</option>
+          <option value="">Production 4</option>
+        </select>
+      </div>
+      <div class="container">
+        <label class="container-item">Line:</label>
+        <select class="container-item">
+          <option value="">Line A</option>
+          <option value="">Line B</option>
+          <option value="">Line C</option>
+          <option value="">Line D</option>
+        </select>
+      </div>
+      <div class="container">
+        <label class="container-item">Process:</label>
+        <select class="container-item">
+          <option value="">P0001</option>
+          <option value="">P0002</option>
+          <option value="">P0003</option>
+          <option value="">P0004</option>
+          <option value="">P0005</option>
+          <option value="">P0006</option>
+          <option value="">P0007</option>
+          <option value="">P0008</option>
+        </select>
+      </div>
+      <div class="container">
+        <label class="container-item">Work Shift:</label>
+        <select class="container-item">
+          <option value="">Shift 1</option>
+          <option value="">Shift 2</option>
+          <option value="">Shift 3</option>
+          <option value="">Office Hours</option>
+        </select>
+      </div>
+      <div class="container">
+        <label class="container-item">Begin Time:</label>
+        <input type="time" class="container-item" />
+      </div>
+      <div class="container">
+        <label class="container-item">End Time:</label>
+        <input type="time" class="container-item" />
+      </div>
+      <div class="container" id="shift-form-add" style="display: none;">
+        <a class="container-item btn btn-success">Add</a>
+        <a class="container-item btn">Cancel</a>
+      </div>
+      <div class="container" id="shift-form-update" style="display: none;">
+        <a class="container-item btn btn-danger">Delete</a>
+        <a class="container-item btn btn-success">Update</a>
+        <a class="container-item btn">Cancel</a>
+      </div>
     </section>
 
     <section class="footer">

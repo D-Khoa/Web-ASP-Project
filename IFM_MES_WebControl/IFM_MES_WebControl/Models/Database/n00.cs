@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace MES_IFM_MVC.Models.dbTable
+namespace IFM_MES_WebControl.Models.Database
 {
-    public class a0003
+    public class n00
     {
+        [Key]
         public string c01 { get; set; }
         public string c02 { get; set; }
         public string c03 { get; set; }

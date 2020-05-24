@@ -22,52 +22,22 @@
         $("#machine-table").DataTable({
           columns: [
             {
-              data: "Machine ID",
+              data: "Status ID",
             },
             {
-              data: "Machine Name",
+              data: "Status Name",
             },
             {
-              data: "Width(m)",
-            },
-            {
-              data: "Length(m)",
-            },
-            {
-              data: "Hight(m)",
-            },
-            {
-              data: "Supplier",
-            },
-            {
-              data: "Status",
+              data: "Color",
               render: function (data, type) {
                 if (type === "display") {
-                  var stt = "";
-                  switch (data) {
-                    case "Working":
-                      stt = "green";
-                      break;
-                    case "Stop":
-                      stt = "red";
-                      break;
-                    case "Repair":
-                      stt = "yellow";
-                      break;
-                    case "None":
-                      stt = "gray";
-                      break;
-                  }
-                  return '<div class="circle-stt ' + stt + '"></div>';
+                  return '<div class="circle-stt" style="background:' + data + ';"></div>';
                 }
                 return data;
               },
             },
             {
-              data: "Receive Date",
-            },
-            {
-              data: "Receive User",
+              data: "Style",
             },
             {
               data: "Update User",
@@ -86,11 +56,11 @@
         formCurrent.style.display = "block";
         switch (formOption) {
           case "add":
-            formTitle.innerHTML = "Add New Machine";
+            formTitle.innerHTML = "Add New Status";
             formAdd.style.display = "flex";
             break;
           case "update":
-            formTitle.innerHTML = "Update Machine";
+            formTitle.innerHTML = "Update Status";
             formUpdate.style.display = "flex";
             break;
           case "close":
@@ -162,7 +132,7 @@
             <div class="dropdown-content">
               <a href="workingshift.html">Working shift</a>
               <a href="#">Process status</a>
-              <a href="#">Machine status</a>
+              <a href="status.html">Machine status</a>
               <a href="site.html">Site detail</a>
             </div>
           </div>
@@ -188,201 +158,67 @@
           href="#"
           onclick="showDialog('shift-form','add');"
         >
-          <span class="ico ico-plus"></span>Add Machine</a
+          <span class="ico ico-plus"></span>Add Status</a
         >
         <a
           class="container-item btn"
           href="#"
           onclick="showDialog('shift-form','update');"
         >
-          <span class="ico ico-update"></span>Update Machine</a
+          <span class="ico ico-update"></span>Update Status</a
         >
       </div>
       <table id="machine-table" class="display" style="width: 100%;">
         <thead>
           <tr>
-            <th>Machine ID</th>
-            <th>Machine Name</th>
-            <th>Width(m)</th>
-            <th>Length(m)</th>
-            <th>Hight(m)</th>
-            <th>Supplier</th>
-            <th>Status</th>
-            <th>Receive Date</th>
-            <th>Receive User</th>
+            <th>Status ID</th>
+            <th>Status Name</th>
+            <th>Color</th>
+            <th>Style</th>
             <th>Update User</th>
             <th>Update Date</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>MC0001</td>
-            <td>Machine No1</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1.5</td>
-            <td>ABC Company</td>
-            <td>Repair</td>
-            <td>2020-05-20</td>
-            <td>John</td>
-            <td>Administrator</td>
-            <td>2020-05-20 12:15:23</td>
-          </tr>
-          <tr>
-            <td>MC0002</td>
-            <td>Machine No2</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1.5</td>
-            <td>ABC Company</td>
+            <td>ST0001</td>
             <td>Working</td>
-            <td>2020-05-20</td>
-            <td>John</td>
+            <td>#008000</td>
+            <td>In Process</td>
             <td>Administrator</td>
             <td>2020-05-20 12:15:23</td>
           </tr>
           <tr>
-            <td>MC0004</td>
-            <td>Machine No4</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1.5</td>
-            <td>ABC Company</td>
-            <td>Stop</td>
-            <td>2020-05-20</td>
-            <td>John</td>
-            <td>Administrator</td>
-            <td>2020-05-20 12:15:23</td>
-          </tr>
-          <tr>
-            <td>MC0014</td>
-            <td>Machine No14</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1.5</td>
-            <td>ABC Company</td>
-            <td>Stop</td>
-            <td>2020-05-20</td>
-            <td>John</td>
-            <td>Administrator</td>
-            <td>2020-05-20 12:15:23</td>
-          </tr>
-          <tr>
-            <td>MC0006</td>
-            <td>Machine No6</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1.5</td>
-            <td>ABC Company</td>
+            <td>ST0002</td>
             <td>Repair</td>
-            <td>2020-05-20</td>
-            <td>John</td>
+            <td>#ffff00</td>
+            <td>Maintain</td>
             <td>Administrator</td>
             <td>2020-05-20 12:15:23</td>
           </tr>
           <tr>
-            <td>MC0007</td>
-            <td>Machine No7</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1.5</td>
-            <td>ABC Company</td>
-            <td>Working</td>
-            <td>2020-05-20</td>
-            <td>John</td>
-            <td>Administrator</td>
-            <td>2020-05-20 12:15:23</td>
-          </tr>
-          <tr>
-            <td>MC0008</td>
-            <td>Machine No8</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1.5</td>
-            <td>ABC Company</td>
+            <td>ST0003</td>
             <td>Stop</td>
-            <td>2020-05-20</td>
-            <td>John</td>
-            <td>Administrator</td>
-            <td>2020-05-20 12:15:23</td>
-          </tr>
-          <tr>
-            <td>MC0005</td>
-            <td>Machine No5</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1.5</td>
-            <td>ABC Company</td>
+            <td>#ff0000</td>
             <td>Stop</td>
-            <td>2020-05-20</td>
-            <td>John</td>
             <td>Administrator</td>
             <td>2020-05-20 12:15:23</td>
           </tr>
           <tr>
-            <td>MC0012</td>
-            <td>Machine No12</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1.5</td>
-            <td>ABC Company</td>
-            <td>Repair</td>
-            <td>2020-05-20</td>
-            <td>John</td>
-            <td>Administrator</td>
-            <td>2020-05-20 12:15:23</td>
-          </tr>
-          <tr>
-            <td>MC0003</td>
-            <td>Machine No3</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1.5</td>
-            <td>ABC Company</td>
-            <td>Working</td>
-            <td>2020-05-20</td>
-            <td>John</td>
-            <td>Administrator</td>
-            <td>2020-05-20 12:15:23</td>
-          </tr>
-          <tr>
-            <td>MC0013</td>
-            <td>Machine No13</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1.5</td>
-            <td>ABC Company</td>
+            <td>ST0004</td>
+            <td>No Plan</td>
+            <td>#808080</td>
             <td>Stop</td>
-            <td>2020-05-20</td>
-            <td>John</td>
-            <td>Administrator</td>
-            <td>2020-05-20 12:15:23</td>
-          </tr>
-          <tr>
-            <td>MC0009</td>
-            <td>Machine No9</td>
-            <td>3</td>
-            <td>2</td>
-            <td>1.5</td>
-            <td>ABC Company</td>
-            <td>Stop</td>
-            <td>2020-05-20</td>
-            <td>John</td>
             <td>Administrator</td>
             <td>2020-05-20 12:15:23</td>
           </tr>
         </tbody>
         <tfoot>
           <tr>
-            <th>Machine ID</th>
-            <th>Machine Name</th>
-            <th>Width(m)</th>
-            <th>Length(m)</th>
-            <th>Hight(m)</th>
-            <th>Supplier</th>
-            <th>Status</th>
-            <th>Receive Date</th>
-            <th>Receive User</th>
+            <th>Status ID</th>
+            <th>Status Name</th>
+            <th>Color</th>
+            <th>Style</th>
             <th>Update User</th>
             <th>Update Date</th>
           </tr>
@@ -393,50 +229,29 @@
     <section class="form-dialog" id="shift-form">
       <div class="menu-nav container" style="margin-bottom: 20px;">
         <h2 class="container-item" id="form-title" style="width: auto;">
-          Add New Machine
+          Add New Status
         </h2>
         <a href="#" onclick="showDialog('shift-form','close')">X</a>
       </div>
       <div class="container">
-        <label class="container-item">Machine ID:</label>
+        <label class="container-item">Status ID:</label>
         <input class="container-item" />
       </div>
       <div class="container">
-        <label class="container-item">Machine Name:</label>
+        <label class="container-item">Status Name:</label>
         <input class="container-item" />
       </div>
       <div class="container">
-        <label class="container-item">Width(m):</label>
-        <input type="number" class="container-item" />
+        <label class="container-item">Color:</label>
+        <input type="color" class="container-item" style="height: 20px;" value="#000000"/>
       </div>
       <div class="container">
-        <label class="container-item">Length(m):</label>
-        <input type="number" class="container-item" />
-      </div>
-      <div class="container">
-        <label class="container-item">Hight(m):</label>
-        <input type="number" class="container-item" />
-      </div>
-      <div class="container">
-        <label class="container-item">Supplier:</label>
-        <input type="text" class="container-item" />
-      </div>
-      <div class="container">
-        <label class="container-item">Status:</label>
+        <label class="container-item">Style:</label>
         <select class="container-item">
-          <option value="Working" >Working</option>
-          <option value="Repair" >Repair</option>
-          <option value="Stop" >Stop</option>
-          <option value="No Plan" >No Plan</option>
+          <option value="In process">In Process</option>
+          <option value="Maintain">Maintain</option>
+          <option value="Stop">Stop</option>
         </select>
-      </div>
-      <div class="container">
-        <label class="container-item">Receive Date:</label>
-        <input type="date" class="container-item" />
-      </div>
-      <div class="container">
-        <label class="container-item">Receive User:</label>
-        <input type="text" class="container-item" />
       </div>
       <div class="container">
         <label class="container-item">Update User:</label>

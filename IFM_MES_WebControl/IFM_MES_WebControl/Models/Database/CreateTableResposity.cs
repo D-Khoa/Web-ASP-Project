@@ -4,8 +4,7 @@ namespace IFM_MES_WebControl.Models.Database
 {
     public class CreateTableResposity
     {
-        private a0003 tmpTable;
-        private MESSQL mESSQL;
+        private n00 tmpTable;
 
         public CreateTableResposity()
         {

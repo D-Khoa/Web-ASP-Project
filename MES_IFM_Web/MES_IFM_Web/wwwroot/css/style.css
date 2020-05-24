@@ -100,7 +100,7 @@ body {
   -webkit-border-radius: 25px;
   --border-radius: 25px;
   border-radius: 25px;
-  background: black;
+  background: white;
 }
 
 /* Flex container */
@@ -117,7 +117,6 @@ body {
   margin: auto;
   margin-bottom: 20px;
   margin-bottom: 10px;
-  line-height: auto;
   text-align: center;
 }
 
@@ -204,14 +203,14 @@ body {
 }
 
 .header h2 {
-  font-size: 4vw;
+  font-size: 3.5vw;
   color: #d1d1cf;
   text-shadow: 5px 5px 5px black;
 }
 
 .img {
-  width: 80%;
-  height: 80%;
+  width: 40%;
+  height: 40%;
   object-fit: fill;
   vertical-align: middle;
 }
@@ -235,6 +234,11 @@ body {
   text-decoration: none;
 }
 
+.menu-nav .active{
+  color: #ff6600;
+  content: attr('');
+}
+
 /* Change color on hover */
 .menu-nav a:hover {
   color: #ff6600;
@@ -242,6 +246,12 @@ body {
   box-shadow: 2px 2px 2px 2px inset rgba(0, 0, 0, 0.5);
 }
 
+/* Rectangle status*/
+.rect-stt {
+  width: auto;
+  height: 20px;
+  background: white;
+}
 /* Clear floats after the columns */
 .row:after {
   content: "";
