@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace IFM_MES_WebControl
+namespace IFM_ManufacturingExecutionSystems
 {
     public class Program
     {

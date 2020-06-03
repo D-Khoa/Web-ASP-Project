@@ -4,9 +4,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using IFM_MES_WebControl.Models;
+using IFM_ManufacturingExecutionSystems.Models;
 
-namespace IFM_MES_WebControl.Controllers
+namespace IFM_ManufacturingExecutionSystems.Controllers
 {
     public class HomeController : Controller
     {

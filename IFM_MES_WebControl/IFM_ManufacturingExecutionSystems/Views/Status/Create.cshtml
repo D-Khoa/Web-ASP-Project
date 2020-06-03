@@ -1,0 +1,42 @@
+﻿@model IFM_ManufacturingExecutionSystems.Models.MVC.Status
+
+@{
+    ViewData["Title"] = "Add Status";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <form asp-action="Create" class="rounded-lg shadow-lg" style="padding:20px;">
+            <h1 class="text-center">Add Status</h1>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="statusCode" class="control-label">Status Code</label>
+                <input asp-for="statusCode" class="form-control" />
+                <span asp-validation-for="statusID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="statusName" class="control-label">Status Name</label>
+                <input asp-for="statusName" class="form-control" />
+                <span asp-validation-for="statusName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="color" class="control-label">Color</label>
+                <input type="color" asp-for="color" class="form-control" />
+                <span asp-validation-for="color" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="style" class="control-label">Style</label>
+                <input asp-for="style" class="form-control" />
+                <span asp-validation-for="style" class="text-danger"></span>
+            </div>
+            <div class="row form-group">
+                <a class="btn btn-light col-md-4 offset-md-4" asp-action="Index">Cancel</a>
+                <input class="btn btn-primary col-md-4" type="submit" value="Add" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

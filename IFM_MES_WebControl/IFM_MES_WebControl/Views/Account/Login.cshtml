@@ -1,0 +1,30 @@
+﻿@model IFM_MES_WebControl.Models.Database.aa0001
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container">
+    <div class="row"><h2 class="col-md-4 col-md-offset-4 text-center">Login</h2></div>
+    <div class="row">
+        <form class="col-md-4 col-md-offset-4" asp-action="Login" method="post">
+            <div class="text-danger">@ViewData["Error"]</div>
+            <div class="form-group">
+                <label class="control-label" asp-for="aa0001c11">Username</label>
+                <input class="form-control" asp-for="aa0001c11" />
+            </div>
+            <div class="form-group">
+                <label class="control-label" asp-for="aa0001c23">Password</label>
+                <input class="form-control" asp-for="aa0001c23" />
+            </div>
+            <div class="form-group">
+                <input class="col-md-4 btn btn-default" type="submit" value="Login" />
+                <a class="col-md-offset-4 btn btn-default" asp-action="Register">Register</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

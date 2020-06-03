@@ -1,0 +1,180 @@
+﻿@model IEnumerable<IFM_ManufacturingExecutionSystems.Models.MVC.Status>
+
+@{
+    ViewData["Title"] = "Status Management";
+    IFM_ManufacturingExecutionSystems.Models.MVC.Status currentStatus = new IFM_ManufacturingExecutionSystems.Models.MVC.Status();
+}
+
+<h1 class="text-center">Status Management</h1>
+<p class="text-danger">@ViewData["Message"]</p>
+<p>
+    <a class="btn btn-menu" asp-action="Create" data-toggle="modal" data-target="#add-status-popup"><i class="fas fa-plus" style="color:green;"></i>Add New Status</a>
+</p>
+@if (Model != null && Model.Count() > 0)
+{
+    <table class="table-sm table-bordered table-primary w-100">
+        <thead>
+            <tr>
+                <th>
+                    Status Code
+                </th>
+                <th>
+                    Status Name
+                </th>
+                <th>
+                    Status Color
+                </th>
+                <th>
+                    Status Style
+                </th>
+                <th>
+                    Update User
+                </th>
+                <th>
+                    Update Time
+                </th>
+                <th>
+                    Creator
+                </th>
+                <th>
+                    Create Time
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.statusCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.statusName)
+                    </td>
+                    <td>
+                        <span class="dot" style="background:@item.color;"></span>
+                        @Html.DisplayFor(modelItem => item.color)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.style)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.updateUser)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.updateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.creator)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.createTime)
+                    </td>
+                    <td>
+                        <button class="btn btn-menu" data-toggle="modal" data-target="#update-status-popup"
+                                data-id="@item.statusID" data-code="@item.statusCode" data-name="@item.statusName"
+                                data-color="@item.color" data-style="@item.style">
+                            <i class="fas fa-edit" style="color:blue;"></i>
+                        </button> |
+                        @*<a class="btn btn-menu" asp-action="Details" asp-route-id="@item.statusID">Details</a> |*@
+                        <a class="btn btn-menu" asp-action="Delete" asp-route-id="@item.statusID"><i class="fas fa-trash" style="color:red;"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <tr>No have any status.</tr>
+}
+
+<div id="add-status-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="Create" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Add new status</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label class="control-label">Status Code</label>
+                    <input name="statusCode" class="form-control input-bg" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Status Name</label>
+                    <input name="statusName" class="form-control input-bg" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Color</label>
+                    <input type="color" name="color" class="form-control input-bg" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Style</label>
+                    <input name="style" class="form-control input-bg" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="update-status-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="Edit" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Update status</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="selected-status-id" type="hidden" name="statusID" />
+                <div class="form-group">
+                    <label class="control-label">Status Code</label>
+                    <input id="selected-status-code" name="statusCode" class="form-control input-bg" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Status Name</label>
+                    <input id="selected-status-name" name="statusName" class="form-control input-bg" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Color</label>
+                    <input id="selected-status-color" type="color" name="color" class="form-control input-bg" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Style</label>
+                    <input id="selected-status-style" name="style" class="form-control input-bg" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    $('#update-status-popup').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget) // Button that triggered the modal
+        var id = button.data('id') // Extract info from data-* attributes
+        var code = button.data('code')
+        var name = button.data('name')
+        var color = button.data('color')
+        var style = button.data('style')
+
+        var modal = $(this)
+        modal.find('#selected-status-id').val(id);
+        modal.find('#selected-status-code').val(code);
+        modal.find('#selected-status-name').val(name);
+        modal.find('#selected-status-color').val(color);
+        modal.find('#selected-status-style').val(style);
+
+    })
+</script>

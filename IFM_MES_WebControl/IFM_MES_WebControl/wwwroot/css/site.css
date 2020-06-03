@@ -1,7 +1,7 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
 for details on configuring this project to bundle and minify static web assets. */
 body {
-    padding-top: 50px;
+    padding-top: 0px;
     padding-bottom: 20px;
 }
 
@@ -35,3 +35,94 @@ body {
         display: none;
     }
 }
+
+/* Custom CSS IFM Company */
+.container-flex-ifm {
+    padding: 5px;
+    display: flex;
+    max-width: 100%;
+    max-height: 1000px;
+}
+
+.container-item-ifm {
+    width: auto;
+    height: auto;
+    margin: auto;
+    text-align: center;
+}
+
+.container-menuitem-ifm {
+    width: 200px;
+    height: 50px;
+    margin: auto;
+    text-align: center;
+}
+
+.footer-ifm {
+    right: 0;
+    bottom: 0;
+    width: auto;
+    color: #ff6600;
+    position: fixed;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.0);
+}
+
+    .footer-ifm p {
+        margin: 5px;
+        color: #3366ff;
+        text-shadow: 5px 5px 5px black;
+    }
+
+.header-ifm {
+    top: 0;
+    left: 0;
+    padding: 0px 0px 5px 0px;
+    text-align: center;
+    background: linear-gradient(180deg, #3366ff 0%, rgba(255, 255, 255, 1) 100%);
+}
+
+    .header-ifm h2 {
+        font-size: 3.5vw;
+        color: #d1d1cf;
+        text-shadow: 5px 5px 5px black;
+    }
+
+.img-ifm {
+    width: 80%;
+    height: 80%;
+    object-fit: fill;
+    vertical-align: middle;
+}
+
+/* Style the top navigation bar */
+.nav-menu-ifm {
+    overflow: hidden;
+    border-radius: 6px;
+    max-height: 200px;
+    box-shadow: 5px 5px 5px 6px lightsteelblue;
+    background: linear-gradient(180deg, #f2f2f2 0%, #82869a 100%);
+}
+
+    /* Style the menu-nav links*/
+    .nav-menu-ifm a {
+        color: #000;
+        padding: 8px 16px;
+        margin-bottom: 5px;
+        font-size: medium;
+        text-align: center;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    .nav-menu-ifm .active {
+        color: #ff6600;
+        content: attr('');
+    }
+
+    /* Change color on hover */
+    .nav-menu-ifm a:hover {
+        color: #ff6600;
+        background-color: #82869a;
+        box-shadow: 2px 2px 2px 2px inset rgba(0, 0, 0, 0.5);
+    }

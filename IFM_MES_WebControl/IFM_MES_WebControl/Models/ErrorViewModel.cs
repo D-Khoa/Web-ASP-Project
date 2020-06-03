@@ -1,6 +1,6 @@
 using System;
 
-namespace IFM_MES_WebControl.Models
+namespace IFM_ManufacturingExecutionSystems.Models
 {
     public class ErrorViewModel
     {

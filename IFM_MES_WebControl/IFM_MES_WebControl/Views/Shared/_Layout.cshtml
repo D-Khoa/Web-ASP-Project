@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - IFM_MES_WebControl</title>
-
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
@@ -17,22 +16,84 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+    <div class="container-fluid">
+        <div class="row text-center" style="line-height:50px; background:linear-gradient(#3366ff,#ffffff)">
+            <a href="#" class="col-md-4">
+                <img src="https://ifmsolutionsvn.com/wp-content/uploads/2019/12/LogoAI2.png"
+                     style="height:50px;"
+                     alt="IFM-Solutions" />
+            </a>
+            <h2 class="col-md-8">
+                Manufacturing Execution Systems
+            </h2>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-default bg-primary">
+        <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menubar"
+                        aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
+                    <span class="icon-bar" style="background:#3366ff;"></span>
+                    <span class="icon-bar" style="background:#3366ff;"></span>
+                    <span class="icon-bar" style="background:#3366ff;"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">IFM_MES_WebControl</a>
+                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Home</a>
             </div>
-            <div class="navbar-collapse collapse">
+            <div id="menubar" class="navbar-collapse collapse" aria-expanded="false" style="height:1px;">
                 <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            Working Status<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Planning</a></li>
+                            <li><a href="#">Actual</a></li>
+                            <li><a href="#">Processing</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Machine<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Add new machine</a></li>
+                            <li><a href="#">Update machine</a></li>
+                            <li class="divider"><</li>
+                            <li><a href="#">Machine detail</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Master<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Status</a></li>
+                            <li><a href="#">Work shift</a></li>
+                            <li><a href="#">Process</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Users<span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="dropdown-header">Users</li>
+                            <li><a href="#">Add new user</a></li>
+                            <li><a href="#">Update user</a></li>
+                            <li><a href="#">Users detail</a></li>
+                            <li class="divider"><</li>
+                            <li class="dropdown-header">Roles</li>
+                            <li><a href="#">Add new role</a></li>
+                            <li><a href="#">Update role</a></li>
+                            <li><a href="#">Roles detail</a></li>
+                        </ul>
+                    </li>
+                    @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>*@
                 </ul>
                 <p class="nav navbar-text navbar-right">Hello, @User.Identity.Name!</p>
             </div>
@@ -44,11 +105,10 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; 2020 - IFM_MES_WebControl</p>
-        </footer>
     </div>
-
+    <footer class="navbar-fixed-bottom text-right" style="margin-right:10px;">
+        <h4 style="color:#3366ff; text-shadow:5px 5px 5px #000000;">&copy; 2020 - IFM Solutions Company</h4>
+    </footer>
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
