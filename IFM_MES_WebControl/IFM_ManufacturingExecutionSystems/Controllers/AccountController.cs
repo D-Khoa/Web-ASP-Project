@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using RestSharp;
 
 namespace IFM_ManufacturingExecutionSystems.Controllers
 {
@@ -23,7 +22,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         public AccountController(IConfiguration configuration)
         {
             _config = configuration;
-            baseURI = _config["BaseURL:DefaultURL"];
+            //baseURI = _config["BaseURL:DefaultURL"];
+            baseURI = _config["BaseURL:LocalURL"];
         }
         // GET: Account
         public ActionResult Index()
@@ -125,6 +125,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 }
                 string salt = EncryptData.RandomSalt(12);
                 string ipAdress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
+                string tokenActive = inUser.username.StringToHash(salt, MD5.Create());
                 aa0001 regUserInfo = new aa0001
                 {
                     aa0001c05 = inUser.username,
@@ -134,46 +135,87 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0001c13 = inUser.lastname,
                     aa0001c14 = inUser.email,
                     aa0001c15 = inUser.phone,
-                    aa0001c16 = "False",
+                    aa0001c16 = "0",
                     aa0001c17 = "None",
                     aa0001c21 = salt,
                     aa0001c22 = ipAdress,
-                    aa0001c23 = EncryptData.StringToHash(inUser.password, salt, MD5.Create())
+                    aa0001c23 = EncryptData.StringToHash(inUser.password, salt, MD5.Create()),
+                    aa0001c24 = tokenActive
                 };
                 // Register API
-                string jsonRegUserInfoString = JsonConvert.SerializeObject(regUserInfo);
-                var client = new RestClient(baseURI + "/aa0001/Accounts/")
+                //string jsonRegUserInfoString = JsonConvert.SerializeObject(regUserInfo);
+                //var client = new RestClient(baseURI + "/aa0001/Accounts/")
+                //{
+                //    Timeout = -1
+                //};
+                //var request = new RestRequest(Method.POST);
+                //request.AddHeader("Content-Type", "application/json");
+                //request.AddParameter("application/json", jsonRegUserInfoString, ParameterType.RequestBody);
+                //IRestResponse response = client.Execute(request);
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                using (HttpClient client = new HttpClient(clientHandler))
                 {
-                    Timeout = -1
-                };
-                var request = new RestRequest(Method.POST);
-                request.AddHeader("Content-Type", "application/json");
-                request.AddParameter("application/json", jsonRegUserInfoString, ParameterType.RequestBody);
-                IRestResponse response = client.Execute(request);
-
-                if (response.IsSuccessful)
-                {
-                    // Send mail
-                    MailInfo mail = new MailInfo
+                    client.BaseAddress = new Uri(baseURI + @"/aa0001/Accounts");
+                    var respone = client.PostAsJsonAsync<aa0001>("accounts", regUserInfo);
+                    respone.Wait();
+                    var result = respone.Result;
+                    if (result.IsSuccessStatusCode)
                     {
-                        mailTo = inUser.email,
-                        mailSubject = "Active your account in IFM MES",
-                        mailMessage = string.Format(@"Click the link below for active your account: {0}/account/activeuser/?email={1}", baseURI, inUser.email)
-                    };
-                    SendMail.SendMailAuto(mail);
-                    ViewData["Message"] = "Your account is registed successful! Please check mail for active it!";
-                    return RedirectToAction(nameof(Login));
-                }
-                else
-                {
-                    ViewData["Message"] = response.StatusCode.ToString();
-                    Console.WriteLine(response.Content);
-                    return View();
+                        // Send mail
+                        MailInfo mail = new MailInfo
+                        {
+                            mailTo = inUser.email,
+                            mailSubject = "Active your account in IFM MES",
+                            mailMessage = string.Format(@"Click the link below for active your account: {0}/account/activeuser/?token={1}", baseURI, tokenActive)
+                        };
+                        SendMail.SendMailAuto(mail);
+                        ViewData["Message"] = "Your account is registed successful! Please check mail for active it!";
+                        return RedirectToAction(nameof(Login));
+                    }
+                    else
+                    {
+                        ViewData["Message"] = result.StatusCode.ToString();
+                        Console.WriteLine(result.Content);
+                        return View();
+                    }
                 }
             }
             catch
             {
                 return View();
+            }
+        }
+
+        public ActionResult ActiveUser(string token)
+        {
+            try
+            {
+                var jsonRequest = JsonConvert.SerializeObject(token);
+                HttpContent httpContent = new StringContent(jsonRequest, System.Text.Encoding.UTF8, "application/json-patch+json");
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                using (HttpClient client = new HttpClient(clientHandler))
+                {
+                    client.BaseAddress = new Uri(baseURI + @"/aa0001/Security");
+                    var respone = client.PatchAsync("security", httpContent);
+                    respone.Wait();
+                    var result = respone.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        ViewData["Message"] = "User active successful!";
+                    }
+                    else
+                    {
+                        ViewData["Message"] = "User active fail!";
+                    }
+                    return RedirectToAction(nameof(Login));
+                }
+            }
+            catch
+            {
+                ViewData["Message"] = "Error when active user";
+                return View(nameof(Login));
             }
         }
 
@@ -200,31 +242,43 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0001c23 = inUser.password,
                 };
                 // Login API
-                string jsonLoginUserString = JsonConvert.SerializeObject(loginUser);
-                var client = new RestClient(baseURI + "/aa0001/Security/")
+                //string jsonLoginUserString = JsonConvert.SerializeObject(loginUser);
+                //var client = new RestClient(baseURI + "/aa0001/Security/")
+                //{
+                //    Timeout = -1
+                //};
+                //var request = new RestRequest(Method.PUT);
+                //request.AddHeader("Content-Type", "application/json");
+                //request.AddParameter("application/json", jsonLoginUserString, ParameterType.RequestBody);
+                //IRestResponse response = client.Execute(request);
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                using (HttpClient client = new HttpClient(clientHandler))
                 {
-                    Timeout = -1
-                };
-                var request = new RestRequest(Method.PUT);
-                request.AddHeader("Content-Type", "application/json");
-                request.AddParameter("application/json", jsonLoginUserString, ParameterType.RequestBody);
-                IRestResponse response = client.Execute(request);
-                if (response.IsSuccessful)
-                {
-                    JWT jwtToken = JsonConvert.DeserializeObject<JWT>(response.Content);
-                    HttpContext.Session.SetString("token", jwtToken.Token);
-                    ViewData["Message"] = "Wellcome " + inUser.username;
-                    return RedirectToAction(nameof(Index));
-                }
-                else
-                {
-                    ViewData["Message"] = response.StatusCode.ToString();
-                    Console.WriteLine(response.Content);
-                    return View();
+                    client.BaseAddress = new Uri(baseURI + @"/aa0001/Security");
+                    var respone = client.PutAsJsonAsync<aa0001>("security", loginUser);
+                    respone.Wait();
+                    var result = respone.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        //JWT jwtToken = JsonConvert.DeserializeObject<JWT>(result.Content.ReadAsStringAsync());
+                        var jwtToken = result.Content.ReadAsAsync<JWT>();
+                        jwtToken.Wait();
+                        HttpContext.Session.SetString("token", jwtToken.Result.Token);
+                        ViewData["Message"] = "Wellcome " + inUser.username;
+                        return RedirectToAction("Index","Home");
+                    }
+                    else
+                    {
+                        ViewData["Message"] = result.StatusCode.ToString();
+                        Console.WriteLine(result.Content);
+                        return View();
+                    }
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                ViewData["Message"] = ex.Message;
                 return View();
             }
         }

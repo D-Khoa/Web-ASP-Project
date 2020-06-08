@@ -7,28 +7,36 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-reboot.min.css" />
+    <link rel="stylesheet" href="~/css/all.min.css">
+    <link rel="stylesheet" href="~/css/brands.min.css">
+    <link rel="stylesheet" href="~/css/fontawesome.min.css">
+    <link rel="stylesheet" href="~/css/solid.min.css">
     <link rel="stylesheet" href="~/css/site.css" />
-    <script src="https://kit.fontawesome.com/05b68e5bd6.js" crossorigin="anonymous"></script>
+    <script src="~/js/all.min.js"></script>
+    <script src="~/js/brands.min.js"></script>
+    <script src="~/js/fontawesome.min.js"></script>
+    <script src="~/js/solid.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </head>
-<body style="background:linear-gradient(-45deg,#3366ff,#ffffff);">
+@*style="background:linear-gradient(-45deg,#3366ff,#ffffff);"*@
+<body style="background-color:#f2f2f2;">
     <header>
-        <div class="container-fluid" style="padding-bottom:10px;">
+        <div class="container-fluid" style="padding-bottom:10px; background:linear-gradient(-45deg,#3366ff,#ffffff);">
             <div class="row text-center" style="line-height:50px;">
                 <a href="#" class="col-md-4">
                     <img src="https://ifmsolutionsvn.com/wp-content/uploads/2019/12/LogoAI2.png"
                          style="height:50px;"
                          alt="IFM-Solutions" />
                 </a>
-                <h1 class="col-md-8">
+                <h1 class="col-md-8 text-shadow-glow">
                     Manufacturing Execution Systems
                 </h1>
             </div>
         </div>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light mb-3 nav-menu">
             <div class="container">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,8 +44,8 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
-                        <li><a class="btn btn-menu" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li class="btn-group btn-menu">
+                        <li class="btn-group"><a class="btn" asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="btn-group">
                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                 Tasks
@@ -48,7 +56,7 @@
                                 <a class="dropdown-item" href="#">Processing</a>
                             </div>
                         </li>
-                        <li class="btn-group btn-menu">
+                        <li class="btn-group">
                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                 Machines
@@ -59,7 +67,7 @@
                                 <a class="dropdown-item" href="#">Show machines</a>
                             </div>
                         </li>
-                        <li class="btn-group btn-menu">
+                        <li class="btn-group">
                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                 Users &amp; Roles
@@ -76,7 +84,7 @@
                                 <a class="dropdown-item" href="#">Show roles</a>
                             </div>
                         </li>
-                        <li class="btn-group btn-menu">
+                        <li class="btn-group">
                             <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"
                                     aria-haspopup="true" aria-expanded="false">
                                 Masters
@@ -88,7 +96,7 @@
                             </div>
                         </li>
                         <li class="float-md-right">@ViewData["Username"]</li>
-                        <li><a class="btn btn-menu" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                        <li class="btn-group"><a class="btn" asp-controller="Account" asp-action="Logout">Logout</a></li>
                     </ul>
                 </div>
             </div>

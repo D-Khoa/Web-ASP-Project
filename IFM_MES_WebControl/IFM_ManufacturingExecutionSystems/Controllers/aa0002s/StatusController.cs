@@ -1,12 +1,10 @@
-﻿using System;
+﻿using IFM_ManufacturingExecutionSystems.Models.Database;
+using IFM_ManufacturingExecutionSystems.Models.SQL;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using IFM_ManufacturingExecutionSystems.Models.Database;
-using IFM_ManufacturingExecutionSystems.Models.SQL;
 
 namespace IFM_ManufacturingExecutionSystems.Controllers.aa0002s
 {
@@ -80,6 +78,10 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0002s
         [HttpPost]
         public async Task<ActionResult<aa0002>> Postaa0002(aa0002 aa0002)
         {
+            if (aa0002Exists(aa0002.aa0002c21))
+            {
+                return BadRequest("This Status Code Is Exists!");
+            }
             _context.aa0002.Add(aa0002);
             await _context.SaveChangesAsync();
 
@@ -105,6 +107,11 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0002s
         private bool aa0002Exists(int id)
         {
             return _context.aa0002.Any(e => e.aa0002c01 == id);
+        }
+
+        private bool aa0002Exists(string statusCode)
+        {
+            return _context.aa0002.Any(e => e.aa0002c21 == statusCode);
         }
     }
 }

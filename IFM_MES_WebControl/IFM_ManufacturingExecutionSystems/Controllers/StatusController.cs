@@ -20,7 +20,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         public StatusController(IConfiguration configuration)
         {
             _config = configuration;
-            baseURI = _config["BaseURL:DefaultURL"];
+            //baseURI = _config["BaseURL:DefaultURL"];
+            baseURI = _config["BaseURL:LocalURL"];
         }
 
         // GET: Status
@@ -28,7 +29,9 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         {
             IEnumerable<aa0002> aa0002s = Enumerable.Empty<aa0002>();
             List<Status> statuses = new List<Status>();
-            using (HttpClient client = new HttpClient())
+            HttpClientHandler clientHandler = new HttpClientHandler();
+            clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+            using (HttpClient client = new HttpClient(clientHandler))
             {
                 client.BaseAddress = new Uri(baseURI + @"/aa0002/Status");
                 var respone = client.GetAsync("Status");
@@ -51,7 +54,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                             updateUser = aa0002.aa0002c07,
                             updateTime = DateTime.TryParse(aa0002.aa0002c08, out DateTime updatetime) ? updatetime : updatetime,
                             creator = aa0002.aa0002c05,
-                            createTime = DateTime.TryParse(aa0002.aa0002c06, out DateTime createtime)? createtime: createtime
+                            createTime = DateTime.TryParse(aa0002.aa0002c06, out DateTime createtime) ? createtime : createtime
                         });
                     }
                 }
@@ -88,7 +91,9 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0002c24 = inStatus.style
                 };
                 string jsonStatus = JsonConvert.SerializeObject(aa0002);
-                using (HttpClient client = new HttpClient())
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                using (HttpClient client = new HttpClient(clientHandler))
                 {
                     client.BaseAddress = new Uri(baseURI + @"/aa0002/Status");
                     var respone = client.PostAsJsonAsync<aa0002>("status", aa0002);
@@ -136,7 +141,9 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0002c24 = inStatus.style
                 };
                 string jsonStatus = JsonConvert.SerializeObject(aa0002);
-                using (HttpClient client = new HttpClient())
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                using (HttpClient client = new HttpClient(clientHandler))
                 {
                     client.BaseAddress = new Uri(baseURI + @"/aa0002/Status");
                     var respone = client.PutAsJsonAsync<aa0002>("status", aa0002);
@@ -160,26 +167,36 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
             }
         }
 
-        // GET: Status/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         // POST: Status/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
+                HttpClientHandler clientHandler = new HttpClientHandler();
+                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                using (HttpClient client = new HttpClient(clientHandler))
+                {
+                    client.BaseAddress = new Uri(baseURI + @"/aa0002/Status");
+                    var respone = client.DeleteAsync(string.Format("status/{0}", id));
+                    respone.Wait();
+                    var result = respone.Result;
+                    if (result.IsSuccessStatusCode)
+                    {
+                        ViewData["Message"] = "Update status successful!";
+                    }
+                    else
+                    {
+                        ViewData["Message"] = "Update status fail!";
+                    }
+                    return RedirectToAction(nameof(Index));
+                }
             }
             catch
             {
-                return View();
+                ViewData["Message"] = "Delete status fail!";
+                return RedirectToAction(nameof(Index));
             }
         }
     }

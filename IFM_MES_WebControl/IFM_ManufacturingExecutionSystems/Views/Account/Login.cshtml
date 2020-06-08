@@ -2,31 +2,62 @@
 
 @{
     ViewData["Title"] = "Login";
+    Layout = null;
 }
 
-<div class="row">
-    <div class="col-md-6 offset-md-3">
-        <form asp-action="Login" class="rounded-lg shadow-lg" style="padding:20px;">
-            <h1 class="text-center">Login</h1>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="username" class="control-label">Username</label>
-                <input asp-for="username" class="form-control input-bg"/>
-                <span asp-validation-for="username" class="text-danger"></span>
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - IFM_ManufacturingExecutionSystems</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-reboot.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body style="background:linear-gradient(-45deg,#3366ff,#ffffff);">
+    <div class="outer">
+        <div class="row middle">
+            <div class="card col-md-4 offset-md-4" style="padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,.2);">
+                <form asp-action="Login">
+                    <div class="card-title row text-center">
+                        <a href="#" class="col-md-4">
+                            <img src="https://ifmsolutionsvn.com/wp-content/uploads/2019/12/LogoAI2.png"
+                                 style="height:50px;"
+                                 alt="IFM-Solutions" />
+                        </a>
+                        <h1 class="col-md-8 text-shadow-block">Login</h1>
+                    </div>
+                    <div class="text-danger">@ViewData["Message"]</div>
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label asp-for="username" class="control-label">Username</label>
+                            <input asp-for="username" class="form-control input-bg" />
+                            <span asp-validation-for="username" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="password" class="control-label">Password</label>
+                            <input type="password" asp-for="password" class="form-control input-bg" />
+                            <span asp-validation-for="password" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="card-footer form-group">
+                        <div class="row">
+                            <a class="btn btn-light col-md-4 offset-md-4" asp-action="Register">Register</a>
+                            <input class="btn btn-primary col-md-4" type="submit" value="Login" />
+                        </div>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label asp-for="password" class="control-label">Password</label>
-                <input type="password" asp-for="password" class="form-control input-bg"/>
-                <span asp-validation-for="password" class="text-danger"></span>
-            </div>
-            <div class="row form-group">
-                <a class="btn btn-light col-md-4 offset-md-4" asp-action="Register">Register</a>
-                <input class="btn btn-primary col-md-4" type="submit" value="Login" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - IFM Solutions Company - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+</body>
+</html>

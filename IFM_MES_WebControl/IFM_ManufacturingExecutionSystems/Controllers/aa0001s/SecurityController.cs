@@ -52,6 +52,11 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
             return _context.aa0001.Any(e => e.aa0001c11 == username);
         }
 
+        private aa0001 CheckToken(string token)
+        {
+            return _context.aa0001.Where(e => e.aa0001c24 == token).FirstOrDefault();
+        }
+
         private string GetSalt(string username)
         {
             return _context.aa0001.Where(a => a.aa0001c11 == username).Select(x => x.aa0001c21).FirstOrDefault();
@@ -85,6 +90,20 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
             {
                 return Unauthorized();
             }
+        }
+
+        [HttpPatch]
+        public IActionResult ActiveUser([FromBody] string token)
+        {
+            aa0001 userActive = CheckToken(token);
+            if (userActive != null)
+            {
+                userActive.aa0001c16 = "1";
+                _context.Update(userActive);
+                _context.SaveChanges();
+                return Ok();
+            }
+            else return BadRequest();
         }
     }
 }
