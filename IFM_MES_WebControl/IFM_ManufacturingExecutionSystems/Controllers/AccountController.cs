@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Security.Cryptography;
-using System.Threading.Tasks;
-using IFM_ManufacturingExecutionSystems.Models.Database;
+﻿using IFM_ManufacturingExecutionSystems.Models.Database;
 using IFM_ManufacturingExecutionSystems.Models.Mail;
 using IFM_ManufacturingExecutionSystems.Models.MVC;
 using IFM_ManufacturingExecutionSystems.Models.Security;
@@ -12,6 +6,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using System;
+using System.Net.Http;
+using System.Security.Cryptography;
 
 namespace IFM_ManufacturingExecutionSystems.Controllers
 {

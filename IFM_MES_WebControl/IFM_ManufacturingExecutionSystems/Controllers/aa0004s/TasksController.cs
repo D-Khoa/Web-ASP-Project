@@ -7,50 +7,50 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IFM_ManufacturingExecutionSystems.Controllers.aa0002s
+namespace IFM_ManufacturingExecutionSystems.Controllers.aa0004s
 {
-    [Route("aa0002/[controller]")]
+    [Route("aa0004/[controller]")]
     [ApiController]
-    public class StatusController : ControllerBase
+    public class TasksController : ControllerBase
     {
         private readonly MESContext _context;
 
-        public StatusController(MESContext context)
+        public TasksController(MESContext context)
         {
             _context = context;
         }
 
-        // GET: api/Status
+        // GET: api/Tasks
         [HttpGet]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<aa0002>>> Getaa0002()
+        public async Task<ActionResult<IEnumerable<aa0004>>> Getaa0004()
         {
-            return await _context.aa0002.Where(x => !string.IsNullOrEmpty(x.aa0002c21)).ToListAsync();
+            return await _context.aa0004.Where(x => !string.IsNullOrEmpty(x.aa0004c11)).ToListAsync();
         }
 
-        // GET: api/Status/5
+        // GET: api/Tasks/5
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<ActionResult<aa0002>> Getaa0002(int id)
+        public async Task<ActionResult<aa0004>> Getaa0004(int id)
         {
-            var aa0002 = await _context.aa0002.FindAsync(id);
+            var aa0004 = await _context.aa0004.FindAsync(id);
 
-            if (aa0002 == null)
+            if (aa0004 == null)
             {
                 return NotFound();
             }
 
-            return aa0002;
+            return aa0004;
         }
 
-        // PUT: api/Status/5
+        // PUT: api/Tasks/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> Putaa0002(aa0002 aa0002)
+        public async Task<IActionResult> Putaa0004(aa0004 aa0004)
         {
-            _context.Entry(aa0002).State = EntityState.Modified;
+            _context.Entry(aa0004).State = EntityState.Modified;
 
             try
             {
@@ -58,7 +58,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0002s
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!aa0002Exists(aa0002.aa0002c01))
+                if (!aa0004Exists(aa0004.aa0004c01))
                 {
                     return NotFound();
                 }
@@ -71,48 +71,48 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0002s
             return NoContent();
         }
 
-        // POST: api/Status
+        // POST: api/Tasks
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Authorize]
-        public async Task<ActionResult<aa0002>> Postaa0002(aa0002 aa0002)
+        public async Task<ActionResult<aa0004>> Postaa0004(aa0004 aa0004)
         {
-            if (aa0002Exists(aa0002.aa0002c21))
+            if (aa0004Exists(aa0004.aa0004c11))
             {
-                return BadRequest("This Status Code Is Exists!");
+                return BadRequest("This Task Is Exists!");
             }
-            _context.aa0002.Add(aa0002);
+            _context.aa0004.Add(aa0004);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("Getaa0002", new { id = aa0002.aa0002c01 }, aa0002);
+            return CreatedAtAction("Getaa0004", new { id = aa0004.aa0004c01 }, aa0004);
         }
 
-        // DELETE: api/Status/5
+        // DELETE: api/Tasks/5
         [Authorize]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<aa0002>> Deleteaa0002(int id)
+        public async Task<ActionResult<aa0004>> Deleteaa0004(int id)
         {
-            var aa0002 = await _context.aa0002.FindAsync(id);
-            if (aa0002 == null)
+            var aa0004 = await _context.aa0004.FindAsync(id);
+            if (aa0004 == null)
             {
                 return NotFound();
             }
 
-            _context.aa0002.Remove(aa0002);
+            _context.aa0004.Remove(aa0004);
             await _context.SaveChangesAsync();
 
-            return aa0002;
+            return aa0004;
         }
 
-        private bool aa0002Exists(int id)
+        private bool aa0004Exists(int id)
         {
-            return _context.aa0002.Any(e => e.aa0002c01 == id);
+            return _context.aa0004.Any(e => e.aa0004c01 == id);
         }
 
-        private bool aa0002Exists(string statusCode)
+        private bool aa0004Exists(string taskcode)
         {
-            return _context.aa0002.Any(e => e.aa0002c21 == statusCode);
+            return _context.aa0004.Any(e => e.aa0004c11 == taskcode);
         }
     }
 }

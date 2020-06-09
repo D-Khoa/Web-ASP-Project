@@ -11,33 +11,33 @@ using System.Net.Http.Headers;
 
 namespace IFM_ManufacturingExecutionSystems.Controllers
 {
-    public class StatusController : Controller
+    public class DepartmentController : Controller
     {
         private readonly string baseURI;
         private readonly IConfiguration _config;
 
-        public StatusController(IConfiguration configuration)
+        public DepartmentController(IConfiguration configuration)
         {
             _config = configuration;
             //baseURI = _config["BaseURL:DefaultURL"];
             baseURI = _config["BaseURL:LocalURL"];
         }
 
-        // GET: Status
+        // GET: DepartmentController
         public ActionResult Index()
         {
             IEnumerable<aa0002> aa0002s = Enumerable.Empty<aa0002>();
-            List<Status> statuses = new List<Status>();
+            List<Department> departments = new List<Department>();
             HttpClientHandler clientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
             };
             using (HttpClient client = new HttpClient(clientHandler))
             {
-                client.BaseAddress = new Uri(baseURI + @"/aa0002/Status");
+                client.BaseAddress = new Uri(baseURI + @"/aa0002/Departments");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                         HttpContext.Session.GetString("token"));
-                var respone = client.GetAsync("Status");
+                var respone = client.GetAsync("departments");
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
@@ -47,13 +47,11 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0002s = readTask.Result;
                     foreach (aa0002 aa0002 in aa0002s)
                     {
-                        statuses.Add(new Status
+                        departments.Add(new Department
                         {
-                            statusID = aa0002.aa0002c01,
-                            statusCode = aa0002.aa0002c21,
-                            statusName = aa0002.aa0002c22,
-                            color = aa0002.aa0002c23,
-                            style = aa0002.aa0002c24,
+                            deptID = aa0002.aa0002c01,
+                            deptCode = aa0002.aa0002c61,
+                            deptName = aa0002.aa0002c62,
                             updateUser = aa0002.aa0002c07,
                             updateTime = DateTime.TryParse(aa0002.aa0002c08, out DateTime updatetime) ? updatetime : updatetime,
                             creator = aa0002.aa0002c05,
@@ -62,36 +60,34 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                 }
             }
-            return View(statuses);
+            return View(departments);
         }
 
-        // GET: Status/Details/5
+        // GET: DepartmentController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Status/Create
+        // GET: DepartmentController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Status/Create
+        // POST: DepartmentController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Status inStatus)
+        public ActionResult Create(Department inDept)
         {
             try
             {
                 aa0002 aa0002 = new aa0002
                 {
-                    aa0002c05 = inStatus.updateUser,
+                    aa0002c05 = inDept.updateUser,
                     aa0002c06 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                    aa0002c21 = inStatus.statusCode,
-                    aa0002c22 = inStatus.statusName,
-                    aa0002c23 = inStatus.color,
-                    aa0002c24 = inStatus.style
+                    aa0002c61 = inDept.deptCode,
+                    aa0002c62 = inDept.deptName,
                 };
                 HttpClientHandler clientHandler = new HttpClientHandler
                 {
@@ -99,52 +95,50 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 };
                 using HttpClient client = new HttpClient(clientHandler)
                 {
-                    BaseAddress = new Uri(baseURI + @"/aa0002/Status")
+                    BaseAddress = new Uri(baseURI + @"/aa0002/Departments")
                 };
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                     HttpContext.Session.GetString("token"));
-                var respone = client.PostAsJsonAsync<aa0002>("status", aa0002);
+                var respone = client.PostAsJsonAsync<aa0002>("departments", aa0002);
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    ViewData["Message"] = "Add new status successful!";
+                    ViewData["Message"] = "Add new department successful!";
                 }
                 else
                 {
-                    ViewData["Message"] = "Add new status fail!";
+                    ViewData["Message"] = "Add new department fail!";
                 }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ViewData["Message"] = "Add new status fail!";
+                ViewData["Message"] = "Add new department fail!";
                 return RedirectToAction(nameof(Index));
             }
         }
 
-        // GET: Status/Edit/5
-        public ActionResult Edit()
+        // GET: DepartmentController/Edit/5
+        public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Status/Edit/5
+        // POST: DepartmentController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Status inStatus)
+        public ActionResult Edit(Department inDept)
         {
             try
             {
                 aa0002 aa0002 = new aa0002
                 {
-                    aa0002c01 = inStatus.statusID,
-                    aa0002c07 = inStatus.updateUser,
+                    aa0002c01 = inDept.deptID,
+                    aa0002c07 = inDept.updateUser,
                     aa0002c08 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                    aa0002c21 = inStatus.statusCode,
-                    aa0002c22 = inStatus.statusName,
-                    aa0002c23 = inStatus.color,
-                    aa0002c24 = inStatus.style
+                    aa0002c61 = inDept.deptCode,
+                    aa0002c62 = inDept.deptName,
                 };
                 HttpClientHandler clientHandler = new HttpClientHandler
                 {
@@ -152,31 +146,31 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 };
                 using HttpClient client = new HttpClient(clientHandler)
                 {
-                    BaseAddress = new Uri(baseURI + @"/aa0002/Status")
+                    BaseAddress = new Uri(baseURI + @"/aa0002/Departments")
                 };
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                     HttpContext.Session.GetString("token"));
-                var respone = client.PutAsJsonAsync<aa0002>("status", aa0002);
+                var respone = client.PutAsJsonAsync<aa0002>("departments", aa0002);
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    ViewData["Message"] = "Update status successful!";
+                    ViewData["Message"] = "Update departments successful!";
                 }
                 else
                 {
-                    ViewData["Message"] = "Update status fail!";
+                    ViewData["Message"] = "Update departments fail!";
                 }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ViewData["Message"] = "Update status fail!";
+                ViewData["Message"] = "Update departments fail!";
                 return RedirectToAction(nameof(Index));
             }
         }
 
-        // POST: Status/Delete/5
+        // POST: DepartmentController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
@@ -189,26 +183,26 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 };
                 using HttpClient client = new HttpClient(clientHandler)
                 {
-                    BaseAddress = new Uri(baseURI + @"/aa0002/Status")
+                    BaseAddress = new Uri(baseURI + @"/aa0002/Departments")
                 };
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                         HttpContext.Session.GetString("token"));
-                var respone = client.DeleteAsync(string.Format("status/{0}", id));
+                var respone = client.DeleteAsync(string.Format("departments/{0}", id));
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    ViewData["Message"] = "Update status successful!";
+                    ViewData["Message"] = "Update departments successful!";
                 }
                 else
                 {
-                    ViewData["Message"] = "Update status fail!";
+                    ViewData["Message"] = "Update departments fail!";
                 }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ViewData["Message"] = "Delete status fail!";
+                ViewData["Message"] = "Delete departments fail!";
                 return RedirectToAction(nameof(Index));
             }
         }

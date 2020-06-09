@@ -11,33 +11,33 @@ using System.Net.Http.Headers;
 
 namespace IFM_ManufacturingExecutionSystems.Controllers
 {
-    public class StatusController : Controller
+    public class ProcessController : Controller
     {
         private readonly string baseURI;
         private readonly IConfiguration _config;
 
-        public StatusController(IConfiguration configuration)
+        public ProcessController(IConfiguration configuration)
         {
             _config = configuration;
             //baseURI = _config["BaseURL:DefaultURL"];
             baseURI = _config["BaseURL:LocalURL"];
         }
 
-        // GET: Status
+        // GET: ProcessController
         public ActionResult Index()
         {
             IEnumerable<aa0002> aa0002s = Enumerable.Empty<aa0002>();
-            List<Status> statuses = new List<Status>();
+            List<Process> processes = new List<Process>();
             HttpClientHandler clientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
             };
             using (HttpClient client = new HttpClient(clientHandler))
             {
-                client.BaseAddress = new Uri(baseURI + @"/aa0002/Status");
+                client.BaseAddress = new Uri(baseURI + @"/aa0002/Processes");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                         HttpContext.Session.GetString("token"));
-                var respone = client.GetAsync("Status");
+                var respone = client.GetAsync("processes");
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
@@ -47,13 +47,14 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0002s = readTask.Result;
                     foreach (aa0002 aa0002 in aa0002s)
                     {
-                        statuses.Add(new Status
+                        processes.Add(new Process
                         {
-                            statusID = aa0002.aa0002c01,
-                            statusCode = aa0002.aa0002c21,
-                            statusName = aa0002.aa0002c22,
-                            color = aa0002.aa0002c23,
-                            style = aa0002.aa0002c24,
+                            processID = aa0002.aa0002c01,
+                            processCode = aa0002.aa0002c31,
+                            processName = aa0002.aa0002c32,
+                            lineCode = aa0002.aa0002c33,
+                            deptCode = aa0002.aa0002c34,
+                            siteCode = aa0002.aa0002c35,
                             updateUser = aa0002.aa0002c07,
                             updateTime = DateTime.TryParse(aa0002.aa0002c08, out DateTime updatetime) ? updatetime : updatetime,
                             creator = aa0002.aa0002c05,
@@ -62,36 +63,37 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                 }
             }
-            return View(statuses);
+            return View(processes);
         }
 
-        // GET: Status/Details/5
+        // GET: ProcessController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Status/Create
+        // GET: ProcessController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Status/Create
+        // POST: ProcessController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Status inStatus)
+        public ActionResult Create(Process inProcess)
         {
             try
             {
                 aa0002 aa0002 = new aa0002
                 {
-                    aa0002c05 = inStatus.updateUser,
+                    aa0002c05 = inProcess.updateUser,
                     aa0002c06 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                    aa0002c21 = inStatus.statusCode,
-                    aa0002c22 = inStatus.statusName,
-                    aa0002c23 = inStatus.color,
-                    aa0002c24 = inStatus.style
+                    aa0002c31 = inProcess.siteCode,
+                    aa0002c32 = inProcess.processName,
+                    aa0002c33 = inProcess.lineCode,
+                    aa0002c34 = inProcess.deptCode,
+                    aa0002c35 = inProcess.siteCode,
                 };
                 HttpClientHandler clientHandler = new HttpClientHandler
                 {
@@ -99,52 +101,53 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 };
                 using HttpClient client = new HttpClient(clientHandler)
                 {
-                    BaseAddress = new Uri(baseURI + @"/aa0002/Status")
+                    BaseAddress = new Uri(baseURI + @"/aa0002/Processes")
                 };
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                     HttpContext.Session.GetString("token"));
-                var respone = client.PostAsJsonAsync<aa0002>("status", aa0002);
+                var respone = client.PostAsJsonAsync<aa0002>("processes", aa0002);
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    ViewData["Message"] = "Add new status successful!";
+                    ViewData["Message"] = "Add new process successful!";
                 }
                 else
                 {
-                    ViewData["Message"] = "Add new status fail!";
+                    ViewData["Message"] = "Add new process fail!";
                 }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ViewData["Message"] = "Add new status fail!";
+                ViewData["Message"] = "Add new process fail!";
                 return RedirectToAction(nameof(Index));
             }
         }
 
-        // GET: Status/Edit/5
-        public ActionResult Edit()
+        // GET: ProcessController/Edit/5
+        public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Status/Edit/5
+        // POST: ProcessController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Status inStatus)
+        public ActionResult Edit(Process inProcess)
         {
             try
             {
                 aa0002 aa0002 = new aa0002
                 {
-                    aa0002c01 = inStatus.statusID,
-                    aa0002c07 = inStatus.updateUser,
+                    aa0002c01 = inProcess.processID,
+                    aa0002c07 = inProcess.updateUser,
                     aa0002c08 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                    aa0002c21 = inStatus.statusCode,
-                    aa0002c22 = inStatus.statusName,
-                    aa0002c23 = inStatus.color,
-                    aa0002c24 = inStatus.style
+                    aa0002c31 = inProcess.siteCode,
+                    aa0002c32 = inProcess.processName,
+                    aa0002c33 = inProcess.lineCode,
+                    aa0002c34 = inProcess.deptCode,
+                    aa0002c35 = inProcess.siteCode,
                 };
                 HttpClientHandler clientHandler = new HttpClientHandler
                 {
@@ -152,31 +155,31 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 };
                 using HttpClient client = new HttpClient(clientHandler)
                 {
-                    BaseAddress = new Uri(baseURI + @"/aa0002/Status")
+                    BaseAddress = new Uri(baseURI + @"/aa0002/Processes")
                 };
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                     HttpContext.Session.GetString("token"));
-                var respone = client.PutAsJsonAsync<aa0002>("status", aa0002);
+                var respone = client.PutAsJsonAsync<aa0002>("processes", aa0002);
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    ViewData["Message"] = "Update status successful!";
+                    ViewData["Message"] = "Update process successful!";
                 }
                 else
                 {
-                    ViewData["Message"] = "Update status fail!";
+                    ViewData["Message"] = "Update process fail!";
                 }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ViewData["Message"] = "Update status fail!";
+                ViewData["Message"] = "Update process fail!";
                 return RedirectToAction(nameof(Index));
             }
         }
 
-        // POST: Status/Delete/5
+        // POST: ProcessController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
@@ -189,26 +192,26 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 };
                 using HttpClient client = new HttpClient(clientHandler)
                 {
-                    BaseAddress = new Uri(baseURI + @"/aa0002/Status")
+                    BaseAddress = new Uri(baseURI + @"/aa0002/Processes")
                 };
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                         HttpContext.Session.GetString("token"));
-                var respone = client.DeleteAsync(string.Format("status/{0}", id));
+                var respone = client.DeleteAsync(string.Format("processes/{0}", id));
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    ViewData["Message"] = "Update status successful!";
+                    ViewData["Message"] = "Update process successful!";
                 }
                 else
                 {
-                    ViewData["Message"] = "Update status fail!";
+                    ViewData["Message"] = "Update process fail!";
                 }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ViewData["Message"] = "Delete status fail!";
+                ViewData["Message"] = "Delete process fail!";
                 return RedirectToAction(nameof(Index));
             }
         }

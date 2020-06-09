@@ -11,33 +11,33 @@ using System.Net.Http.Headers;
 
 namespace IFM_ManufacturingExecutionSystems.Controllers
 {
-    public class StatusController : Controller
+    public class LineController : Controller
     {
         private readonly string baseURI;
         private readonly IConfiguration _config;
 
-        public StatusController(IConfiguration configuration)
+        public LineController(IConfiguration configuration)
         {
             _config = configuration;
             //baseURI = _config["BaseURL:DefaultURL"];
             baseURI = _config["BaseURL:LocalURL"];
         }
 
-        // GET: Status
+        // GET: LineController
         public ActionResult Index()
         {
             IEnumerable<aa0002> aa0002s = Enumerable.Empty<aa0002>();
-            List<Status> statuses = new List<Status>();
+            List<Line> lines = new List<Line>();
             HttpClientHandler clientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
             };
             using (HttpClient client = new HttpClient(clientHandler))
             {
-                client.BaseAddress = new Uri(baseURI + @"/aa0002/Status");
+                client.BaseAddress = new Uri(baseURI + @"/aa0002/Lines");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                         HttpContext.Session.GetString("token"));
-                var respone = client.GetAsync("Status");
+                var respone = client.GetAsync("lines");
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
@@ -47,13 +47,11 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0002s = readTask.Result;
                     foreach (aa0002 aa0002 in aa0002s)
                     {
-                        statuses.Add(new Status
+                        lines.Add(new Line
                         {
-                            statusID = aa0002.aa0002c01,
-                            statusCode = aa0002.aa0002c21,
-                            statusName = aa0002.aa0002c22,
-                            color = aa0002.aa0002c23,
-                            style = aa0002.aa0002c24,
+                            lineID = aa0002.aa0002c01,
+                            lineCode = aa0002.aa0002c51,
+                            lineName = aa0002.aa0002c52,
                             updateUser = aa0002.aa0002c07,
                             updateTime = DateTime.TryParse(aa0002.aa0002c08, out DateTime updatetime) ? updatetime : updatetime,
                             creator = aa0002.aa0002c05,
@@ -62,36 +60,34 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                 }
             }
-            return View(statuses);
+            return View(lines);
         }
 
-        // GET: Status/Details/5
+        // GET: LineController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Status/Create
+        // GET: LineController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Status/Create
+        // POST: LineController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Status inStatus)
+        public ActionResult Create(Line inLine)
         {
             try
             {
                 aa0002 aa0002 = new aa0002
                 {
-                    aa0002c05 = inStatus.updateUser,
+                    aa0002c05 = inLine.updateUser,
                     aa0002c06 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                    aa0002c21 = inStatus.statusCode,
-                    aa0002c22 = inStatus.statusName,
-                    aa0002c23 = inStatus.color,
-                    aa0002c24 = inStatus.style
+                    aa0002c51 = inLine.lineCode,
+                    aa0002c52 = inLine.lineName,
                 };
                 HttpClientHandler clientHandler = new HttpClientHandler
                 {
@@ -99,52 +95,50 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 };
                 using HttpClient client = new HttpClient(clientHandler)
                 {
-                    BaseAddress = new Uri(baseURI + @"/aa0002/Status")
+                    BaseAddress = new Uri(baseURI + @"/aa0002/Lines")
                 };
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                     HttpContext.Session.GetString("token"));
-                var respone = client.PostAsJsonAsync<aa0002>("status", aa0002);
+                var respone = client.PostAsJsonAsync<aa0002>("lines", aa0002);
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    ViewData["Message"] = "Add new status successful!";
+                    ViewData["Message"] = "Add new line successful!";
                 }
                 else
                 {
-                    ViewData["Message"] = "Add new status fail!";
+                    ViewData["Message"] = "Add new line fail!";
                 }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ViewData["Message"] = "Add new status fail!";
+                ViewData["Message"] = "Add new line fail!";
                 return RedirectToAction(nameof(Index));
             }
         }
 
-        // GET: Status/Edit/5
-        public ActionResult Edit()
+        // GET: LineController/Edit/5
+        public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Status/Edit/5
+        // POST: LineController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Status inStatus)
+        public ActionResult Edit(Line inLine)
         {
             try
             {
                 aa0002 aa0002 = new aa0002
                 {
-                    aa0002c01 = inStatus.statusID,
-                    aa0002c07 = inStatus.updateUser,
+                    aa0002c01 = inLine.lineID,
+                    aa0002c07 = inLine.updateUser,
                     aa0002c08 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                    aa0002c21 = inStatus.statusCode,
-                    aa0002c22 = inStatus.statusName,
-                    aa0002c23 = inStatus.color,
-                    aa0002c24 = inStatus.style
+                    aa0002c51 = inLine.lineCode,
+                    aa0002c52 = inLine.lineName,
                 };
                 HttpClientHandler clientHandler = new HttpClientHandler
                 {
@@ -152,31 +146,31 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 };
                 using HttpClient client = new HttpClient(clientHandler)
                 {
-                    BaseAddress = new Uri(baseURI + @"/aa0002/Status")
+                    BaseAddress = new Uri(baseURI + @"/aa0002/Lines")
                 };
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                     HttpContext.Session.GetString("token"));
-                var respone = client.PutAsJsonAsync<aa0002>("status", aa0002);
+                var respone = client.PutAsJsonAsync<aa0002>("lines", aa0002);
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    ViewData["Message"] = "Update status successful!";
+                    ViewData["Message"] = "Update line successful!";
                 }
                 else
                 {
-                    ViewData["Message"] = "Update status fail!";
+                    ViewData["Message"] = "Update line fail!";
                 }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ViewData["Message"] = "Update status fail!";
+                ViewData["Message"] = "Update line fail!";
                 return RedirectToAction(nameof(Index));
             }
         }
 
-        // POST: Status/Delete/5
+        // POST: LineController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id)
@@ -189,26 +183,26 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 };
                 using HttpClient client = new HttpClient(clientHandler)
                 {
-                    BaseAddress = new Uri(baseURI + @"/aa0002/Status")
+                    BaseAddress = new Uri(baseURI + @"/aa0002/Lines")
                 };
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                         HttpContext.Session.GetString("token"));
-                var respone = client.DeleteAsync(string.Format("status/{0}", id));
+                var respone = client.DeleteAsync(string.Format("lines/{0}", id));
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    ViewData["Message"] = "Update status successful!";
+                    ViewData["Message"] = "Update lines successful!";
                 }
                 else
                 {
-                    ViewData["Message"] = "Update status fail!";
+                    ViewData["Message"] = "Update lines fail!";
                 }
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                ViewData["Message"] = "Delete status fail!";
+                ViewData["Message"] = "Delete lines fail!";
                 return RedirectToAction(nameof(Index));
             }
         }

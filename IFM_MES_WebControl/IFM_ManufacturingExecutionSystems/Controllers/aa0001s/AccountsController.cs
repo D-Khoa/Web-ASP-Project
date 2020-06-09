@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IFM_ManufacturingExecutionSystems.Models.Database;
 using IFM_ManufacturingExecutionSystems.Models.SQL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
 {
@@ -23,12 +24,14 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
 
         // GET: api/Account
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<aa0001>>> Getaa0001()
         {
             return await _context.aa0001.ToListAsync();
         }
 
         // GET: api/Account/5
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<aa0001>> Getaa0001(int id)
         {
@@ -92,6 +95,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
         }
 
         // DELETE: api/Account/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<aa0001>> Deleteaa0001(int id)
         {

@@ -1,34 +1,36 @@
-﻿using IFM_ManufacturingExecutionSystems.Models.Database;
-using IFM_ManufacturingExecutionSystems.Models.SQL;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using IFM_ManufacturingExecutionSystems.Models.Database;
+using IFM_ManufacturingExecutionSystems.Models.SQL;
+using Microsoft.AspNetCore.Authorization;
 
 namespace IFM_ManufacturingExecutionSystems.Controllers.aa0002s
 {
     [Route("aa0002/[controller]")]
     [ApiController]
-    public class StatusController : ControllerBase
+    public class ProcessesController : ControllerBase
     {
         private readonly MESContext _context;
 
-        public StatusController(MESContext context)
+        public ProcessesController(MESContext context)
         {
             _context = context;
         }
 
-        // GET: api/Status
+        // GET: api/Process
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<IEnumerable<aa0002>>> Getaa0002()
         {
-            return await _context.aa0002.Where(x => !string.IsNullOrEmpty(x.aa0002c21)).ToListAsync();
+            return await _context.aa0002.Where(x => !string.IsNullOrEmpty(x.aa0002c31)).ToListAsync();
         }
 
-        // GET: api/Status/5
+        // GET: api/Process/5
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<aa0002>> Getaa0002(int id)
@@ -43,7 +45,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0002s
             return aa0002;
         }
 
-        // PUT: api/Status/5
+        // PUT: api/Process/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
@@ -71,16 +73,15 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0002s
             return NoContent();
         }
 
-        // POST: api/Status
+        // POST: api/Process
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<aa0002>> Postaa0002(aa0002 aa0002)
         {
-            if (aa0002Exists(aa0002.aa0002c21))
+            if (aa0002Exists(aa0002.aa0002c31))
             {
-                return BadRequest("This Status Code Is Exists!");
+                return BadRequest("This Process Code Is Exists!");
             }
             _context.aa0002.Add(aa0002);
             await _context.SaveChangesAsync();
@@ -88,8 +89,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0002s
             return CreatedAtAction("Getaa0002", new { id = aa0002.aa0002c01 }, aa0002);
         }
 
-        // DELETE: api/Status/5
-        [Authorize]
+        // DELETE: api/Process/5
         [HttpDelete("{id}")]
         public async Task<ActionResult<aa0002>> Deleteaa0002(int id)
         {
@@ -110,9 +110,9 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0002s
             return _context.aa0002.Any(e => e.aa0002c01 == id);
         }
 
-        private bool aa0002Exists(string statusCode)
+        private bool aa0002Exists(string processcode)
         {
-            return _context.aa0002.Any(e => e.aa0002c21 == statusCode);
+            return _context.aa0002.Any(e => e.aa0002c31 == processcode);
         }
     }
 }
