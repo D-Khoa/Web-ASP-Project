@@ -3,5 +3,6 @@
     public class JWT
     {
         public string Token { get; set; }
+        public string Firstname { get; set; }
     }
 }

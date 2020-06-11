@@ -1,13 +1,13 @@
-﻿@model IEnumerable<IFM_ManufacturingExecutionSystems.Models.MVC.Status>
+﻿@model IEnumerable<IFM_ManufacturingExecutionSystems.Models.MVC.Line>
 
 @{
-    ViewData["Title"] = "Status Management";
+    ViewData["Title"] = "Index";
 }
 
-<h1 class="text-center">Status Management</h1>
+<h1 class="text-center">Line Management</h1>
 <p class="text-danger">@ViewData["Message"]</p>
 <p>
-    <a class="btn btn-menu" asp-action="Create" data-toggle="modal" data-target="#add-popup"><i class="fas fa-plus" style="color:green;"></i>Add New Status</a>
+    <a class="btn btn-menu" asp-action="Create" data-toggle="modal" data-target="#add-popup"><i class="fas fa-plus" style="color:green;"></i>Add New Line</a>
 </p>
 @if (Model != null && Model.Count() > 0)
 {
@@ -15,16 +15,10 @@
         <thead>
             <tr>
                 <th>
-                    Status Code
+                    Line Code
                 </th>
                 <th>
-                    Status Name
-                </th>
-                <th>
-                    Status Color
-                </th>
-                <th>
-                    Status Style
+                    Line Name
                 </th>
                 <th>
                     Update User
@@ -46,17 +40,10 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.statusCode)
+                        @Html.DisplayFor(modelItem => item.lineCode)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.statusName)
-                    </td>
-                    <td>
-                        <span class="dot" style="background:@item.color;"></span>
-                        @Html.DisplayFor(modelItem => item.color)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.style)
+                        @Html.DisplayFor(modelItem => item.lineName)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.updateUser)
@@ -71,17 +58,16 @@
                         @Html.DisplayFor(modelItem => item.createTime)
                     </td>
                     <td>
+                        @*<a asp-action="Details" asp-route-id="@item.lineID">Details</a> |*@
                         <button class="btn btn-menu" data-toggle="modal" data-target="#update-popup"
-                                data-id="@item.statusID" data-code="@item.statusCode" data-name="@item.statusName"
-                                data-color="@item.color" data-style="@item.style">
+                                data-id="@item.lineID" data-code="@item.lineCode" data-name="@item.lineName">
                             <i class="fas fa-edit" style="color:blue;"></i>
                         </button> |
                         @*<a class="btn btn-menu" asp-action="Details" asp-route-id="@item.statusID">Details</a> |*@
-                        <button class="btn btn-menu" data-toggle="modal" data-target="#delete-popup"
-                                data-id="@item.statusID" data-code="@item.statusCode" data-name="@item.statusName"
-                                data-color="@item.color" data-style="@item.style">
-                            <i class="fas fa-trash" style="color:red;"></i>
-                        </button>
+                    <button class="btn btn-menu" data-toggle="modal" data-target="#delete-popup"
+                            data-id="@item.lineID" data-code="@item.lineCode" data-name="@item.lineName">
+                        <i class="fas fa-trash" style="color:red;"></i>
+                    </button>
                     </td>
                 </tr>
             }
@@ -90,34 +76,26 @@
 }
 else
 {
-    <p>No have any status.</p>
+    <p>No have any line.</p>
 }
 
 <div id="add-popup" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <form asp-action="Create" method="post" class="modal-content rounded-lg shadow-lg">
             <div class="modal-header">
-                <h4 class="modal-title">Add new status</h4>
+                <h4 class="modal-title">Add new line</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="control-label">Status Code</label>
-                    <input name="statusCode" class="form-control input-bg" />
+                    <label class="control-label">Line Code</label>
+                    <input name="lineCode" class="form-control input-bg" />
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Status Name</label>
-                    <input name="statusName" class="form-control input-bg" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Color</label>
-                    <input type="color" name="color" class="form-control input-bg" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Style</label>
-                    <input name="style" class="form-control input-bg" />
+                    <label class="control-label">Line Name</label>
+                    <input name="lineName" class="form-control input-bg" />
                 </div>
             </div>
             <div class="modal-footer">
@@ -132,28 +110,20 @@ else
     <div class="modal-dialog" role="document">
         <form asp-action="Edit" method="post" class="modal-content rounded-lg shadow-lg">
             <div class="modal-header">
-                <h4 class="modal-title">Update status</h4>
+                <h4 class="modal-title">Update line</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <input id="selected-status-id" type="hidden" name="statusID" />
+                <input id="selected-status-id" type="hidden" name="deptID" />
                 <div class="form-group">
-                    <label class="control-label">Status Code</label>
-                    <input id="selected-code" name="statusCode" class="form-control input-bg" />
+                    <label class="control-label">Line Code</label>
+                    <input id="selected-code" name="lineCode" class="form-control input-bg" />
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Status Name</label>
-                    <input id="selected-name" name="statusName" class="form-control input-bg" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Color</label>
-                    <input id="selected-color" type="color" name="color" class="form-control input-bg" />
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Style</label>
-                    <input id="selected-style" name="style" class="form-control input-bg" />
+                    <label class="control-label">Line Name</label>
+                    <input id="selected-name" name="lineName" class="form-control input-bg" />
                 </div>
             </div>
             <div class="modal-footer">
@@ -168,7 +138,7 @@ else
     <div class="modal-dialog" role="document">
         <form asp-action="Delete" method="post" class="modal-content rounded-lg shadow-lg">
             <div class="modal-header">
-                <h4 class="modal-title">Delete status</h4>
+                <h4 class="modal-title">Delete line</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -176,7 +146,7 @@ else
             <div class="modal-body">
                 <input id="delete-id" type="hidden" name="id" />
                 <p class="text-body">
-                    Are you sure delete the department name:
+                    Are you sure delete the line name:
                     <label class="text-danger" id="delete-name" /> ?
                 </p>
             </div>
@@ -194,15 +164,11 @@ else
         var id = button.data('id') // Extract info from data-* attributes
         var code = button.data('code')
         var name = button.data('name')
-        var color = button.data('color')
-        var style = button.data('style')
 
         var modal = $(this)
         modal.find('#selected-id').val(id);
         modal.find('#selected-code').val(code);
         modal.find('#selected-name').val(name);
-        modal.find('#selected-color').val(color);
-        modal.find('#selected-style').val(style);
     })
 
     $('#delete-popup').on('show.bs.modal', function (event) {

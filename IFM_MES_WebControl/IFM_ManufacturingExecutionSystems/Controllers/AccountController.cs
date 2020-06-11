@@ -238,16 +238,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0001c11 = inUser.username,
                     aa0001c23 = inUser.password,
                 };
-                // Login API
-                //string jsonLoginUserString = JsonConvert.SerializeObject(loginUser);
-                //var client = new RestClient(baseURI + "/aa0001/Security/")
-                //{
-                //    Timeout = -1
-                //};
-                //var request = new RestRequest(Method.PUT);
-                //request.AddHeader("Content-Type", "application/json");
-                //request.AddParameter("application/json", jsonLoginUserString, ParameterType.RequestBody);
-                //IRestResponse response = client.Execute(request);
                 HttpClientHandler clientHandler = new HttpClientHandler();
                 clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
                 using (HttpClient client = new HttpClient(clientHandler))
@@ -258,10 +248,11 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     var result = respone.Result;
                     if (result.IsSuccessStatusCode)
                     {
-                        //JWT jwtToken = JsonConvert.DeserializeObject<JWT>(result.Content.ReadAsStringAsync());
                         var jwtToken = result.Content.ReadAsAsync<JWT>();
                         jwtToken.Wait();
                         HttpContext.Session.SetString("token", jwtToken.Result.Token);
+                        HttpContext.Session.SetString("firstname", jwtToken.Result.Firstname);
+                        HttpContext.Session.SetString("username", inUser.username);
                         ViewData["Message"] = "Wellcome " + inUser.username;
                         return RedirectToAction("Index","Home");
                     }

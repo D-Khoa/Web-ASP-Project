@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using IFM_ManufacturingExecutionSystems.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using IFM_ManufacturingExecutionSystems.Models;
+using System.Diagnostics;
 
 namespace IFM_ManufacturingExecutionSystems.Controllers
 {
@@ -20,6 +17,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Username"] = HttpContext.Session.GetString("firstnamef");
             return View();
         }
 

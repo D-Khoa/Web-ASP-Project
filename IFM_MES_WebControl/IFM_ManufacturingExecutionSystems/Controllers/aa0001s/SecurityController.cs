@@ -59,7 +59,14 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
 
         private string GetSalt(string username)
         {
-            return _context.aa0001.Where(a => a.aa0001c11 == username).Select(x => x.aa0001c21).FirstOrDefault();
+            return _context.aa0001.Where(a => a.aa0001c11 == username)
+                                  .Select(x => x.aa0001c21).FirstOrDefault();
+        }
+
+        private aa0001 GetInfo(string username)
+        {
+            return _context.aa0001.Where(a => a.aa0001c11 == username)
+                                  .Select(x => x).FirstOrDefault();
         }
 
         private bool IsActive(string username)
@@ -84,7 +91,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
                 aa0001.aa0001c25 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 _context.Update(aa0001);
                 _context.SaveChanges();
-                return Ok(new { token = tokenstring });
+                aa0001 userinfo = GetInfo(aa0001.aa0001c11);
+                return Ok(new { token = tokenstring, firstname = userinfo.aa0001c12 });
             }
             else
             {
