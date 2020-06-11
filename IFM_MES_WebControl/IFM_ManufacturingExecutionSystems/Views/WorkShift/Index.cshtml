@@ -1,13 +1,13 @@
-﻿@model IEnumerable<IFM_ManufacturingExecutionSystems.Models.MVC.Line>
+﻿@model IEnumerable<IFM_ManufacturingExecutionSystems.Models.MVC.WorkShift>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Work Shift Management";
 }
 
-<h1 class="text-center">Line Management</h1>
+<h1 class="text-center"> @ViewData["Title"]</h1>
 <p class="text-danger">@ViewData["Message"]</p>
 <p>
-    <a class="btn btn-menu" asp-action="Create" data-toggle="modal" data-target="#add-popup"><i class="fas fa-plus" style="color:green;"></i>Add New Line</a>
+    <a class="btn btn-menu" asp-action="Create" data-toggle="modal" data-target="#add-popup"><i class="fas fa-plus" style="color:green;"></i>Add New Work Shift</a>
 </p>
 @if (Model != null && Model.Count() > 0)
 {
@@ -15,12 +15,18 @@
         <thead class="text-center">
             <tr>
                 <th class="th-sm">
-                    Line Code
+                    Shift Code
                 </th>
                 <th class="th-sm">
-                    Line Name
+                    Shift Name
                 </th>
-                <th>
+                <th class="th-sm">
+                    Begin Time
+                </th>
+                <th class="th-sm">
+                    End Time
+                </th>
+                <th class="th-sm">
                     Update User
                 </th>
                 <th class="th-sm">
@@ -40,10 +46,16 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.lineCode)
+                        @Html.DisplayFor(modelItem => item.shiftCode)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.lineName)
+                        @Html.DisplayFor(modelItem => item.shiftName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.beginTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.endTime)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.updateUser)
@@ -58,14 +70,15 @@
                         @Html.DisplayFor(modelItem => item.createTime)
                     </td>
                     <td>
-                        @*<a asp-action="Details" asp-route-id="@item.lineID">Details</a> |*@
+                        @*<a asp-action="Details" asp-route-id="@item.shiftID">Details</a> |*@
                         <button class="btn btn-menu" data-toggle="modal" data-target="#update-popup"
-                                data-id="@item.lineID" data-code="@item.lineCode" data-name="@item.lineName">
+                                data-id="@item.shiftID" data-code="@item.shiftCode" data-name="@item.shiftName"
+                                data-begintime="@item.beginTime" data-endtime="@item.endTime">
                             <i class="fas fa-edit" style="color:blue;"></i>
                         </button> |
-                        @*<a class="btn btn-menu" asp-action="Details" asp-route-id="@item.statusID">Details</a> |*@
                         <button class="btn btn-menu" data-toggle="modal" data-target="#delete-popup"
-                                data-id="@item.lineID" data-code="@item.lineCode" data-name="@item.lineName">
+                                data-id="@item.shiftID" data-code="@item.shiftCode" data-name="@item.shiftName"
+                                data-begintime="@item.beginTime" data-endtime="@item.endTime">
                             <i class="fas fa-trash" style="color:red;"></i>
                         </button>
                     </td>
@@ -76,26 +89,34 @@
 }
 else
 {
-    <p>No have any line.</p>
+    <p>No have any work shift.</p>
 }
 
 <div id="add-popup" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <form asp-action="Create" method="post" class="modal-content rounded-lg shadow-lg">
             <div class="modal-header">
-                <h4 class="modal-title">Add new line</h4>
+                <h4 class="modal-title">Add new work shift</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="control-label">Line Code</label>
-                    <input name="lineCode" class="form-control input-bg" />
+                    <label class="control-label">Shift Code</label>
+                    <input name="shiftCode" class="form-control input-bg" />
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Line Name</label>
-                    <input name="lineName" class="form-control input-bg" />
+                    <label class="control-label">Shift Name</label>
+                    <input name="shiftName" class="form-control input-bg" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Begin Time</label>
+                    <input type="time" name="beginTime" class="form-control input-bg" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">End Time</label>
+                    <input type="time" name="endTime" class="form-control input-bg" />
                 </div>
             </div>
             <div class="modal-footer">
@@ -110,20 +131,28 @@ else
     <div class="modal-dialog" role="document">
         <form asp-action="Edit" method="post" class="modal-content rounded-lg shadow-lg">
             <div class="modal-header">
-                <h4 class="modal-title">Update line</h4>
+                <h4 class="modal-title">Update work shift</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <input id="selected-status-id" type="hidden" name="deptID" />
+                <input id="selected-id" type="hidden" name="shiftID" />
                 <div class="form-group">
-                    <label class="control-label">Line Code</label>
-                    <input id="selected-code" name="lineCode" class="form-control input-bg" />
+                    <label class="control-label">Shift Code</label>
+                    <input id="selected-code" name="shiftCode" class="form-control input-bg" />
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Line Name</label>
-                    <input id="selected-name" name="lineName" class="form-control input-bg" />
+                    <label class="control-label">Shift Name</label>
+                    <input id="selected-name" name="shiftName" class="form-control input-bg" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Begin Time</label>
+                    <input id="selected-beginTime" type="time" name="beginTime" class="form-control input-bg" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">End Time</label>
+                    <input id="selected-endTime" type="time" name="endTime" class="form-control input-bg" />
                 </div>
             </div>
             <div class="modal-footer">
@@ -138,7 +167,7 @@ else
     <div class="modal-dialog" role="document">
         <form asp-action="Delete" method="post" class="modal-content rounded-lg shadow-lg">
             <div class="modal-header">
-                <h4 class="modal-title">Delete line</h4>
+                <h4 class="modal-title">Delete work shift</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -146,7 +175,7 @@ else
             <div class="modal-body">
                 <input id="delete-id" type="hidden" name="id" />
                 <p class="text-body">
-                    Are you sure delete the line name:
+                    Are you sure delete the work shift name:
                     <label class="text-danger" id="delete-name" /> ?
                 </p>
             </div>
@@ -164,11 +193,15 @@ else
         var id = button.data('id') // Extract info from data-* attributes
         var code = button.data('code')
         var name = button.data('name')
+        var beginTime = button.data('beginTime')
+        var endTime = button.data('endTime')
 
         var modal = $(this)
         modal.find('#selected-id').val(id);
         modal.find('#selected-code').val(code);
         modal.find('#selected-name').val(name);
+        modal.find('#selected-beginTime').val(beginTime);
+        modal.find('#selected-endTime').val(endTime);
     })
 
     $('#delete-popup').on('show.bs.modal', function (event) {

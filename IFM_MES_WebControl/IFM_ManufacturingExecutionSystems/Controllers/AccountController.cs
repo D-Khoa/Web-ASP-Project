@@ -139,16 +139,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0001c23 = EncryptData.StringToHash(inUser.password, salt, MD5.Create()),
                     aa0001c24 = tokenActive
                 };
-                // Register API
-                //string jsonRegUserInfoString = JsonConvert.SerializeObject(regUserInfo);
-                //var client = new RestClient(baseURI + "/aa0001/Accounts/")
-                //{
-                //    Timeout = -1
-                //};
-                //var request = new RestRequest(Method.POST);
-                //request.AddHeader("Content-Type", "application/json");
-                //request.AddParameter("application/json", jsonRegUserInfoString, ParameterType.RequestBody);
-                //IRestResponse response = client.Execute(request);
                 HttpClientHandler clientHandler = new HttpClientHandler();
                 clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
                 using (HttpClient client = new HttpClient(clientHandler))
