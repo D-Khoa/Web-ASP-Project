@@ -12,8 +12,8 @@ namespace IFM_ManufacturingExecutionSystems.Models.MVC
         public string taskName { get; set; }
         public string machineCode { get; set; }
         public string processCode { get; set; }
-        //Plan
         public string shiftCode { get; set; }
+        //Plan
         public string planStatus { get; set; }
         public DateTime planStart { get; set; }
         public DateTime planStop { get; set; }

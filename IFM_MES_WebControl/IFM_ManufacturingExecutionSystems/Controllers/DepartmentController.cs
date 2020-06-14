@@ -26,8 +26,15 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         // GET: DepartmentController
         public ActionResult Index()
         {
+            string token = HttpContext.Session.GetString("token");
+            GetDepartment(out List<Department> departments, baseURI, token);
+            return View(departments);
+        }
+
+        public void GetDepartment(out List<Department> departments, string baseURI, string token)
+        {
             IEnumerable<aa0002> aa0002s = Enumerable.Empty<aa0002>();
-            List<Department> departments = new List<Department>();
+            departments = new List<Department>();
             HttpClientHandler clientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
@@ -36,7 +43,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
             {
                 client.BaseAddress = new Uri(baseURI + @"/aa0002/Departments");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
-                        HttpContext.Session.GetString("token"));
+                        token);
                 var respone = client.GetAsync("departments");
                 respone.Wait();
                 var result = respone.Result;
@@ -60,7 +67,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                 }
             }
-            return View(departments);
         }
 
         // GET: DepartmentController/Details/5

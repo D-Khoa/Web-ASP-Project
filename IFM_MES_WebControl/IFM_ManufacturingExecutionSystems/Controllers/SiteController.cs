@@ -26,8 +26,15 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         // GET: Site
         public ActionResult Index()
         {
+            string token = HttpContext.Session.GetString("token");
+            GetSite(out List<Site> siteses, baseURI, token);
+            return View(siteses);
+        }
+
+        public void GetSite(out List<Site> siteses, string baseURI, string token)
+        {
             IEnumerable<aa0002> aa0002s = Enumerable.Empty<aa0002>();
-            List<Site> siteses = new List<Site>();
+            siteses = new List<Site>();
             HttpClientHandler clientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
@@ -36,7 +43,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
             {
                 client.BaseAddress = new Uri(baseURI + @"/aa0002/Sites");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
-                        HttpContext.Session.GetString("token"));
+                        token);
                 var respone = client.GetAsync("sites");
                 respone.Wait();
                 var result = respone.Result;
@@ -53,7 +60,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                             siteCode = aa0002.aa0002c41,
                             siteName = aa0002.aa0002c42,
                             location = aa0002.aa0002c43,
-                            country =  aa0002.aa0002c44,
+                            country = aa0002.aa0002c44,
                             updateUser = aa0002.aa0002c07,
                             updateTime = DateTime.TryParse(aa0002.aa0002c08, out DateTime updatetime) ? updatetime : updatetime,
                             creator = aa0002.aa0002c05,
@@ -62,7 +69,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                 }
             }
-            return View(siteses);
         }
 
         // GET: Site/Details/5

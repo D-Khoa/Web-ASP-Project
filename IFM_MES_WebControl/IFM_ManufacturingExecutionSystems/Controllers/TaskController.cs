@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -26,8 +27,29 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         // GET: TaskController
         public ActionResult Index()
         {
+            string token = HttpContext.Session.GetString("token");
+            GetTask(out List<Task> Tasks, baseURI, token);
+            StatusController statusController = new StatusController(_config);
+            statusController.GetStatus(out List<Status> statuses, baseURI, token);
+            MachineController machineController = new MachineController(_config);
+            machineController.GetMachines(out List<Machine> machines, baseURI, token);
+            ProcessController processController = new ProcessController(_config);
+            processController.GetProcesses(out List<Process> processes, baseURI, token);
+            WorkShiftController workShiftController = new WorkShiftController(_config);
+            workShiftController.GetShifts(out List<WorkShift> shifts, baseURI, token);
+            dynamic myTasks = new ExpandoObject();
+            myTasks.tasks = Tasks;
+            myTasks.shifts = shifts;
+            myTasks.statuses = statuses;
+            myTasks.machines = machines;
+            myTasks.processes = processes;
+            return View(myTasks);
+        }
+
+        public void GetTask(out List<Task> Tasks, string baseURI, string token)
+        {
             IEnumerable<aa0004> aa0004s = Enumerable.Empty<aa0004>();
-            List<Task> Tasks = new List<Task>();
+            Tasks = new List<Task>();
             HttpClientHandler clientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
@@ -36,7 +58,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
             {
                 client.BaseAddress = new Uri(baseURI + @"/aa0004/Tasks");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
-                        HttpContext.Session.GetString("token"));
+                        token);
                 var respone = client.GetAsync("tasks");
                 respone.Wait();
                 var result = respone.Result;
@@ -71,7 +93,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                 }
             }
-            return View(Tasks);
         }
 
         // GET: TaskController/Details/5

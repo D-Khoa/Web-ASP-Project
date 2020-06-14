@@ -4,34 +4,31 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - IFM_ManufacturingExecutionSystems</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.min.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-reboot.min.css" />
-    <link rel="stylesheet" href="~/css/all.min.css">
-    <link rel="stylesheet" href="~/css/brands.min.css">
-    <link rel="stylesheet" href="~/css/fontawesome.min.css">
-    <link rel="stylesheet" href="~/css/solid.min.css">
-    <link rel="stylesheet" href="~/css/site.css" />
-    <!-- MDBootstrap Datatables  -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-grid.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link href="~/css/addons/datatables.min.css" rel="stylesheet">
-    <script src="~/js/all.min.js"></script>
-    <script src="~/js/brands.min.js"></script>
-    <script src="~/js/fontawesome.min.js"></script>
-    <script src="~/js/solid.min.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <!-- MDBootstrap Datatables  -->
+    <link rel="stylesheet" href="~/css/fontawesome.min.css">
+    <link rel="stylesheet" href="~/css/brands.min.css">
+    <link rel="stylesheet" href="~/css/solid.min.css">
+    <link rel="stylesheet" href="~/css/all.min.css">
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/js/all.min.js"></script>
+    <script type="text/javascript" src="~/js/solid.min.js"></script>
+    <script type="text/javascript" src="~/js/brands.min.js"></script>
+    <script type="text/javascript" src="~/js/fontawesome.min.js"></script>
     <script type="text/javascript" src="~/js/addons/datatables.min.js"></script>
-    @RenderSection("Scripts", required: false)
+    <script type="text/javascript" src="~/js/site.js" asp-append-version="true"></script>
 </head>
-@*style="background:linear-gradient(-45deg,#3366ff,#ffffff);"*@
 <body style="background-color:#f2f2f2;">
     <script>
         $(document).ready(function () {
             $('#dgv-main').DataTable();
             $('.dataTables_length').addClass('bs-select');
         });
+        console.log(@ViewData["Error"]);
     </script>
     <header>
         <div class="container-fluid" style="padding-bottom:10px; background:linear-gradient(-45deg,#3366ff,#ffffff);">
@@ -98,13 +95,13 @@
                                 <a class="dropdown-item" href="#">Resources</a>
                                 <a class="dropdown-item" href="#">Materials Request</a>
                                 <a class="dropdown-item" href="#">Product Drawing</a>
-                                <a class="dropdown-item" href="#">Machines &amp; Equipments</a>
+                                <a class="dropdown-item" asp-controller="Machine" asp-action="Index">Machines &amp; Equipments</a>
                                 <div class="dropdown-divider"></div>
                                 <div class="dropdown-header">Traceability</div>
                                 <a class="dropdown-item" href="#">Materials Queries</a>
                                 <a class="dropdown-item" href="#">Machine Downtime</a>
-                                <a class="dropdown-item" href="#">Process</a>
-                                <a class="dropdown-item" href="#">Working Time</a>
+                                <a class="dropdown-item" asp-controller="Process" asp-action="Index">Process</a>
+                                <a class="dropdown-item" asp-controller="Task" asp-action="Index">Task</a>
                                 <div class="dropdown-divider"></div>
                                 <div class="dropdown-header">Final</div>
                                 <a class="dropdown-item" href="#">Finish Products</a>
@@ -172,7 +169,7 @@
                                 <a class="dropdown-item" asp-controller="Status" asp-action="Index">Status</a>
                                 <a class="dropdown-item" asp-controller="Line" asp-action="Index">Line</a>
                                 <a class="dropdown-item" asp-controller="Department" asp-action="Index">Department</a>
-                                <a class="dropdown-item" href="#">Site</a>
+                                <a class="dropdown-item" asp-controller="Site" asp-action="Index">Site</a>
                             </div>
                         </li>
                     </ul>
@@ -184,7 +181,7 @@
             </div>
         </nav>
     </header>
-
+    <h1 id="error-message" class="hide">@ViewData["Error"]</h1>
     <div class="container-fluid">
         <main role="main" class="pb-3">
             @RenderBody()
@@ -196,6 +193,6 @@
             &copy; 2020 - IFM Solutions Company - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
-
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

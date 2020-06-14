@@ -28,6 +28,7 @@ namespace IFM_ManufacturingExecutionSystems
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.Configure<IISServerOptions>(options => { options.AutomaticAuthentication = false; });
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     .AddJwtBearer(options =>
                     {

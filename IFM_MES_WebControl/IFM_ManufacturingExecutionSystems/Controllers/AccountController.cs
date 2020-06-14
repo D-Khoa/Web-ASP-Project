@@ -248,7 +248,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                     else
                     {
-                        ViewData["Message"] = result.StatusCode.ToString();
+                        ViewData["Error"] = result.StatusCode.ToString();
+                        ViewData["Message"] = "Login failure!";
                         Console.WriteLine(result.Content);
                         return View();
                     }
@@ -256,7 +257,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
             }
             catch(Exception ex)
             {
-                ViewData["Message"] = ex.Message;
+                ViewData["Error"] = ex.Message;
+                ViewData["Message"] = "Login failure!";
                 return View();
             }
         }

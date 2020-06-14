@@ -1,0 +1,474 @@
+﻿@model dynamic;
+
+@{
+    ViewData["Title"] = "Machine Management";
+    ViewData["AddPopupTitle"] = "Add new machine";
+    ViewData["UpdatePopupTitle"] = "Update machine";
+    ViewData["DeletePopupTitle"] = "Delete machine";
+}
+
+@section Scripts{
+    <script>
+        $('#update-popup').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            var code = button.data('code')
+            var name = button.data('name')
+            var supplier = button.data('supplier')
+            var width = button.data('width')
+            var length = button.data('length')
+            var hight = button.data('hight')
+            var life = button.data('life')
+            var acquisitionCost = button.data('acquisitionCost')
+            var acquisitionDate = button.data('acquisitionDate')
+            var depreciationStart = button.data('depreciationStart')
+            var depreciationEnd = button.data('depreciationEnd')
+            var depreciationMonthly = button.data('depreciationMonthly')
+            var processCode = button.data('processCode')
+            var statusCode = button.data('statusCode')
+
+            var modal = $(this)
+            modal.find('#selected-id').val(id);
+            modal.find('#selected-code').val(code);
+            modal.find('#selected-name').val(name);
+            modal.find('#selected-supplier').val(supplier);
+            modal.find('#selected-width').val(width);
+            modal.find('#selected-length').val(length);
+            modal.find('#selected-hight').val(hight);
+            modal.find('#selected-life').val(life);
+            modal.find('#selected-acquisitionCost').val(acquisitionCost);
+            modal.find('#selected-acquisitionDate').val(acquisitionDate);
+            modal.find('#selected-depreciationStart').val(depreciationStart);
+            modal.find('#selected-depreciationEnd').val(depreciationEnd);
+            modal.find('#selected-depreciationMonthly').val(depreciationMonthly);
+            modal.find('#selected-processCode').val(processCode);
+            modal.find('#selected-statusCode').val(statusCode);
+
+        })
+
+        $('#delete-popup').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            var name = button.data('name')
+
+            var modal = $(this)
+            modal.find('#delete-id').val(id);
+            modal.find('#delete-name').text(name);
+        })
+    </script>
+}
+<h1 class="text-center">@ViewData["Title"]</h1>
+<p class="text-danger">@ViewData["Message"]</p>
+    <table id="dgv-main" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
+        <thead class="text-center">
+            <tr>
+                <th class="th-sm">Machine Code</th>
+                <th class="th-sm">Machine Name</th>
+                <th class="th-sm">Supplier</th>
+                <th class="th-sm">Width</th>
+                <th class="th-sm">Length</th>
+                <th class="th-sm">Hight</th>
+                <th class="th-sm">Life</th>
+                <th class="th-sm">Accum Cost</th>
+                <th class="th-sm">Acquisition Cost</th>
+                <th class="th-sm">Acquisition Date</th>
+                <th class="th-sm">Depreciation Start</th>
+                <th class="th-sm">Depreciation End</th>
+                <th class="th-sm">Depreciation Monthly</th>
+                <th class="th-sm">Process</th>
+                <th class="th-sm">Status</th>
+                <th class="th-sm">Worked Time</th>
+                <th class="th-sm">Maintain Time</th>
+                <th class="th-sm">Stopped Time</th>
+                <th class="th-sm">Update User</th>
+                <th class="th-sm">Update Time</th>
+                <th class="th-sm">Creator</th>
+                <th class="th-sm">Create Time</th>
+                <th class="th-sm">
+                    <a class="btn btn-menu" asp-action="Create" data-toggle="modal" data-target="#add-popup">
+                        <i class="fas fa-plus" style="color:green;"></i>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.machines != null && Model.machines.Count > 0)
+            {
+
+                @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Machine item in Model.machines)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.machineCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.machineName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.supplier)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.width)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.length)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.hight)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.life)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.accumCost)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.acquisitionCost)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.acquisitionDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.depreciationStart)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.depreciationEnd)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.depreciationMonthly)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.processCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.statusCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.workTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.maintainTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.stopTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.updateUser)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.updateTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.creator)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.createTime)
+                        </td>
+                        <td>
+                            <button class="btn btn-menu" data-toggle="modal" data-target="#update-popup"
+                                    data-id="machineID"
+                                    data-code="machineCode"
+                                    data-name="machineName"
+                                    data-supplier="supplier"
+                                    data-width="width"
+                                    data-length="length"
+                                    data-hight="hight"
+                                    data-life="life"
+                                    data-accumCost="accumCost"
+                                    data-acquisitionCost="acquisitionCost"
+                                    data-acquisitionDate="acquisitionDate"
+                                    data-depreciationStart="depreciationStart"
+                                    data-depreciationEnd="depreciationEnd"
+                                    data-depreciationMonthly="depreciationMonthly"
+                                    data-processCode="processCode"
+                                    data-statusCode="statusCode"
+                                    data-workTime="workTime"
+                                    data-maintainTime="maintainTime"
+                                    data-stopTime="stopTime">
+                                <i class="fas fa-edit" style="color:blue;"></i>
+                            </button> |
+                            <button class="btn btn-menu" data-toggle="modal" data-target="#delete-popup"
+                                    data-id="machineID"
+                                    data-code="machineCode"
+                                    data-name="machineName"
+                                    data-supplier="supplier"
+                                    data-width="width"
+                                    data-length="length"
+                                    data-hight="hight"
+                                    data-life="life"
+                                    data-accumCost="accumCost"
+                                    data-acquisitionCost="acquisitionCost"
+                                    data-acquisitionDate="acquisitionDate"
+                                    data-depreciationStart="depreciationStart"
+                                    data-depreciationEnd="depreciationEnd"
+                                    data-depreciationMonthly="depreciationMonthly"
+                                    data-processCode="processCode"
+                                    data-statusCode="statusCode"
+                                    data-workTime="workTime"
+                                    data-maintainTime="maintainTime"
+                                    data-stopTime="stopTime">
+                                <i class="fas fa-trash" style="color:red;"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>No have any machines.</tr>
+            }
+        </tbody>
+    </table>
+
+<div id="add-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="Create" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">@ViewData["AddPopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">Base Information</div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Machine Code</label>
+                        <input class="form-control input-bg" name="machineCode" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Machine Name</label>
+                        <input class="form-control input-bg" name="machineName" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Supplier</label>
+                        <input class="form-control input-bg" name="supplier" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Width</label>
+                        <input class="form-control input-bg" type="number" name="width" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Length</label>
+                        <input class="form-control input-bg" type="number" name="length" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Hight</label>
+                        <input class="form-control input-bg" type="number" name="hight" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Life</label>
+                        <input class="form-control input-bg" type="number" name="life" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Acquisition Cost</label>
+                        <input class="form-control input-bg" type="number" name="acquisitionCost" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Acquisition Date</label>
+                        <input class="form-control input-bg" type="date" name="acquisitionDate" />
+                    </div>
+                </div>
+                <div class="row">Depreciation</div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Date Start</label>
+                        <input class="form-control input-bg" type="date" name="depreciationStart" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Date End</label>
+                        <input class="form-control input-bg" type="date" name="depreciationEnd" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Monthly</label>
+                        <input class="form-control input-bg" type="number" name="depreciationMonthly" />
+                    </div>
+                </div>
+                <div class="row">Status</div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Process</label>
+                        <select class="form-control input-bg" name="processCode">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Process item in Model.processes)
+                            {
+                                <option value="@item.deptCode">@item.processName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Status</label>
+                        <select class="form-control input-bg" name="statusCode">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Status item in Model.statuses)
+                            {
+                                <option value="@item.statusCode" style="background-color:@item.color;">
+                                    @item.statusName
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                @*<div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Plan Start</label>
+                            <input class="form-control input-bg" type="time" name="workTime" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Plan Stop</label>
+                            <input class="form-control input-bg" type="time" name="maintainTime" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Plan Qty</label>
+                            <input class="form-control input-bg" type="number" name="stopTime" />
+                        </div>
+                    </div>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="update-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="Edit" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">@ViewData["UpdatePopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="selected-id" type="hidden" name="machineID" />
+                <div class="row">Base Information</div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Machine Code</label>
+                        <input class="form-control input-bg" id="selected-code" name="machineCode" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Machine Name</label>
+                        <input class="form-control input-bg" id="selected-name" name="machineName" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Supplier</label>
+                        <input class="form-control input-bg" id="selected-supplier" name="supplier" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Width</label>
+                        <input class="form-control input-bg" type="number" id="selected-width" name="width" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Length</label>
+                        <input class="form-control input-bg" type="number" id="selected-length" name="length" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Hight</label>
+                        <input class="form-control input-bg" type="number" id="selected-hight" name="hight" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Life</label>
+                        <input class="form-control input-bg" type="number" id="selected-life" name="life" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Acquisition Cost</label>
+                        <input class="form-control input-bg" type="number" id="selected-acquisitionCost" name="acquisitionCost" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Acquisition Date</label>
+                        <input class="form-control input-bg" type="date" id="selected-acquisitionDate" name="acquisitionDate" />
+                    </div>
+                </div>
+                <div class="row">Depreciation</div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Date Start</label>
+                        <input class="form-control input-bg" type="date" id="selected-depreciationStart" name="depreciationStart" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Date End</label>
+                        <input class="form-control input-bg" type="date" id="selected-depreciationEnd" name="depreciationEnd" />
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label class="control-label">Monthly</label>
+                        <input class="form-control input-bg" type="number" id="selected-depreciationMonthly" name="depreciationMonthly" />
+                    </div>
+                </div>
+                <div class="row">Status</div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Process</label>
+                        <select class="form-control input-bg" name="processCode" id="selected-processCode">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Process item in Model.processes)
+                            {
+                                <option value="@item.deptCode">@item.processName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Status</label>
+                        <select class="form-control input-bg" name="statusCode" id="selected-statusCode">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Status item in Model.statuses)
+                            {
+                                <option value="@item.statusCode" style="background-color:@item.color;">
+                                    @item.statusName
+                                </option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                @*<div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Plan Start</label>
+                            <input class="form-control input-bg" type="time" name="workTime" />
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label class="control-label">Plan Stop</label>
+                            <input class="form-control input-bg" type="time" name="maintainTime" />
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label">Plan Qty</label>
+                            <input class="form-control input-bg" type="number" name="stopTime" />
+                        </div>
+                    </div>*@
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="delete-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="Delete" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">@ViewData["DeletePopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="delete-id" type="hidden" name="id" />
+                <p class="text-body">
+                    Are you sure delete the machine:
+                    <label class="text-danger" id="delete-name" /> ?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -26,8 +26,15 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         // GET: Status
         public ActionResult Index()
         {
+            string token = HttpContext.Session.GetString("token");
+            GetStatus(out List<Status> statuses, baseURI, token);
+            return View(statuses);
+        }
+
+        public void GetStatus(out List<Status> statuses, string baseURI, string token)
+        {
             IEnumerable<aa0002> aa0002s = Enumerable.Empty<aa0002>();
-            List<Status> statuses = new List<Status>();
+            statuses = new List<Status>();
             HttpClientHandler clientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
@@ -36,7 +43,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
             {
                 client.BaseAddress = new Uri(baseURI + @"/aa0002/Status");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
-                        HttpContext.Session.GetString("token"));
+                        token);
                 var respone = client.GetAsync("Status");
                 respone.Wait();
                 var result = respone.Result;
@@ -62,7 +69,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                 }
             }
-            return View(statuses);
         }
 
         // GET: Status/Details/5

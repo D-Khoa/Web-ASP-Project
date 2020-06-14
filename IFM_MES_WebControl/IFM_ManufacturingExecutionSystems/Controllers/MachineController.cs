@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -15,7 +16,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
     {
         private readonly string baseURI;
         private readonly IConfiguration _config;
-
         public MachineController(IConfiguration configuration)
         {
             _config = configuration;
@@ -23,12 +23,26 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
             baseURI = _config["BaseURL:LocalURL"];
         }
 
-
         // GET: MachineController
         public ActionResult Index()
         {
+            string token = HttpContext.Session.GetString("token");
+            GetMachines(out List<Machine> machines, baseURI, token);
+            StatusController statusController = new StatusController(_config);
+            statusController.GetStatus(out List<Status> statuses, baseURI, token);
+            ProcessController processController = new ProcessController(_config);
+            processController.GetProcesses(out List<Process> processes, baseURI, token);
+            dynamic myMachines = new ExpandoObject();
+            myMachines.machines = machines;
+            myMachines.statuses = statuses;
+            myMachines.processes = processes;
+            return View(myMachines);
+        }
+
+        public void GetMachines(out List<Machine> machines, string baseURI, string token)
+        {
             IEnumerable<aa0003> aa0003s = Enumerable.Empty<aa0003>();
-            List<Machine> machines = new List<Machine>();
+            machines = new List<Machine>();
             HttpClientHandler clientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
@@ -37,7 +51,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
             {
                 client.BaseAddress = new Uri(baseURI + @"/aa0003/Machines");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
-                        HttpContext.Session.GetString("token"));
+                        token);
                 var respone = client.GetAsync("machines");
                 respone.Wait();
                 var result = respone.Result;
@@ -77,7 +91,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                 }
             }
-            return View(machines);
         }
 
         // GET: MachineController/Details/5

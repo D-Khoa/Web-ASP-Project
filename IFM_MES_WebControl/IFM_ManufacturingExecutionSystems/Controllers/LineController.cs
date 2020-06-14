@@ -26,8 +26,15 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         // GET: LineController
         public ActionResult Index()
         {
+            string token = HttpContext.Session.GetString("token");
+            GetLine(out List<Line> lines, baseURI, token);
+            return View(lines);
+        }
+
+        public void GetLine(out List<Line> lines, string baseURI, string token)
+        {
             IEnumerable<aa0002> aa0002s = Enumerable.Empty<aa0002>();
-            List<Line> lines = new List<Line>();
+            lines = new List<Line>();
             HttpClientHandler clientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
@@ -36,7 +43,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
             {
                 client.BaseAddress = new Uri(baseURI + @"/aa0002/Lines");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
-                        HttpContext.Session.GetString("token"));
+                        token);
                 var respone = client.GetAsync("lines");
                 respone.Wait();
                 var result = respone.Result;
@@ -60,7 +67,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                 }
             }
-            return View(lines);
         }
 
         // GET: LineController/Details/5

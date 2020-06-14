@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -26,8 +27,26 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         // GET: ProcessController
         public ActionResult Index()
         {
+            string token = HttpContext.Session.GetString("token");
+            GetProcesses(out List<Process> processes, baseURI, token);
+            SiteController siteController = new SiteController(_config);
+            siteController.GetSite(out List<Site> siteses, baseURI, token);
+            LineController lineController = new LineController(_config);
+            lineController.GetLine(out List<Line> lines, baseURI, token);
+            DepartmentController departmentController = new DepartmentController(_config);
+            departmentController.GetDepartment(out List<Department> departments, baseURI, token);
+            dynamic myProcesses = new ExpandoObject();
+            myProcesses.processes = processes;
+            myProcesses.depts = departments;
+            myProcesses.sites = siteses;
+            myProcesses.lines = lines;
+            return View(myProcesses);
+        }
+
+        public void GetProcesses(out List<Process> processes, string baseURI, string token)
+        {
             IEnumerable<aa0002> aa0002s = Enumerable.Empty<aa0002>();
-            List<Process> processes = new List<Process>();
+            processes = new List<Process>();
             HttpClientHandler clientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
@@ -36,7 +55,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
             {
                 client.BaseAddress = new Uri(baseURI + @"/aa0002/Processes");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
-                        HttpContext.Session.GetString("token"));
+                        token);
                 var respone = client.GetAsync("processes");
                 respone.Wait();
                 var result = respone.Result;
@@ -63,7 +82,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                 }
             }
-            return View(processes);
         }
 
         // GET: ProcessController/Details/5
@@ -89,7 +107,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 {
                     aa0002c05 = inProcess.updateUser,
                     aa0002c06 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
-                    aa0002c31 = inProcess.siteCode,
+                    aa0002c31 = inProcess.processCode,
                     aa0002c32 = inProcess.processName,
                     aa0002c33 = inProcess.lineCode,
                     aa0002c34 = inProcess.deptCode,

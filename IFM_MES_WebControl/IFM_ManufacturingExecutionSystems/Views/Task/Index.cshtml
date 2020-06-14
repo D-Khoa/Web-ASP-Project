@@ -1,0 +1,380 @@
+﻿@model dynamic;
+
+@{
+    ViewData["Title"] = "Task Management";
+    ViewData["AddPopupTitle"] = "Add new task";
+    ViewData["UpdatePopupTitle"] = "Update task";
+    ViewData["DeletePopupTitle"] = "Delete task";
+}
+
+@section Scripts{
+    <script>
+        $('#update-popup').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            var code = button.data('code')
+            var name = button.data('name')
+            var machineCode = button.data('machineCode')
+            var processCode = button.data('processCode')
+            var shiftCode = button.data('shiftCode')
+            var planStatus = button.data('planStatus')
+            var planStart = button.data('planStart')
+            var planStop = button.data('planStop')
+            var planQuantity = button.data('planQuantity')
+            var actualStatus = button.data('actualStatus')
+            var actualStart = button.data('actualStart')
+            var actualStop = button.data('actualStop')
+            var actualQuantity = button.data('actualQuantity')
+
+            var modal = $(this)
+            modal.find('#selected-id').val(id);
+            modal.find('#selected-code').val(code);
+            modal.find('#selected-name').val(name);
+            modal.find('#selected-machineCode').val(machineCode);
+            modal.find('#selected-processCode').val(processCode);
+            modal.find('#selected-shiftCode').val(shiftCode);
+            modal.find('#selected-planStatus').val(planStatus);
+            modal.find('#selected-planStart').val(planStart);
+            modal.find('#selected-planStop').val(planStop);
+            modal.find('#selected-planQuantity').val(planQuantity);
+            modal.find('#selected-actualStatus').val(actualStatus);
+            modal.find('#selected-actualStart').val(actualStart);
+            modal.find('#selected-actualStop').val(actualStop);
+            modal.find('#selected-actualQuantity').val(actualQuantity);
+        })
+
+        $('#delete-popup').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            var name = button.data('name')
+
+            var modal = $(this)
+            modal.find('#delete-id').val(id);
+            modal.find('#delete-name').text(name);
+        })
+    </script>
+}
+<h1 class="text-center">@ViewData["Title"]</h1>
+<p class="text-danger">@ViewData["Message"]</p>
+</div>
+<table id="dgv-main" class="table table-striped table-bordered table-sm table-hover" cellspacing="0" width="100%">
+    <thead class="text-center">
+        <tr>
+            <th class="th-sm">Task Code</th>
+            <th class="th-sm">Task Name</th>
+            <th class="th-sm">Machine</th>
+            <th class="th-sm">Process</th>
+            <th class="th-sm">Shift</th>
+            <th class="th-sm">Plan Status</th>
+            <th class="th-sm">Plan Start</th>
+            <th class="th-sm">Plan Stop</th>
+            <th class="th-sm">Plan Quantity</th>
+            <th class="th-sm">Actual Status</th>
+            <th class="th-sm">Actual Start</th>
+            <th class="th-sm">Actual Stop</th>
+            <th class="th-sm">Actual Quantity</th>
+            <th class="th-sm">Update User</th>
+            <th class="th-sm">Update Time</th>
+            <th class="th-sm">Creator</th>
+            <th class="th-sm">Create Time</th>
+            <th class="th-sm">
+                <a class="btn btn-menu" asp-action="Create" data-toggle="modal" data-target="#add-popup">
+                    <i class="fas fa-plus" style="color:green;"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.tasks != null && Model.tasks.Count > 0)
+        {
+            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Task item in Model.tasks)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.taskCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.taskName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.machineCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.processCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.shiftCode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.planStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.planStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.planStop)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.planQuantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.actualStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.actualStart)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.actualStop)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.actualQuantity)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.updateUser)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.updateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.creator)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.createTime)
+                    </td>
+                    <td>
+                        <button class="btn btn-menu" data-toggle="modal" data-target="#update-popup"
+                                data-id="@item.taskID"
+                                data-code="@item.taskCode"
+                                data-name="@item.taskName"
+                                data-machineCode="@item.machineCode"
+                                data-processCode="@item.processCode"
+                                data-shiftCode="@item.shiftCode"
+                                data-planStatus="@item.planStatus"
+                                data-planStart="@item.planStart"
+                                data-planStop="@item.planStop"
+                                data-planQuantity="@item.planQuantity"
+                                data-actualStatus="@item.actualStatus"
+                                data-actualStart="@item.actualStart"
+                                data-actualStop="@item.actualStop"
+                                data-actualQuantity="@item.actualQuantity">
+                            <i class="fas fa-edit" style="color:blue;"></i>
+                        </button> |
+                        <button class="btn btn-menu" data-toggle="modal" data-target="#delete-popup"
+                                data-id="@item.taskID"
+                                data-code="@item.taskCode"
+                                data-name="@item.taskName"
+                                data-machineCode="@item.machineCode"
+                                data-processCode="@item.processCode"
+                                data-shiftCode="@item.shiftCode"
+                                data-planStatus="@item.planStatus"
+                                data-planStart="@item.planStart"
+                                data-planStop="@item.planStop"
+                                data-planQuantity="@item.planQuantity"
+                                data-actualStatus="@item.actualStatus"
+                                data-actualStart="@item.actualStart"
+                                data-actualStop="@item.actualStop"
+                                data-actualQuantity="@item.actualQuantity">
+                            <i class="fas fa-trash" style="color:red;"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>No have any tasks.</tr>
+        }
+    </tbody>
+</table>
+
+<div id="add-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="Create" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">@ViewData["AddPopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Task Code</label>
+                        <input class="form-control input-bg" name="taskCode" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Task Name</label>
+                        <input class="form-control input-bg" name="taskName" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Machine</label>
+                        <select class="form-control input-bg" name="machineCode">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Machine item in Model.machines)
+                            {
+                                <option value="@item.machineCode">@item.machineName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Process</label>
+                        <select class="form-control input-bg" name="processCode">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Process item in Model.processes)
+                            {
+                                <option value="@item.processCode">@item.processName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Shift</label>
+                        <select class="form-control input-bg" name="shiftCode">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.WorkShift item in Model.shifts)
+                            {
+                                <option value="@item.shiftCode">@item.shiftName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Plan Status</label>
+                        <select class="form-control input-bg" name="planStatus">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Status item in Model.statuses)
+                            {
+                                <option value="@item.statusCode" style="background-color:@item.color">@item.statusName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Plan Start</label>
+                        <input class="form-control input-bg" type="time" name="planStart" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Plan Stop</label>
+                        <input class="form-control input-bg" type="time" name="planStop" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Plan Qty</label>
+                    <input class="form-control input-bg" type="number" name="planQuantity" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="update-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="Edit" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">@ViewData["UpdatePopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="selected-id" type="hidden" name="taskID" />
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Task Code</label>
+                        <input class="form-control input-bg" id="selected-code" name="taskCode" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Task Name</label>
+                        <input class="form-control input-bg" id="selected-name" name="taskName" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Machine</label>
+                        <select class="form-control input-bg" name="machineCode" id="selected-machineCode">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Machine item in Model.machines)
+                            {
+                                <option value="@item.machineCode">@item.machineName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Process</label>
+                        <select class="form-control input-bg" name="processCode" id="selected-processCode">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Process item in Model.processes)
+                            {
+                                <option value="@item.processCode">@item.processName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Shift</label>
+                        <select class="form-control input-bg" name="shiftCode" id="selected-shiftCode">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.WorkShift item in Model.shifts)
+                            {
+                                <option value="@item.shiftCode">@item.shiftName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Actual Status</label>
+                        <input class="form-control input-bg" id="selected-planStatus" name="planStatus" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Actual Start</label>
+                        <input class="form-control input-bg" type="time" id="selected-actualStart" name="actualStart" />
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label class="control-label">Actual Stop</label>
+                        <select class="form-control input-bg" type="time" id="selected-actualStop" name="actualStop">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Status item in Model.statuses)
+                            {
+                                <option value="@item.statusCode" style="background-color:@item.color">@item.statusName</option>
+                            }
+                        </select>
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Actual Qty</label>
+                    <input class="form-control input-bg" type="number" id="selected-actualQuantity" name="actualQuantity" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="delete-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="Delete" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">@ViewData["DeletePopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="delete-id" type="hidden" name="id" />
+                <p class="text-body">
+                    Are you sure delete the task:
+                    <label class="text-danger" id="delete-name" /> ?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>

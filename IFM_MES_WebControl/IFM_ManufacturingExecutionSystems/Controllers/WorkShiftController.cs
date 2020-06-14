@@ -26,8 +26,14 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         // GET: WorkShift
         public ActionResult Index()
         {
+            GetShifts(out List<WorkShift> WorkShifts, baseURI, HttpContext.Session.GetString("token"));
+            return View(WorkShifts);
+        }
+
+        public void GetShifts(out List<WorkShift> WorkShifts, string baseURI, string token)
+        {
             IEnumerable<aa0002> aa0002s = Enumerable.Empty<aa0002>();
-            List<WorkShift> WorkShiftses = new List<WorkShift>();
+            WorkShifts = new List<WorkShift>();
             HttpClientHandler clientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
@@ -36,7 +42,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
             {
                 client.BaseAddress = new Uri(baseURI + @"/aa0002/WorkShifts");
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
-                        HttpContext.Session.GetString("token"));
+                        token);
                 var respone = client.GetAsync("workShifts");
                 respone.Wait();
                 var result = respone.Result;
@@ -47,7 +53,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0002s = readTask.Result;
                     foreach (aa0002 aa0002 in aa0002s)
                     {
-                        WorkShiftses.Add(new WorkShift
+                        WorkShifts.Add(new WorkShift
                         {
                             shiftID = aa0002.aa0002c01,
                             shiftCode = aa0002.aa0002c11,
@@ -62,7 +68,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                 }
             }
-            return View(WorkShiftses);
         }
 
         // GET: WorkShift/Details/5
