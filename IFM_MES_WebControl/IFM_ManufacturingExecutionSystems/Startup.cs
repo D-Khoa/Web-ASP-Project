@@ -65,11 +65,12 @@ namespace IFM_ManufacturingExecutionSystems
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
-            app.UseRouting();
-
             app.UseSession();
+
+            app.UseRouting();
 
             app.UseAuthentication();
 

@@ -139,8 +139,10 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0001c23 = EncryptData.StringToHash(inUser.password, salt, MD5.Create()),
                     aa0001c24 = tokenActive
                 };
-                HttpClientHandler clientHandler = new HttpClientHandler();
-                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                HttpClientHandler clientHandler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+                };
                 using (HttpClient client = new HttpClient(clientHandler))
                 {
                     client.BaseAddress = new Uri(baseURI + @"/aa0001/Accounts");
@@ -180,8 +182,10 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
             {
                 var jsonRequest = JsonConvert.SerializeObject(token);
                 HttpContent httpContent = new StringContent(jsonRequest, System.Text.Encoding.UTF8, "application/json-patch+json");
-                HttpClientHandler clientHandler = new HttpClientHandler();
-                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                HttpClientHandler clientHandler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+                };
                 using (HttpClient client = new HttpClient(clientHandler))
                 {
                     client.BaseAddress = new Uri(baseURI + @"/aa0001/Security");
@@ -228,8 +232,10 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0001c11 = inUser.username,
                     aa0001c23 = inUser.password,
                 };
-                HttpClientHandler clientHandler = new HttpClientHandler();
-                clientHandler.ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; };
+                HttpClientHandler clientHandler = new HttpClientHandler
+                {
+                    ServerCertificateCustomValidationCallback = (sender, cert, chain, sslPolicyErrors) => { return true; }
+                };
                 using (HttpClient client = new HttpClient(clientHandler))
                 {
                     client.BaseAddress = new Uri(baseURI + @"/aa0001/Security");
