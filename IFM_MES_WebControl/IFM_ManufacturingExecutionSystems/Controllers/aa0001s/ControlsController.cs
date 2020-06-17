@@ -1,28 +1,26 @@
-﻿using System;
+﻿using IFM_ManufacturingExecutionSystems.Models.Database;
+using IFM_ManufacturingExecutionSystems.Models.SQL;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using IFM_ManufacturingExecutionSystems.Models.Database;
-using IFM_ManufacturingExecutionSystems.Models.SQL;
-using Microsoft.AspNetCore.Authorization;
 
 namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
 {
-    [Route("aa0001/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class AccountsController : ControllerBase
+    public class ControlsController : ControllerBase
     {
         private readonly MESContext _context;
 
-        public AccountsController(MESContext context)
+        public ControlsController(MESContext context)
         {
             _context = context;
         }
 
-        // GET: api/Account
+        // GET: api/Controls
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<IEnumerable<aa0001>>> Getaa0001()
@@ -30,7 +28,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
             return await _context.aa0001.ToListAsync();
         }
 
-        // GET: api/Account/5
+        // GET: api/Controls/5
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<aa0001>> Getaa0001(int id)
@@ -45,13 +43,18 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
             return aa0001;
         }
 
-        // PUT: api/Account/5
+        // PUT: api/Controls/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
         [Authorize]
-        public async Task<IActionResult> Putaa0001(aa0001 aa0001)
+        public async Task<IActionResult> Putaa0001(int id, aa0001 aa0001)
         {
+            if (id != aa0001.aa0001c01)
+            {
+                return BadRequest();
+            }
+
             _context.Entry(aa0001).State = EntityState.Modified;
 
             try
@@ -60,7 +63,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!aa0001Exists(aa0001.aa0001c01))
+                if (!aa0001Exists(id))
                 {
                     return NotFound();
                 }
@@ -73,25 +76,20 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
             return NoContent();
         }
 
-        // POST: api/Account
+        // POST: api/Controls
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         [Authorize]
         public async Task<ActionResult<aa0001>> Postaa0001(aa0001 aa0001)
         {
-            if(aa0001Exists(aa0001.aa0001c11, aa0001.aa0001c14))
-            {
-                return BadRequest("This account is really exists!");
-            }
-
             _context.aa0001.Add(aa0001);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("Getaa0001", new { id = aa0001.aa0001c01 }, aa0001);
         }
 
-        // DELETE: api/Account/5
+        // DELETE: api/Controls/5
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<aa0001>> Deleteaa0001(int id)
@@ -111,11 +109,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
         private bool aa0001Exists(int id)
         {
             return _context.aa0001.Any(e => e.aa0001c01 == id);
-        }
-
-        private bool aa0001Exists(string username, string email)
-        {
-            return _context.aa0001.Any(e => e.aa0001c14 == email || e.aa0001c11 == username);
         }
     }
 }

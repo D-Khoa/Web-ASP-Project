@@ -219,11 +219,11 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)
                 {
-                    ViewData["Message"] = "Update process successful!";
+                    ViewData["Message"] = "Delete process successful!";
                 }
                 else
                 {
-                    ViewData["Message"] = "Update process fail!";
+                    ViewData["Message"] = "Delete process fail!";
                 }
                 return RedirectToAction(nameof(Index));
             }
