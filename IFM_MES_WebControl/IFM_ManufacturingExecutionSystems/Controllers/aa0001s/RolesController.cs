@@ -1,18 +1,16 @@
-﻿using System;
+﻿using IFM_ManufacturingExecutionSystems.Models.Database;
+using IFM_ManufacturingExecutionSystems.Models.SQL;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using IFM_ManufacturingExecutionSystems.Models.Database;
-using IFM_ManufacturingExecutionSystems.Models.SQL;
-using Microsoft.AspNetCore.Authorization;
 
 namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("aa0001/[controller]")]
     public class RolesController : ControllerBase
     {
         private readonly MESContext _context;
@@ -27,7 +25,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
         [Authorize]
         public async Task<ActionResult<IEnumerable<aa0001>>> Getaa0001()
         {
-            return await _context.aa0001.ToListAsync();
+            return await _context.aa0001.Where(x => !string.IsNullOrEmpty(x.aa0001c41)).ToListAsync();
         }
 
         // GET: api/Roles/5

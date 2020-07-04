@@ -27,7 +27,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
         [Authorize]
         public async Task<ActionResult<IEnumerable<aa0001>>> Getaa0001()
         {
-            return await _context.aa0001.ToListAsync();
+            return await _context.aa0001.Where(x => !string.IsNullOrEmpty(x.aa0001c11)).ToListAsync();
         }
 
         // GET: api/Account/5

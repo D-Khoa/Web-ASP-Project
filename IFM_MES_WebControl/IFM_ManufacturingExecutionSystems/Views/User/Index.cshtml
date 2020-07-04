@@ -1,0 +1,286 @@
+﻿@model dynamic;
+
+@{
+    ViewData["Title"] = "Users Management";
+    ViewData["AddPopupTitle"] = "Add new user";
+    ViewData["UpdatePopupTitle"] = "Update user";
+    ViewData["DeletePopupTitle"] = "Delete user";
+}
+
+@section Scripts{
+    <script>
+        $('#update-popup').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            var userName = button.data('userName')
+            var firstName = button.data('firstName')
+            var lastName = button.data('lastName')
+            var email = button.data('email')
+            var phone = button.data('phone')
+            var isActive = button.data('isActive')
+            var roleGroups = button.data('roleGroups')
+            var lastLogin = button.data('lastLogin')
+
+            var modal = $(this)
+            modal.find('#selected-id').val(id);
+            modal.find('#selected-userName').val(userName);
+            modal.find('#selected-firstName').val(firstName);
+            modal.find('#selected-lastName').val(lastName);
+            modal.find('#selected-email').val(email);
+            modal.find('#selected-phone').val(phone);
+            modal.find('#selected-isActive').val(isActive);
+            modal.find('#selected-roleGroups').val(roleGroups);
+            modal.find('#selected-lastLogin').val(lastLogin);
+        })
+
+        $('#delete-popup').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            var name = button.data('name')
+
+            var modal = $(this)
+            modal.find('#delete-id').val(id);
+            modal.find('#delete-name').text(name);
+        })
+    </script>
+}
+<h1 class="text-center">@ViewData["Title"]</h1>
+<p class="text-danger">@ViewData["Message"]</p>
+<table id="dgv-main" class="table table-striped table-bordered table-sm table-hover w-100" cellspacing="0" width="100%">
+    <thead class="text-center">
+        <tr>
+            <th class="th-sm">User Name</th>
+            <th class="th-sm">First Name</th>
+            <th class="th-sm">Last Name</th>
+            <th class="th-sm">Email</th>
+            <th class="th-sm">Phone</th>
+            <th class="th-sm">Is Active</th>
+            <th class="th-sm">Role Groups</th>
+            <th class="th-sm">Last Login</th>
+            <th class="th-sm">Update User</th>
+            <th class="th-sm">Update Time</th>
+            <th class="th-sm">Creator</th>
+            <th class="th-sm">Create Time</th>
+            <th>
+                <a class="btn btn-menu" asp-action="Create" data-toggle="modal" data-target="#add-popup">
+                    <i class="fas fa-plus" style="color:green;"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.users != null && Model.users.Count > 0)
+        {
+            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.User item in Model.users)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.userName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.firstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.lastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.isActive)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => string.Join(',', item.roleGroups.Select(x=>x.roleGroupName).ToArray()))
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.lastLogin)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.updateUser)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.updateTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.creator)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.createTime)
+                    </td>
+                    <td>
+                        <button class="btn btn-menu" data-toggle="modal" data-target="#update-popup"
+                                data-id="userID"
+                                data-userName="userName"
+                                data-firstName="firstName"
+                                data-lastName="lastName"
+                                data-email="email"
+                                data-phone="phone"
+                                data-isActive="isActive"
+                                data-roleGroups="roleGroups"
+                                data-lastLogin="lastLogin">
+                            <i class="fas fa-edit" style="color:blue;"></i>
+                        </button> |
+                        <button class="btn btn-menu" data-toggle="modal" data-target="#delete-popup"
+                                data-id="userID"
+                                data-userName="userName"
+                                data-firstName="firstName"
+                                data-lastName="lastName"
+                                data-email="email"
+                                data-phone="phone"
+                                data-isActive="isActive"
+                                data-roleGroups="roleGroups"
+                                data-lastLogin="lastLogin">
+                            <i class="fas fa-trash" style="color:red;"></i>
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>No have any users.</tr>
+        }
+    </tbody>
+</table>
+
+<div id="add-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="Create" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">@ViewData["AddPopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-6">
+                    <h3 class="text-center">Profile</h3>
+                    <div class="form-group">
+                        <label class="control-label">User Name</label>
+                        <input class="form-control input-bg" name="userName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">First Name</label>
+                        <input class="form-control input-bg" name="firstName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Last Name</label>
+                        <input class="form-control input-bg" name="lastName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Email</label>
+                        <input class="form-control input-bg" name="email" type="email" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Phone</label>
+                        <input class="form-control input-bg" name="phone" type="number" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="text-center">Roles</h3>
+                    <div class="form-group">
+                        @if (Model.roleGroups != null && Model.roleGroups.Count > 0)
+                        {
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.RoleGroup roleGroup in Model.roleGroups)
+                            {
+                                <input name="roleGroups" type="checkbox" value="@roleGroup.roleGroupID" />@roleGroup.roleGroupName
+                            }
+                        }
+                        else
+                        {
+                            <p>No role group is exist!</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="update-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="Edit" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-titles text-center">@ViewData["UpdatePopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-6">
+                    <h3 class="text-center">Profile</h3>
+                    <input id="selected-id" type="hidden" name="userID" />
+                    <div class="form-group">
+                        <label class="control-label">User Name</label>
+                        <input class="form-control input-bg" name="userName" id="selected-userName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">First Name</label>
+                        <input class="form-control input-bg" name="firstName" id="selected-firstName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Last Name</label>
+                        <input class="form-control input-bg" name="lastName" id="selected-lastName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Email</label>
+                        <input class="form-control input-bg" name="email" type="email" id="selected-email" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Phone</label>
+                        <input class="form-control input-bg" name="phone" type="number" id="selected-phone" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="text-center">Roles</h3>
+                    <div class="form-group">
+                        @if (Model.roleGroups != null && Model.roleGroups.Count > 0)
+                        {
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.RoleGroup roleGroup in Model.roleGroups)
+                            {
+                                <input name="roleGroups" type="checkbox" value="@roleGroup.roleGroupID" id="selected-roleGroups" /> @roleGroup.roleGroupName
+                            }
+                        }
+                        else
+                        {
+                            <p>No role group is exist!</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="delete-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="Delete" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">@ViewData["DeletePopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="delete-id" type="hidden" name="id" />
+                <p class="text-body">
+                    Are you sure delete the user:
+                    <label class="text-danger" id="delete-name" /> ?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>

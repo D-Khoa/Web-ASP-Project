@@ -1,0 +1,273 @@
+﻿@model dynamic;
+
+@{
+    ViewData["Title"] = "Roles Management";
+    ViewData["AddPopupTitle"] = "Add new role";
+    ViewData["UpdatePopupTitle"] = "Update role";
+    ViewData["DeletePopupTitle"] = "Delete role";
+}
+@section Scripts{
+    <script>
+        $('#update-group-popup').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            var userName = button.data('roleGroupCode')
+            var firstName = button.data('roleGroupName')
+            var lastName = button.data('roles')
+
+            var modal = $(this)
+            modal.find('#selected-id').val(id);
+            modal.find('#selected-roleGroupCode').val(userName);
+            modal.find('#selected-roleGroupName').val(firstName);
+            modal.find('#selected-roles').val(lastName);
+        })
+        $('#update-role-popup').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('roleGroupID') // Extract info from data-* attributes
+            var userName = button.data('roleCode')
+            var firstName = button.data('roleName')
+            var lastName = button.data('controlCode')
+
+            var modal = $(this)
+            modal.find('#selected-roleID').val(id);
+            modal.find('#selected-roleCode').val(userName);
+            modal.find('#selected-roleName').val(firstName);
+            modal.find('#selected-controlCode').val(lastName);
+        })
+        $('#delete-role-popup').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            var name = button.data('name')
+
+            var modal = $(this)
+            modal.find('#delete-id').val(id);
+            modal.find('#delete-name').text(name);
+        })
+        $('#delete-group-popup').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id') // Extract info from data-* attributes
+            var name = button.data('name')
+
+            var modal = $(this)
+            modal.find('#delete-id').val(id);
+            modal.find('#delete-name').text(name);
+        })
+        $(document).ready(function () {
+            $('.treeview').mdbTreeview();
+        });
+    </script>
+}
+<div class="treeview w-100 border">
+    <h6 class="pt-3 pl-3">@ViewData["Title"]</h6>
+    <p class="text-danger">@ViewData["Message"]</p>
+    <a class="btn btn-menu" asp-action="Create" data-toggle="modal" data-target="#add-popup">
+        <i class="fas fa-plus" style="color:green;"></i>
+    </a>
+    <hr>
+    @if (Model.roleGroups != null && Model.roleGroups.Count > 0)
+    {
+        <ul class="mb-1 pl-3 pb-2">
+            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.RoleGroup group in Model.roleGroups)
+            {
+                <li>
+                    <i class="fas fa-angle-right rotate"></i>
+                    <span>@group.roleGroupName</span>
+                    <button class="btn btn-menu" data-toggle="modal" data-target="#update-group-popup"
+                            data-id="roleGroupID"
+                            data-roleGroupCode="roleGroupCode"
+                            data-roleGroupName="roleGroupName"
+                            data-roles="roles">
+                        <i class="fas fa-edit" style="color:blue;"></i>
+                    </button> |
+                    <button class="btn btn-menu" data-toggle="modal" data-target="#delete-popup"
+                            data-id="roleGroupID"
+                            data-code="roleGroupCode"
+                            data-name="roleGroupName"
+                            data-roles="roles">
+                        <i class="fas fa-trash" style="color:red;"></i>
+                    </button>
+                    @if (group.roles != null && group.roles.Count > 0)
+                    {
+                        <ul class="nested">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Role role in group.roles)
+                            {
+                                <li>
+                                    <span>@role.roleName</span>
+                                    <button class="btn btn-menu" data-toggle="modal" data-target="#update-role-popup"
+                                            data-id="roleID"
+                                            data-roleCode="roleCode"
+                                            data-roleName="roleName"
+                                            data-controlCode="controlCode">
+                                        <i class="fas fa-edit" style="color:blue;"></i>
+                                    </button> |
+                                    <button class="btn btn-menu" data-toggle="modal" data-target="#delete-popup"
+                                            data-id="roleID"
+                                            data-code="roleCode"
+                                            data-name="roleName"
+                                            data-controlCode="controlCode">
+                                        <i class="fas fa-trash" style="color:red;"></i>
+                                    </button>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p>No role is exist.</p>
+                    }
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No role group is exist.</p>
+    }
+</div>
+
+<div id="add-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-header">
+            <h4 class="modal-title text-center">@ViewData["AddPopupTitle"]</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body row">
+            <div class="col-md-6">
+                <form asp-action="GetRoleGroup" method="post" class="modal-content rounded-lg shadow-lg">
+                    <h3 class="text-center">Role Group</h3>
+                    <div class="form-group">
+                        <label class="control-label">Group Code</label>
+                        <input class="form-control input-bg" name="roleGroupCode" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Group Name</label>
+                        <input class="form-control input-bg" name="roleGroupName" />
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <form asp-action="CreateRole" method="post" class="modal-content rounded-lg shadow-lg">
+                    <h3 class="text-center">Role</h3>
+                    <div class="form-group">
+                        <label class="control-label">Role Code</label>
+                        <input class="form-control input-bg" name="roleCode" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Role Name</label>
+                        <input class="form-control input-bg" name="roleName" />
+                    </div>
+                    <div class="form-group">
+                        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="update-group-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="EditRoleGroup" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-titles text-center">@ViewData["UpdatePopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <input id="selected-id" type="hidden" name="roleGroupID" />
+                <div class="form-group">
+                    <label class="control-label">Group Code</label>
+                    <input class="form-control input-bg" name="roleGroupCode" id="selected-roleGroupCode" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Group Name</label>
+                    <input class="form-control input-bg" name="roleGroupName" id="selected-roleGroupName" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="update-role-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="EditRole" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-titles text-center">@ViewData["UpdatePopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <input id="selected-id" type="hidden" name="roleID" />
+                <div class="form-group">
+                    <label class="control-label">Role Code</label>
+                    <input class="form-control input-bg" name="roleCode" id="selected-roleCode" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Role Name</label>
+                    <input class="form-control input-bg" name="roleName" id="selected-roleName" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="delete-role-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="DeleteRole" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">@ViewData["DeletePopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="delete-id" type="hidden" name="id" />
+                <p class="text-body">
+                    Are you sure delete the role:
+                    <label class="text-danger" id="delete-name" /> ?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+<div id="delete-group-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="DeleteRoleGroup" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title text-center">@ViewData["DeletePopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <input id="delete-id" type="hidden" name="id" />
+                <p class="text-body">
+                    Are you sure delete the role:
+                    <label class="text-danger" id="delete-name" /> ?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-danger">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>

@@ -26,6 +26,8 @@ namespace IFM_ManufacturingExecutionSystems.Models.SQL
         public DbSet<Register> Register { get; set; }
         public DbSet<WorkShift> WorkShift { get; set; }
         public DbSet<Department> Department { get; set; }
+        public DbSet<IFM_ManufacturingExecutionSystems.Models.MVC.User> User { get; set; }
+        public DbSet<IFM_ManufacturingExecutionSystems.Models.MVC.Role> Role { get; set; }
 
     }
 }

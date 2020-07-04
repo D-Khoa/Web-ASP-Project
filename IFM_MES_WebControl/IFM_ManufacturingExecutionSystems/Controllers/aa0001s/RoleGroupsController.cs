@@ -11,24 +11,24 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
 {
     [Route("aa0001/[controller]")]
     [ApiController]
-    public class ControlsController : ControllerBase
+    public class RoleGroupsController : ControllerBase
     {
         private readonly MESContext _context;
 
-        public ControlsController(MESContext context)
+        public RoleGroupsController(MESContext context)
         {
             _context = context;
         }
 
-        // GET: api/Controls
+        // GET: api/RoleGroups
         [HttpGet]
         [Authorize]
         public async Task<ActionResult<IEnumerable<aa0001>>> Getaa0001()
         {
-            return await _context.aa0001.Where(x => !string.IsNullOrEmpty(x.aa0001c51)).ToListAsync();
+            return await _context.aa0001.Where(x => !string.IsNullOrEmpty(x.aa0001c31)).ToListAsync();
         }
 
-        // GET: api/Controls/5
+        // GET: api/RoleGroups/5
         [Authorize]
         [HttpGet("{id}")]
         public async Task<ActionResult<aa0001>> Getaa0001(int id)
@@ -43,7 +43,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
             return aa0001;
         }
 
-        // PUT: api/Controls/5
+        // PUT: api/RoleGroups/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
@@ -71,7 +71,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
             return NoContent();
         }
 
-        // POST: api/Controls
+        // POST: api/RoleGroups
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
@@ -84,7 +84,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
             return CreatedAtAction("Getaa0001", new { id = aa0001.aa0001c01 }, aa0001);
         }
 
-        // DELETE: api/Controls/5
+        // DELETE: api/RoleGroups/5
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<aa0001>> Deleteaa0001(int id)
