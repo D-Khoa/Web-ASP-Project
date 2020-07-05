@@ -2,9 +2,10 @@
 
 @{
     ViewData["Title"] = "Users Management";
-    ViewData["AddPopupTitle"] = "Add new user";
-    ViewData["UpdatePopupTitle"] = "Update user";
-    ViewData["DeletePopupTitle"] = "Delete user";
+    ViewData["AddPopupTitle"] = "Add New User";
+    ViewData["UpdatePopupTitle"] = "Update User";
+    ViewData["DeletePopupTitle"] = "Delete User";
+    string selectUser = string.Empty;
 }
 
 @section Scripts{
@@ -12,14 +13,14 @@
         $('#update-popup').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
             var id = button.data('id') // Extract info from data-* attributes
-            var userName = button.data('userName')
-            var firstName = button.data('firstName')
-            var lastName = button.data('lastName')
+            var userName = button.data('username')
+            var firstName = button.data('firstname')
+            var lastName = button.data('lastname')
             var email = button.data('email')
             var phone = button.data('phone')
-            var isActive = button.data('isActive')
-            var roleGroups = button.data('roleGroups')
-            var lastLogin = button.data('lastLogin')
+            var isActive = button.data('isactive')
+            var roleGroups = button.data('rolegroups')
+            var lastLogin = button.data('lastlogin')
 
             var modal = $(this)
             modal.find('#selected-id').val(id);
@@ -32,16 +33,51 @@
             modal.find('#selected-roleGroups').val(roleGroups);
             modal.find('#selected-lastLogin').val(lastLogin);
         })
-
         $('#delete-popup').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
             var id = button.data('id') // Extract info from data-* attributes
-            var name = button.data('name')
+            var name = button.data('username')
 
             var modal = $(this)
             modal.find('#delete-id').val(id);
             modal.find('#delete-name').text(name);
         })
+        function addCheckRole() {
+            var roles = document.getElementById('add-roleGroups');
+            var getRole = document.getElementsByName('addrolegroup');
+            for (var i = 0; i < getRole.length; i++) {
+                if (getRole[i].checked && !roles.value.includes(getRole[i].value)) {
+                    if (roles.value === "") {
+                        roles.value = getRole[i].value;
+                    }
+                    else {
+                        roles.value += "," + getRole[i].value;
+                    }
+                }
+                if (!getRole[i].checked && roles.value.includes(getRole[i].value)) {
+                    roles.value = roles.value.replace(getRole[i].value, "");
+                }
+            }
+            debugger;
+        }
+        function upCheckRole() {
+            var roles = document.getElementById('selected-roleGroups');
+            var getRole = document.getElementsByName('uprolegroup');
+            for (var i = 0; i < getRole.length; i++) {
+                if (getRole[i].checked && !roles.value.includes(getRole[i].value)) {
+                    if (roles.value === "") {
+                        roles.value = getRole[i].value;
+                    }
+                    else {
+                        roles.value += "," + getRole[i].value;
+                    }
+                }
+                if (!getRole[i].checked && roles.value.includes(getRole[i].value)) {
+                    roles.value = roles.value.replace(getRole[i].value, "");
+                }
+            }
+            debugger;
+        }
     </script>
 }
 <h1 class="text-center">@ViewData["Title"]</h1>
@@ -73,6 +109,7 @@
         {
             @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.User item in Model.users)
             {
+                selectUser = item.roleGroups;
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.userName)
@@ -93,7 +130,7 @@
                         @Html.DisplayFor(modelItem => item.isActive)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => string.Join(',', item.roleGroups.Select(x=>x.roleGroupName).ToArray()))
+                        @Html.DisplayFor(modelItem => item.roleGroups)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.lastLogin)
@@ -112,27 +149,27 @@
                     </td>
                     <td>
                         <button class="btn btn-menu" data-toggle="modal" data-target="#update-popup"
-                                data-id="userID"
-                                data-userName="userName"
-                                data-firstName="firstName"
-                                data-lastName="lastName"
-                                data-email="email"
-                                data-phone="phone"
-                                data-isActive="isActive"
-                                data-roleGroups="roleGroups"
-                                data-lastLogin="lastLogin">
+                                data-id="@item.userID"
+                                data-username="@item.userName"
+                                data-firstname="@item.firstName"
+                                data-lastname="@item.lastName"
+                                data-email="@item.email"
+                                data-phone="@item.phone"
+                                data-isactive="@item.isActive"
+                                data-rolegroups="@item.roleGroups"
+                                data-lastlogin="@item.lastLogin">
                             <i class="fas fa-edit" style="color:blue;"></i>
                         </button> |
                         <button class="btn btn-menu" data-toggle="modal" data-target="#delete-popup"
-                                data-id="userID"
-                                data-userName="userName"
-                                data-firstName="firstName"
-                                data-lastName="lastName"
-                                data-email="email"
-                                data-phone="phone"
-                                data-isActive="isActive"
-                                data-roleGroups="roleGroups"
-                                data-lastLogin="lastLogin">
+                                data-id="@item.userID"
+                                data-username="@item.userName"
+                                data-firstname="@item.firstName"
+                                data-lastname="@item.lastName"
+                                data-email="@item.email"
+                                data-phone="@item.phone"
+                                data-isactive="@item.isActive"
+                                data-rolegroups="@item.roleGroups"
+                                data-lastlogin="@item.lastLogin">
                             <i class="fas fa-trash" style="color:red;"></i>
                         </button>
                     </td>
@@ -182,11 +219,12 @@
                 <div class="col-md-6">
                     <h3 class="text-center">Roles</h3>
                     <div class="form-group">
+                        <input id="add-roleGroups" type="hidden" name="roleGroups" />
                         @if (Model.roleGroups != null && Model.roleGroups.Count > 0)
                         {
                             @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.RoleGroup roleGroup in Model.roleGroups)
                             {
-                                <input name="roleGroups" type="checkbox" value="@roleGroup.roleGroupID" />@roleGroup.roleGroupName
+                                <input name="addrolegroup" type="checkbox" value="@roleGroup.roleGroupCode" onclick="addCheckRole" />@roleGroup.roleGroupName<br />
                             }
                         }
                         else
@@ -240,11 +278,19 @@
                 <div class="col-md-6">
                     <h3 class="text-center">Roles</h3>
                     <div class="form-group">
+                        <input id="selected-roleGroups" type="hidden" name="roleGroups" />
                         @if (Model.roleGroups != null && Model.roleGroups.Count > 0)
                         {
                             @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.RoleGroup roleGroup in Model.roleGroups)
                             {
-                                <input name="roleGroups" type="checkbox" value="@roleGroup.roleGroupID" id="selected-roleGroups" /> @roleGroup.roleGroupName
+                                if (!string.IsNullOrEmpty(selectUser) && selectUser.Contains(roleGroup.roleGroupCode))
+                                {
+                                    <input name="uprolegroup" type="checkbox" value="@roleGroup.roleGroupCode" onclick="upCheckRole()" checked/>@roleGroup.roleGroupName<br />
+                                }
+                                else
+                                {
+                                    <input name="uprolegroup" type="checkbox" value="@roleGroup.roleGroupCode" onclick="upCheckRole()" />@roleGroup.roleGroupName<br />
+                                }
                             }
                         }
                         else

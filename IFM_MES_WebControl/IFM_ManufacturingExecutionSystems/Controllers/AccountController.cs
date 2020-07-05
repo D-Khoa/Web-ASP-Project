@@ -164,8 +164,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     }
                     else
                     {
-                        ViewData["Message"] = result.StatusCode.ToString();
-                        Console.WriteLine(result.Content);
+                        ViewData["Message"] = string.Format("Register failure! \n {0}", result.Content.ReadAsStringAsync().GetAwaiter().GetResult());
                         return View();
                     }
                 }
@@ -248,20 +247,19 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                         jwtToken.Wait();
                         HttpContext.Session.SetString("token", jwtToken.Result.Token);
                         HttpContext.Session.SetString("firstname", jwtToken.Result.Firstname);
+                        HttpContext.Session.SetString("rolegroups", jwtToken.Result.RoleGroups);
                         HttpContext.Session.SetString("username", inUser.username);
                         ViewData["Message"] = "Wellcome " + inUser.username;
-                        return RedirectToAction("Index","Home");
+                        return RedirectToAction("Index", "Home");
                     }
                     else
                     {
-                        ViewData["Error"] = result.StatusCode.ToString();
-                        ViewData["Message"] = "Login failure!";
-                        Console.WriteLine(result.Content);
+                        ViewData["Message"] = string.Format("Login failure! \n {0}", result.Content.ReadAsStringAsync().GetAwaiter().GetResult());
                         return View();
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 ViewData["Error"] = ex.Message;
                 ViewData["Message"] = "Login failure!";

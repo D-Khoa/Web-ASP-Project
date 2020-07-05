@@ -10,7 +10,7 @@ namespace IFM_ManufacturingExecutionSystems.Models.MVC
         public int roleGroupID { get; set; }
         public string roleGroupCode { get; set; }
         public string roleGroupName { get; set; }
-        public List<Role> roles { get; set; }
+        public string roles { get; set; }
         public string updateUser { get; set; }
         public DateTime updateTime { get; set; }
         public string creator { get; set; }

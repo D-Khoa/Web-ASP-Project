@@ -27,9 +27,12 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         public ActionResult Index()
         {
             string token = HttpContext.Session.GetString("token");
+            ControlController controlController = new ControlController(_config);
+            controlController.GetControl(out List<Control> controls, baseURI, token);
             GetRole(out List<Role> roles, baseURI, token);
             GetRoleGroup(out List<RoleGroup> roleGroups, roles, baseURI, token);
             dynamic myRoles = new ExpandoObject();
+            myRoles.controls = controls;
             myRoles.roles = roles;
             myRoles.roleGroups = roleGroups;
             return View(myRoles);
@@ -97,7 +100,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 var readTask = result.Content.ReadAsAsync<IList<aa0001>>();
                 readTask.Wait();
                 aa0001s = readTask.Result;
-                if(roles == null)
+                if (roles == null)
                 {
                     GetRole(out roles, baseURI, token);
                 }
@@ -108,7 +111,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                         roleGroupID = aa0001.aa0001c01,
                         roleGroupCode = aa0001.aa0001c31,
                         roleGroupName = aa0001.aa0001c32,
-                        roles = roles.Where(x => aa0001.aa0001c33.Contains(x.roleCode)).ToList(),
+                        //roles = roles.Where(x => aa0001.aa0001c33.Contains(x.roleCode)).ToList(),
+                        roles = aa0001.aa0001c33,
                         updateUser = aa0001.aa0001c07,
                         updateTime = DateTime.TryParse(aa0001.aa0001c08, out DateTime updatetime) ? updatetime : updatetime,
                         creator = aa0001.aa0001c50,
@@ -193,7 +197,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0001c06 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                     aa0001c31 = inRoleGroup.roleGroupCode,
                     aa0001c32 = inRoleGroup.roleGroupName,
-                    aa0001c33 = string.Join(',', inRoleGroup.roles.Select(x => x.roleCode).ToArray()),
+                    //aa0001c33 = string.Join(',', inRoleGroup.roles.Select(x => x.roleCode).ToArray()),
+                    aa0001c33 = inRoleGroup.roles
                 };
                 HttpClientHandler clientHandler = new HttpClientHandler
                 {
@@ -295,7 +300,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0001c08 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
                     aa0001c31 = inRoleGroup.roleGroupCode,
                     aa0001c32 = inRoleGroup.roleGroupName,
-                    aa0001c43 = string.Join(',', inRoleGroup.roles.Select(x => x.roleCode).ToArray()),
+                    //aa0001c43 = string.Join(',', inRoleGroup.roles.Select(x => x.roleCode).ToArray()),
+                    aa0001c33 = inRoleGroup.roles
                 };
                 HttpClientHandler clientHandler = new HttpClientHandler
                 {
@@ -303,11 +309,11 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                 };
                 using HttpClient client = new HttpClient(clientHandler)
                 {
-                    BaseAddress = new Uri(baseURI + @"/aa0001/Roles")
+                    BaseAddress = new Uri(baseURI + @"/aa0001/RoleGroups")
                 };
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer",
                     HttpContext.Session.GetString("token"));
-                var respone = client.PutAsJsonAsync<aa0001>("roles", aa0001);
+                var respone = client.PutAsJsonAsync<aa0001>("rolegroups", aa0001);
                 respone.Wait();
                 var result = respone.Result;
                 if (result.IsSuccessStatusCode)

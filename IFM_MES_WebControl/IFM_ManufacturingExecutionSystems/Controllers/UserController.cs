@@ -28,9 +28,14 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         public ActionResult Index()
         {
             string token = HttpContext.Session.GetString("token");
+            string rolegroups = HttpContext.Session.GetString("rolegroups");
             RoleController roleController = new RoleController(_config);
             roleController.GetRole(out List<Role> roles, baseURI, token);
             roleController.GetRoleGroup(out roleGroups, roles, baseURI, token);
+            //if(roleGroups.Any(x=>rolegroups.Contains(x.roleGroupCode)))
+            //{
+
+            //}    
             GetUser(out List<User> users, roleGroups, baseURI, token);
             dynamic myUsers = new ExpandoObject();
             myUsers.users = users;
@@ -71,7 +76,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                             email = aa0001.aa0001c14,
                             phone = aa0001.aa0001c15,
                             isActive = aa0001.aa0001c16,
-                            roleGroups = roleGroups.Where(x => aa0001.aa0001c31.Contains(x.roleGroupCode)).ToList(),
+                            //roleGroups = roleGroups.Where(x => aa0001.aa0001c17.Contains(x.roleGroupCode)).ToList(),
+                            roleGroups = aa0001.aa0001c17,
                             lastLogin = aa0001.aa0001c25,
                             updateUser = aa0001.aa0001c07,
                             updateTime = DateTime.TryParse(aa0001.aa0001c08, out DateTime updatetime) ? updatetime : updatetime,
@@ -115,7 +121,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                         email = aa0001.aa0001c14,
                         phone = aa0001.aa0001c15,
                         isActive = aa0001.aa0001c16,
-                        roleGroups = roleGroups.Where(x => x.roleGroupCode == aa0001.aa0001c31).ToList(),
+                        //roleGroups = roleGroups.Where(x => x.roleGroupCode == aa0001.aa0001c31).ToList(),
+                        roleGroups = aa0001.aa0001c17,
                         lastLogin = aa0001.aa0001c25,
                         updateUser = aa0001.aa0001c07,
                         updateTime = DateTime.TryParse(aa0001.aa0001c08, out DateTime updatetime) ? updatetime : updatetime,
@@ -159,7 +166,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0001c14 = inUser.email,
                     aa0001c55 = inUser.phone,
                     aa0001c16 = inUser.isActive,
-                    aa0001c17 = string.Join(',', inUser.roleGroups.Select(x => x.roleGroupCode).ToArray()),
+                    //aa0001c17 = string.Join(',', inUser.roleGroups.Select(x => x.roleGroupCode).ToArray()),
+                    aa0001c17 = inUser.roleGroups,
                     aa0001c25 = inUser.lastLogin,
                 };
                 HttpClientHandler clientHandler = new HttpClientHandler
@@ -216,7 +224,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                     aa0001c14 = inUser.email,
                     aa0001c55 = inUser.phone,
                     aa0001c16 = inUser.isActive,
-                    aa0001c17 = string.Join(',', inUser.roleGroups.Select(x => x.roleGroupCode).ToArray()),
+                    //aa0001c17 = string.Join(',', inUser.roleGroups.Select(x => x.roleGroupCode).ToArray()),
+                    aa0001c17 = inUser.roleGroups,
                     aa0001c25 = inUser.lastLogin,
                 };
                 HttpClientHandler clientHandler = new HttpClientHandler

@@ -2,111 +2,137 @@
 
 @{
     ViewData["Title"] = "Roles Management";
-    ViewData["AddPopupTitle"] = "Add new role";
-    ViewData["UpdatePopupTitle"] = "Update role";
-    ViewData["DeletePopupTitle"] = "Delete role";
+    ViewData["AddPopupTitle"] = "Add New Role";
+    ViewData["UpdatePopupTitle"] = "Update Role";
+    ViewData["DeletePopupTitle"] = "Delete Role";
+    string selectRolesOfGroup = string.Empty;
+    List<IFM_ManufacturingExecutionSystems.Models.MVC.Role> roles = Model.roles;
+    List<IFM_ManufacturingExecutionSystems.Models.MVC.Role> rolesInGroup =
+        new List<IFM_ManufacturingExecutionSystems.Models.MVC.Role>();
 }
 @section Scripts{
     <script>
         $('#update-group-popup').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
-            var id = button.data('id') // Extract info from data-* attributes
-            var userName = button.data('roleGroupCode')
-            var firstName = button.data('roleGroupName')
-            var lastName = button.data('roles')
-
+            var roleGroupID = button.data('id') // Extract info from data-* attributes
+            var roleGroupCode = button.data('code')
+            var roleGroupName = button.data('name')
+            var roles = button.data('roles')
             var modal = $(this)
-            modal.find('#selected-id').val(id);
-            modal.find('#selected-roleGroupCode').val(userName);
-            modal.find('#selected-roleGroupName').val(firstName);
-            modal.find('#selected-roles').val(lastName);
+            modal.find('#selected-group-id').val(roleGroupID);
+            modal.find('#selected-roleGroupCode').val(roleGroupCode);
+            modal.find('#selected-roleGroupName').val(roleGroupName);
+            modal.find('#selected-roles').val(roles);
         })
         $('#update-role-popup').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
-            var id = button.data('roleGroupID') // Extract info from data-* attributes
-            var userName = button.data('roleCode')
-            var firstName = button.data('roleName')
-            var lastName = button.data('controlCode')
-
+            var roleID = button.data('id') // Extract info from data-* attributes
+            var roleCode = button.data('code')
+            var roleName = button.data('name')
+            var controlCode = button.data('control')
             var modal = $(this)
-            modal.find('#selected-roleID').val(id);
-            modal.find('#selected-roleCode').val(userName);
-            modal.find('#selected-roleName').val(firstName);
-            modal.find('#selected-controlCode').val(lastName);
+            modal.find('#selected-roleID').val(roleID);
+            modal.find('#selected-roleCode').val(roleCode);
+            modal.find('#selected-roleName').val(roleName);
+            modal.find('#selected-controlCode').val(controlCode);
         })
         $('#delete-role-popup').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
-            var id = button.data('id') // Extract info from data-* attributes
-            var name = button.data('name')
+            var roleID = button.data('id') // Extract info from data-* attributes
+            var roleName = button.data('name')
 
             var modal = $(this)
-            modal.find('#delete-id').val(id);
-            modal.find('#delete-name').text(name);
+            modal.find('#delete-id').val(roleID);
+            modal.find('#delete-name').text(roleName);
         })
         $('#delete-group-popup').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget) // Button that triggered the modal
-            var id = button.data('id') // Extract info from data-* attributes
-            var name = button.data('name')
+            var roleGroupID = button.data('id') // Extract info from data-* attributes
+            var roleGroupName = button.data('name')
 
             var modal = $(this)
-            modal.find('#delete-id').val(id);
-            modal.find('#delete-name').text(name);
+            modal.find('#delete-group-id').val(roleGroupID);
+            modal.find('#delete-group-name').text(roleGroupName);
         })
-        $(document).ready(function () {
-            $('.treeview').mdbTreeview();
-        });
+        function addCheckRole() {
+            var roles = document.getElementById('add-roles');
+            var getRole = document.getElementsByName('addcheckroles');
+            for (var i = 0; i < getRole.length; i++) {
+                if (getRole[i].checked && !roles.value.includes(getRole[i].value)) {
+                    if (roles.value === "") {
+                        roles.value = getRole[i].value;
+                    }
+                    else {
+                        roles.value += "," + getRole[i].value;
+                    }
+                }
+                if (!getRole[i].checked && roles.value.includes(getRole[i].value)) {
+                    roles.value.repalce(getRole[i].value, "");
+                }
+            }
+        }
+        function upCheckRole() {
+            var roles = document.getElementById('selected-roles');
+            var getRole = document.getElementsByName('upcheckroles');
+            for (var i = 0; i < getRole.length; i++) {
+                if (getRole[i].checked && !roles.value.includes(getRole[i].value)) {
+                    if (roles.value === "") {
+                        roles.value = getRole[i].value;
+                    }
+                    else {
+                        roles.value += "," + getRole[i].value;
+                    }
+                }
+                if (!getRole[i].checked && roles.value.includes(getRole[i].value)) {
+                    roles.value = roles.value.replace(getRole[i].value, "");
+                }
+            }
+        }
     </script>
 }
+<h1>@ViewData["Title"]</h1>
+<p class="text-danger">@ViewData["Message"]</p>
+<hr />
 <div class="treeview w-100 border">
-    <h6 class="pt-3 pl-3">@ViewData["Title"]</h6>
-    <p class="text-danger">@ViewData["Message"]</p>
-    <a class="btn btn-menu" asp-action="Create" data-toggle="modal" data-target="#add-popup">
-        <i class="fas fa-plus" style="color:green;"></i>
+    <h6 class="pt-3 pl-3 text-center">Role Groups</h6>
+    <hr />
+    <a class="btn btn-menu" asp-action="CreateRoleGroup" data-toggle="modal" data-target="#add-group-popup">
+        <i class="fas fa-plus" style="color:green;"></i>Add new role group
     </a>
-    <hr>
     @if (Model.roleGroups != null && Model.roleGroups.Count > 0)
     {
-        <ul class="mb-1 pl-3 pb-2">
+        <ul class="list-group">
             @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.RoleGroup group in Model.roleGroups)
             {
-                <li>
-                    <i class="fas fa-angle-right rotate"></i>
+                selectRolesOfGroup = group.roles;
+                rolesInGroup = roles.Where(x => group.roles.Contains(x.roleCode)).ToList();
+                <li class="list-group-item list-group-item-action">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#@group.roleGroupCode"
+                            aria-controls="@group.roleGroupCode" aria-expanded="true">
+                        <i class="fas fa-angle-right rotate"></i>
+                    </button>
                     <span>@group.roleGroupName</span>
                     <button class="btn btn-menu" data-toggle="modal" data-target="#update-group-popup"
-                            data-id="roleGroupID"
-                            data-roleGroupCode="roleGroupCode"
-                            data-roleGroupName="roleGroupName"
-                            data-roles="roles">
+                            data-id="@group.roleGroupID"
+                            data-code="@group.roleGroupCode"
+                            data-name="@group.roleGroupName"
+                            data-roles="@group.roles">
                         <i class="fas fa-edit" style="color:blue;"></i>
                     </button> |
-                    <button class="btn btn-menu" data-toggle="modal" data-target="#delete-popup"
-                            data-id="roleGroupID"
-                            data-code="roleGroupCode"
-                            data-name="roleGroupName"
-                            data-roles="roles">
+                    <button class="btn btn-menu" data-toggle="modal" data-target="#delete-group-popup"
+                            data-id="@group.roleGroupID"
+                            data-code="@group.roleGroupCode"
+                            data-name="@group.roleGroupName"
+                            data-roles="@group.roles">
                         <i class="fas fa-trash" style="color:red;"></i>
                     </button>
-                    @if (group.roles != null && group.roles.Count > 0)
+                    @if (!string.IsNullOrEmpty(group.roles) && rolesInGroup.Count > 0)
                     {
-                        <ul class="nested">
-                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Role role in group.roles)
+                        <ul class="nested list-group collapse" id="@group.roleGroupCode">
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Role role in rolesInGroup)
                             {
-                                <li>
+                                <li class="list-group-item">
                                     <span>@role.roleName</span>
-                                    <button class="btn btn-menu" data-toggle="modal" data-target="#update-role-popup"
-                                            data-id="roleID"
-                                            data-roleCode="roleCode"
-                                            data-roleName="roleName"
-                                            data-controlCode="controlCode">
-                                        <i class="fas fa-edit" style="color:blue;"></i>
-                                    </button> |
-                                    <button class="btn btn-menu" data-toggle="modal" data-target="#delete-popup"
-                                            data-id="roleID"
-                                            data-code="roleCode"
-                                            data-name="roleName"
-                                            data-controlCode="controlCode">
-                                        <i class="fas fa-trash" style="color:red;"></i>
-                                    </button>
                                 </li>
                             }
                         </ul>
@@ -125,18 +151,94 @@
     }
 </div>
 
-<div id="add-popup" class="modal fade" tabindex="-1" role="dialog">
+<div class="w-100 border">
+    <h6 class="pt-3 pl-3 text-center">Roles</h6>
+    <hr />
+    @if (Model.roles != null && Model.roles.Count > 0)
+    {
+        <table id="dgv-main" class="table table-striped table-bordered table-sm table-hover w-100" cellspacing="0" width="100%">
+            <thead class="text-center">
+                <tr>
+                    <th class="th-sm">Role Code</th>
+                    <th class="th-sm">Role Name</th>
+                    <th class="th-sm">Control Code</th>
+                    <th class="th-sm">Update User</th>
+                    <th class="th-sm">Update Time</th>
+                    <th class="th-sm">Creator</th>
+                    <th class="th-sm">Create Time</th>
+                    <th>
+                        <a class="btn btn-menu" asp-action="CreateRole" data-toggle="modal" data-target="#add-role-popup">
+                            <i class="fas fa-plus" style="color:green;"></i>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Role item in Model.roles)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.roleCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.roleName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.controlCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.updateUser)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.updateTime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.creator)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.createTime)
+                        </td>
+                        <td>
+                            <button class="btn btn-menu" data-toggle="modal" data-target="#update-role-popup"
+                                    data-id="@item.roleID"
+                                    data-code="@item.roleCode"
+                                    data-name="@item.roleName"
+                                    data-control="@item.controlCode">
+                                <i class="fas fa-edit" style="color:blue;"></i>
+                            </button> |
+                            <button class="btn btn-menu" data-toggle="modal" data-target="#delete-role-popup"
+                                    data-id="@item.roleID"
+                                    data-code="@item.roleCode"
+                                    data-name="@item.roleName"
+                                    data-control="@item.controlCode">
+                                <i class="fas fa-trash" style="color:red;"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No have any users.</p>
+        <a class="btn btn-menu" asp-action="CreateRole" data-toggle="modal" data-target="#add-role-popup">
+            <i class="fas fa-plus" style="color:green;"></i>Add New Role
+        </a>
+    }
+</div>
+
+<div id="add-group-popup" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-header">
-            <h4 class="modal-title text-center">@ViewData["AddPopupTitle"]</h4>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body row">
-            <div class="col-md-6">
-                <form asp-action="GetRoleGroup" method="post" class="modal-content rounded-lg shadow-lg">
-                    <h3 class="text-center">Role Group</h3>
+        <form asp-action="CreateRoleGroup" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">Add New Role Group</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-md-6">
                     <div class="form-group">
                         <label class="control-label">Group Code</label>
                         <input class="form-control input-bg" name="roleGroupCode" />
@@ -145,50 +247,112 @@
                         <label class="control-label">Group Name</label>
                         <input class="form-control input-bg" name="roleGroupName" />
                     </div>
+                </div>
+                <div class="col-md-6">
                     <div class="form-group">
-                        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Confirm</button>
+                        <label class="control-label">Roles</label>
+                        <input id="add-roles" type="hidden" name="roles" />
+                        @if (roles != null && roles.Count > 0)
+                        {
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Role role in roles)
+                            {
+                                <input type="checkbox" name="addcheckroles" value="@role.roleCode" onclick="addCheckRole()" />@role.roleName<br />
+                            }
+                        }
+                        else
+                        {
+                            <p>No role is exist.</p>
+                        }
                     </div>
-                </form>
+                </div>
             </div>
-            <div class="col-md-6">
-                <form asp-action="CreateRole" method="post" class="modal-content rounded-lg shadow-lg">
-                    <h3 class="text-center">Role</h3>
-                    <div class="form-group">
-                        <label class="control-label">Role Code</label>
-                        <input class="form-control input-bg" name="roleCode" />
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label">Role Name</label>
-                        <input class="form-control input-bg" name="roleName" />
-                    </div>
-                    <div class="form-group">
-                        <button type="button" class="btn" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Confirm</button>
-                    </div>
-                </form>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
             </div>
-        </div>
+        </form>
+    </div>
+</div>
+<div id="add-role-popup" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <form asp-action="CreateRole" method="post" class="modal-content rounded-lg shadow-lg">
+            <div class="modal-header">
+                <h4 class="modal-title">@ViewData["AddPopupTitle"]</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h3 class="text-center">Role</h3>
+                <div class="form-group">
+                    <label class="control-label">Role Code</label>
+                    <input class="form-control input-bg" name="roleCode" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Role Name</label>
+                    <input class="form-control input-bg" name="roleName" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Control</label>
+                    <select class="form-control input-bg" name="controlCode">
+                        @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Control control in Model.controls)
+                        {
+                            <option value="@control.controlCode">@control.controlName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Confirm</button>
+            </div>
+        </form>
     </div>
 </div>
 <div id="update-group-popup" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <form asp-action="EditRoleGroup" method="post" class="modal-content rounded-lg shadow-lg">
             <div class="modal-header">
-                <h4 class="modal-titles text-center">@ViewData["UpdatePopupTitle"]</h4>
+                <h4 class="modal-titles">Update Role Group</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body row">
-                <input id="selected-id" type="hidden" name="roleGroupID" />
-                <div class="form-group">
-                    <label class="control-label">Group Code</label>
-                    <input class="form-control input-bg" name="roleGroupCode" id="selected-roleGroupCode" />
+                <div class="col-md-6">
+                    <input id="selected-group-id" type="hidden" name="roleGroupID" />
+                    <div class="form-group">
+                        <label class="control-label">Group Code</label>
+                        <input class="form-control input-bg" name="roleGroupCode" id="selected-roleGroupCode" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Group Name</label>
+                        <input class="form-control input-bg" name="roleGroupName" id="selected-roleGroupName" />
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label">Group Name</label>
-                    <input class="form-control input-bg" name="roleGroupName" id="selected-roleGroupName" />
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label">Roles</label>
+                        <input id="selected-roles" type="hidden" name="roles" />
+                        @if (roles != null && roles.Count > 0)
+                        {
+                            @foreach (IFM_ManufacturingExecutionSystems.Models.MVC.Role role in roles)
+                            {
+                                if (selectRolesOfGroup.Contains(role.roleCode))
+                                {
+                                    <input type="checkbox" name="upcheckroles" value="@role.roleCode" onclick="upCheckRole()" checked />@role.roleName<br />
+                                }
+                                else
+                                {
+                                    <input type="checkbox" name="upcheckroles" value="@role.roleCode" onclick="upCheckRole()" />@role.roleName<br />
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <p>No role is exist.</p>
+                        }
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -202,12 +366,12 @@
     <div class="modal-dialog" role="document">
         <form asp-action="EditRole" method="post" class="modal-content rounded-lg shadow-lg">
             <div class="modal-header">
-                <h4 class="modal-titles text-center">@ViewData["UpdatePopupTitle"]</h4>
+                <h4 class="modal-titles">@ViewData["UpdatePopupTitle"]</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body row">
+            <div class="modal-body">
                 <input id="selected-id" type="hidden" name="roleID" />
                 <div class="form-group">
                     <label class="control-label">Role Code</label>
@@ -258,10 +422,10 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input id="delete-id" type="hidden" name="id" />
+                <input id="delete-group-id" type="hidden" name="id" />
                 <p class="text-body">
                     Are you sure delete the role:
-                    <label class="text-danger" id="delete-name" /> ?
+                    <label class="text-danger" id="delete-group-name" /> ?
                 </p>
             </div>
             <div class="modal-footer">

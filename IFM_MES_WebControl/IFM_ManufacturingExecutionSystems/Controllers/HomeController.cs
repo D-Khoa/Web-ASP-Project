@@ -17,7 +17,10 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Username"] = HttpContext.Session.GetString("firstnamef");
+            //ViewData["firstname"] = HttpContext.Session.GetString("firstname");
+            //ViewData["username"] = HttpContext.Session.GetString("username");
+            GlobalVariable.UserName = HttpContext.Session.GetString("username");
+            GlobalVariable.FirstName = HttpContext.Session.GetString("firstname");
             return View();
         }
 

@@ -57,18 +57,6 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
             return _context.aa0001.Where(e => e.aa0001c24 == token).FirstOrDefault();
         }
 
-        private string GetSalt(string username)
-        {
-            return _context.aa0001.Where(a => a.aa0001c11 == username)
-                                  .Select(x => x.aa0001c21).FirstOrDefault();
-        }
-
-        private aa0001 GetInfo(string username)
-        {
-            return _context.aa0001.Where(a => a.aa0001c11 == username)
-                                  .Select(x => x).FirstOrDefault();
-        }
-
         private bool IsActive(string username)
         {
             return _context.aa0001.Any(e => e.aa0001c11 == username && e.aa0001c16 != "0");
@@ -81,18 +69,19 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
                 return BadRequest("Username is not exist!");
             if (!IsActive(aa0001.aa0001c11))
                 return BadRequest("Username is not active!");
-            aa0001.aa0001c21 = GetSalt(aa0001.aa0001c11);
+            aa0001 user = _context.aa0001.Where(x => x.aa0001c11 == aa0001.aa0001c11).FirstOrDefault();
+            aa0001.aa0001c21 = user.aa0001c21;
             string ipAdress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             if (ValidateUser(aa0001))
             {
                 var tokenstring = GenerateJWT();
-                aa0001.aa0001c22 = ipAdress;
-                aa0001.aa0001c24 = tokenstring;
-                aa0001.aa0001c25 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-                _context.Update(aa0001);
+                user.aa0001c22 = ipAdress;
+                user.aa0001c24 = tokenstring;
+                user.aa0001c25 = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                //_context.Update(aa0001);
                 _context.SaveChanges();
-                aa0001 userinfo = GetInfo(aa0001.aa0001c11);
-                return Ok(new { token = tokenstring, firstname = userinfo.aa0001c12 });
+                //aa0001 userinfo = GetInfo(aa0001.aa0001c11);
+                return Ok(new { token = tokenstring, firstname = user.aa0001c12, rolegroups = user.aa0001c17 });
             }
             else
             {

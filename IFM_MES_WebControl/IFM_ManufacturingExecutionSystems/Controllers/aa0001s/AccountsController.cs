@@ -49,14 +49,29 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut]
-        [Authorize]
         public async Task<IActionResult> Putaa0001(aa0001 aa0001)
         {
-            _context.Entry(aa0001).State = EntityState.Modified;
-
+            //_context.Entry(aa0001).State = EntityState.Modified;
             try
             {
-                await _context.SaveChangesAsync();
+                aa0001 userActive = CheckUser(aa0001.aa0001c11);
+                if (userActive != null)
+                {
+                    userActive.aa0001c01 = aa0001.aa0001c01;
+                    userActive.aa0001c07 = aa0001.aa0001c07;
+                    userActive.aa0001c08 = aa0001.aa0001c08;
+                    userActive.aa0001c11 = aa0001.aa0001c11;
+                    userActive.aa0001c12 = aa0001.aa0001c12;
+                    userActive.aa0001c13 = aa0001.aa0001c13;
+                    userActive.aa0001c14 = aa0001.aa0001c14;
+                    userActive.aa0001c55 = aa0001.aa0001c55;
+                    userActive.aa0001c16 = aa0001.aa0001c16;
+                    userActive.aa0001c17 = aa0001.aa0001c17;
+                    userActive.aa0001c25 = aa0001.aa0001c25;
+                    _context.Update(userActive);
+                    await _context.SaveChangesAsync();
+                    return Ok();
+                }
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -77,10 +92,9 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult<aa0001>> Postaa0001(aa0001 aa0001)
         {
-            if(aa0001Exists(aa0001.aa0001c11, aa0001.aa0001c14))
+            if (aa0001Exists(aa0001.aa0001c11, aa0001.aa0001c14))
             {
                 return BadRequest("This account is really exists!");
             }
@@ -116,6 +130,11 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
         private bool aa0001Exists(string username, string email)
         {
             return _context.aa0001.Any(e => e.aa0001c14 == email || e.aa0001c11 == username);
+        }
+
+        private aa0001 CheckUser(string user)
+        {
+            return _context.aa0001.Where(e => e.aa0001c11 == user).FirstOrDefault();
         }
     }
 }
