@@ -19,88 +19,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         public AccountController(IConfiguration configuration)
         {
             _config = configuration;
-            //baseURI = _config["BaseURL:DefaultURL"];
-            baseURI = _config["BaseURL:LocalURL"];
-        }
-        // GET: Account
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-        // GET: Account/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: Account/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Account/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Account/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Account/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Account/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            baseURI = _config["BaseURL"];
         }
 
         // GET: Account/Register
@@ -248,8 +167,13 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
                         HttpContext.Session.SetString("token", jwtToken.Result.Token);
                         HttpContext.Session.SetString("firstname", jwtToken.Result.Firstname);
                         HttpContext.Session.SetString("rolegroups", jwtToken.Result.RoleGroups);
+                        HttpContext.Session.SetString("roles", jwtToken.Result.Roles);
                         HttpContext.Session.SetString("username", inUser.username);
                         ViewData["Message"] = "Wellcome " + inUser.username;
+                        GlobalVariable.UserName = inUser.username;
+                        GlobalVariable.Token = jwtToken.Result.Token;
+                        GlobalVariable.FirstName = jwtToken.Result.Firstname;
+                        GlobalVariable.Permission = jwtToken.Result.Roles.Split(',');
                         return RedirectToAction("Index", "Home");
                     }
                     else

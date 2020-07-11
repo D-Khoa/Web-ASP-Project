@@ -17,10 +17,10 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
 
         public IActionResult Index()
         {
-            //ViewData["firstname"] = HttpContext.Session.GetString("firstname");
-            //ViewData["username"] = HttpContext.Session.GetString("username");
-            GlobalVariable.UserName = HttpContext.Session.GetString("username");
-            GlobalVariable.FirstName = HttpContext.Session.GetString("firstname");
+            if(string.IsNullOrEmpty(GlobalVariable.Token))
+            {
+                return RedirectToAction("Login", "Account");
+            }
             return View();
         }
 

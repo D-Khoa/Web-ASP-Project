@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Cryptography;
@@ -70,6 +71,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
             if (!IsActive(aa0001.aa0001c11))
                 return BadRequest("Username is not active!");
             aa0001 user = _context.aa0001.Where(x => x.aa0001c11 == aa0001.aa0001c11).FirstOrDefault();
+            List<aa0001> groupRoles = _context.aa0001.Where(x => user.aa0001c17.Contains(x.aa0001c31)).ToList();
+            string roles = string.Join(',', groupRoles.Select(x => x.aa0001c33));
             aa0001.aa0001c21 = user.aa0001c21;
             string ipAdress = Request.HttpContext.Connection.RemoteIpAddress.ToString();
             if (ValidateUser(aa0001))
@@ -81,7 +84,7 @@ namespace IFM_ManufacturingExecutionSystems.Controllers.aa0001s
                 //_context.Update(aa0001);
                 _context.SaveChanges();
                 //aa0001 userinfo = GetInfo(aa0001.aa0001c11);
-                return Ok(new { token = tokenstring, firstname = user.aa0001c12, rolegroups = user.aa0001c17 });
+                return Ok(new JWT { Token = tokenstring, Firstname = user.aa0001c12, RoleGroups = user.aa0001c17, Roles = roles });
             }
             else
             {

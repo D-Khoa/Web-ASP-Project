@@ -21,12 +21,16 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         {
             _config = configuration;
             //baseURI = _config["BaseURL:DefaultURL"];
-            baseURI = _config["BaseURL:LocalURL"];
+            baseURI = _config["BaseURL"];
         }
 
         // GET: ControlController
         public ActionResult Index()
         {
+            if (string.IsNullOrEmpty(GlobalVariable.Token))
+            {
+                return RedirectToAction("Login", "Account");
+            }
             string token = HttpContext.Session.GetString("token");
             GetControl(out List<Control> controls, baseURI, token);
             dynamic myControls = new ExpandoObject();

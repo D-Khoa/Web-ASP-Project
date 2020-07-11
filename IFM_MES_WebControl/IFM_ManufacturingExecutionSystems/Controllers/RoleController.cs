@@ -20,12 +20,16 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         {
             _config = configuration;
             //baseURI = _config["BaseURL:DefaultURL"];
-            baseURI = _config["BaseURL:LocalURL"];
+            baseURI = _config["BaseURL"];
         }
 
         // GET: RoleController
         public ActionResult Index()
         {
+            if (string.IsNullOrEmpty(GlobalVariable.Token))
+            {
+                return RedirectToAction("Login", "Account");
+            }
             string token = HttpContext.Session.GetString("token");
             ControlController controlController = new ControlController(_config);
             controlController.GetControl(out List<Control> controls, baseURI, token);

@@ -20,12 +20,16 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         {
             _config = configuration;
             //baseURI = _config["BaseURL:DefaultURL"];
-            baseURI = _config["BaseURL:LocalURL"];
+            baseURI = _config["BaseURL"];
         }
 
         // GET: MachineController
         public ActionResult Index()
         {
+            if (string.IsNullOrEmpty(GlobalVariable.Token))
+            {
+                return RedirectToAction("Login", "Account");
+            }
             string token = HttpContext.Session.GetString("token");
             GetMachines(out List<Machine> machines, baseURI, token);
             StatusController statusController = new StatusController(_config);

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<IFM_ManufacturingExecutionSystems.Models.SQL.TableInformation>
+
+@{
+    ViewData["Title"] = "Database Information";
+}
+
+<h1 class="text-center">@ViewData["Title"]</h1>
+
+<p>
+    <button class="btn btn-outline-primary" onclick="createDatabase()">Create New Database</button>
+</p>
+@if (Model != null && Model.Count() > 0)
+{
+    <h2>Database: @Html.DisplayFor(modelItem => modelItem.First().Database)</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Schema)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Table)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreateDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ModifyDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.MaxColumn)
+                </th>
+                @*<th></th>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Schema)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Table)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreateDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ModifyDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MaxColumn)
+                    </td>
+                    @*<td>
+                            <a asp-action="Edit" asp-route-id="@item.Table">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Table">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Table">Delete</a>
+                        </td>*@
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Don't have any tables.</p>
+}
+
+@section Scripts{
+    <script>
+        function createDatabase() {
+            var password = prompt("Input password for create database: ");
+            window.location.href = '@Url.Action("Create", "Database")/' + password;
+        }
+    </script>
+}

@@ -20,12 +20,16 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         {
             _config = configuration;
             //baseURI = _config["BaseURL:DefaultURL"];
-            baseURI = _config["BaseURL:LocalURL"];
+            baseURI = _config["BaseURL"];
         }
 
         // GET: WorkShift
         public ActionResult Index()
         {
+            if (string.IsNullOrEmpty(GlobalVariable.Token))
+            {
+                return RedirectToAction("Login", "Account");
+            }
             GetShifts(out List<WorkShift> WorkShifts, baseURI, HttpContext.Session.GetString("token"));
             return View(WorkShifts);
         }

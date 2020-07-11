@@ -21,21 +21,21 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         {
             _config = configuration;
             //baseURI = _config["BaseURL:DefaultURL"];
-            baseURI = _config["BaseURL:LocalURL"];
+            baseURI = _config["BaseURL"];
         }
 
         // GET: UserController
         public ActionResult Index()
         {
+            if (string.IsNullOrEmpty(GlobalVariable.Token))
+            {
+                return RedirectToAction("Login", "Account");
+            }
             string token = HttpContext.Session.GetString("token");
             string rolegroups = HttpContext.Session.GetString("rolegroups");
             RoleController roleController = new RoleController(_config);
             roleController.GetRole(out List<Role> roles, baseURI, token);
-            roleController.GetRoleGroup(out roleGroups, roles, baseURI, token);
-            //if(roleGroups.Any(x=>rolegroups.Contains(x.roleGroupCode)))
-            //{
-
-            //}    
+            roleController.GetRoleGroup(out roleGroups, roles, baseURI, token);  
             GetUser(out List<User> users, roleGroups, baseURI, token);
             dynamic myUsers = new ExpandoObject();
             myUsers.users = users;

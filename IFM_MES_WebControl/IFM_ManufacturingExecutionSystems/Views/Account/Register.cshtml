@@ -18,6 +18,12 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body style="background:linear-gradient(-45deg,#3366ff,#ffffff);">
+    <script>
+        function createDatabase() {
+            var password = prompt("Input your token for create database: ");
+            window.location.href = '@Url.Action("Create", "Database")/' + password;
+        }
+    </script>
     <div class="outer">
         <div class="row middle">
             <div class="card col-md-8 offset-md-2" style="padding: 20px; box-shadow: 0 2px 6px rgba(0,0,0,.2);">
@@ -80,6 +86,7 @@
                     </div>
                     <div class="card-footer form-group">
                         <div class="row">
+                            <button class="btn btn-outline-primary col-md-4" onclick="createDatabase()">Create Database</button>
                             <a class="btn btn-light col-md-4 offset-md-4" asp-action="Login">Cancel</a>
                             <input class="btn btn-primary col-md-4" type="submit" value="Register" />
                         </div>
