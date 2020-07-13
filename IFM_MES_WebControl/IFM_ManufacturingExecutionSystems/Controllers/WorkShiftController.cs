@@ -20,7 +20,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         {
             _config = configuration;
             //baseURI = _config["BaseURL:DefaultURL"];
-            baseURI = _config["BaseURL"];
+            //baseURI = _config["BaseURL"];
+            baseURI = GlobalVariable.BaseURI;
         }
 
         // GET: WorkShift

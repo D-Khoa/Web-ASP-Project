@@ -20,8 +20,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         public ControlController(IConfiguration configuration)
         {
             _config = configuration;
-            //baseURI = _config["BaseURL:DefaultURL"];
-            baseURI = _config["BaseURL"];
+            baseURI = GlobalVariable.BaseURI;
+            //baseURI = _config["BaseURL"];
         }
 
         // GET: ControlController

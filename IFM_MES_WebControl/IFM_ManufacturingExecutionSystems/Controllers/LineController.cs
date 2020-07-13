@@ -19,8 +19,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         public LineController(IConfiguration configuration)
         {
             _config = configuration;
-            //baseURI = _config["BaseURL:DefaultURL"];
-            baseURI = _config["BaseURL"];
+            //baseURI = _config["BaseURL"];
+            baseURI = GlobalVariable.BaseURI;
         }
 
         // GET: LineController

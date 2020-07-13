@@ -2,6 +2,7 @@ using IFM_ManufacturingExecutionSystems.Models.SQL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Hosting.Server.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
@@ -99,6 +101,8 @@ namespace IFM_ManufacturingExecutionSystems
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            GlobalVariable.BaseURI = app.ServerFeatures.Get<IServerAddressesFeature>().Addresses.First();
 
             app.UseEndpoints(endpoints =>
             {
