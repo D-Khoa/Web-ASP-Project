@@ -16,7 +16,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         public DatabaseController(MESContext context, IConfiguration configuration)
         {
             _context = context;
-            baseURI = configuration["BaseURL"];
+            //baseURI = configuration["BaseURL"];
+            baseURI = GlobalVariable.BaseURI;
         }
 
         // GET: DatabaseController

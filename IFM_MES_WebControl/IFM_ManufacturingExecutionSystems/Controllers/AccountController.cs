@@ -19,7 +19,8 @@ namespace IFM_ManufacturingExecutionSystems.Controllers
         public AccountController(IConfiguration configuration)
         {
             _config = configuration;
-            baseURI = _config["BaseURL"];
+            //baseURI = _config["BaseURL"];
+            baseURI = GlobalVariable.BaseURI;
         }
 
         // GET: Account/Register

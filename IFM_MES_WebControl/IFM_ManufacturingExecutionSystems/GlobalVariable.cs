@@ -2,6 +2,7 @@
 {
     public static class GlobalVariable
     {
+        public static string BaseURI { get; set; }
         public static string UserName { get; set; }
         public static string FirstName { get; set; }
         public static string Email { get; set; }
